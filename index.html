@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Главная — АвтоПродажа</title>
+  <meta charset="UTF-8"/>
+  <title>Главная — Tesla-like АвтоПродажа</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ШАПКА -->
-<header class="parallax-header" style="background-image:url('https://via.placeholder.com/1920x1080?text=Parallax+Car');">
+<!-- Параллакс шапка, Tesla-like -->
+<header class="parallax-header" style="background-image:url('https://via.placeholder.com/1920x1080?text=Tesla+Style');">
   <div class="nav-bar">
     <h2 onclick="location.href='index.html'">AutoSale</h2>
     <div class="nav-links">
@@ -23,30 +23,30 @@
   </div>
 
   <div class="header-content">
-    <h1>Автомобили для <span class="typing-text" id="typedText"></span></h1>
-    <p>Легко выбрать, просто купить, надёжно ездить</p>
+    <h1 class="hero-title">Мир автомобилей</h1>
+    <p>Откройте новую эру транспорта — не только Tesla, но и любые б/у и новые модели</p>
     <div>
-      <button class="btn" onclick="location.href='catalog.html'">Наши автомобили</button>
+      <button class="btn" onclick="location.href='catalog.html'">Наши предложения</button>
       <button class="btn" onclick="location.href='contact.html'">Связаться с нами</button>
     </div>
   </div>
 </header>
 
-<!-- Преимущества -->
+<!-- Преимущества (fade-up) -->
 <section class="advantages" id="advantagesSection">
-  <h2>Наши преимущества</h2>
-  <div class="adv-cards">
+  <h2>Почему выбрать нас?</h2>
+  <div class="adv-cards fade-up">
     <div class="adv-card">
-      <h3>Гарантия качества</h3>
-      <p>Тщательная проверка, диагностика и честная история каждого авто</p>
+      <h3>Технологии</h3>
+      <p>Мы используем передовые инструменты для оценки состояния авто.</p>
     </div>
     <div class="adv-card">
-      <h3>Удобная покупка</h3>
-      <p>Онлайн-бронирование, гибкая оплата, помощь в оформлении</p>
+      <h3>Удобство</h3>
+      <p>Онлайн-бронирование и доставка. Или приезжайте лично!</p>
     </div>
     <div class="adv-card">
-      <h3>Прозрачная сделка</h3>
-      <p>Официальное оформление, юридическое сопровождение, безопасные расчёты</p>
+      <h3>Скидка друга директора</h3>
+      <p>Проверяйте, не являетесь ли вы другом директора, чтобы получить супер-цену!</p>
     </div>
   </div>
 </section>
@@ -58,28 +58,14 @@
   <p>© 2025 Авто-Сервис | Все права защищены</p>
 </footer>
 
-<!-- Скрипт -->
 <script src="app.js"></script>
 <script>
   window.addEventListener('load',()=>{
     initApp();  
-    // Typed-текст
-    setupTypedText(["комфорта","всей семьи","лёгких путешествий","надёжной жизни"], "typedText");
-    // Плавное появление advantages
-    setupScrollAnimations("advantagesSection");
-    // Кнопка "Вверх"
+    setupTypedText(["комфорта","электромобилей","новых возможностей"], "typedText"); // если хотим typed
+    fadeUpOnScroll(".fade-up"); 
     setupScrollTopBtn("scrollTopBtn");
   });
 </script>
 </body>
 </html>
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  ...
-  <script src="app.js"></script>
-  <script>
-    window.addEventListener('load', ()=>{ initApp(); /* observeCards('.car-card'), etc. */ });
-  </script>
-</body>
