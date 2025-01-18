@@ -1,5 +1,5 @@
 /***********************************************
- * app.js — логика для всего сайта
+ * app.js — дополнительная логика
  ***********************************************/
 
 // Тема
@@ -8,35 +8,35 @@ function applyTheme(isLight){
   else document.body.classList.remove('light-theme');
 }
 function toggleTheme(){
-  const isLight=document.body.classList.contains('light-theme');
-  localStorage.setItem('siteTheme', isLight?'dark':'light');
+  const isLight = document.body.classList.contains('light-theme');
+  localStorage.setItem('siteTheme', isLight ? 'dark' : 'light');
   applyTheme(!isLight);
 }
 
 // Проверка логина
 function checkLoginStatus(){
-  const currentUser=localStorage.getItem('currentUser');
-  const loginLink=document.getElementById('loginLink');
-  const registerLink=document.getElementById('registerLink');
-  const logoutBtn=document.getElementById('logoutBtn');
+  const currentUser=localStorage.getItem("currentUser");
+  const loginLink=document.getElementById("loginLink");
+  const registerLink=document.getElementById("registerLink");
+  const logoutBtn=document.getElementById("logoutBtn");
 
   if(currentUser){
-    if(loginLink) loginLink.classList.add('hidden');
-    if(registerLink) registerLink.classList.add('hidden');
-    if(logoutBtn) logoutBtn.classList.remove('hidden');
+    if(loginLink) loginLink.classList.add("hidden");
+    if(registerLink) registerLink.classList.add("hidden");
+    if(logoutBtn) logoutBtn.classList.remove("hidden");
   } else {
-    if(loginLink) loginLink.classList.remove('hidden');
-    if(registerLink) registerLink.classList.remove('hidden');
-    if(logoutBtn) logoutBtn.classList.add('hidden');
+    if(loginLink) loginLink.classList.remove("hidden");
+    if(registerLink) registerLink.classList.remove("hidden");
+    if(logoutBtn) logoutBtn.classList.add("hidden");
   }
 }
 
 // Logout
 function setupLogoutBtn(){
-  const logoutBtn=document.getElementById('logoutBtn');
+  const logoutBtn=document.getElementById("logoutBtn");
   if(!logoutBtn)return;
-  logoutBtn.addEventListener('click',()=>{
-    localStorage.removeItem('currentUser');
+  logoutBtn.addEventListener("click",()=>{
+    localStorage.removeItem("currentUser");
     alert("Вы вышли из аккаунта");
     checkLoginStatus();
     location.reload();
@@ -47,12 +47,12 @@ function setupLogoutBtn(){
 function setupScrollTopBtn(btnId){
   const btn=document.getElementById(btnId);
   if(!btn)return;
-  window.addEventListener('scroll',()=>{
-    if(window.scrollY>300) btn.classList.add('show');
-    else btn.classList.remove('show');
+  window.addEventListener("scroll",()=>{
+    if(window.scrollY>300) btn.classList.add("show");
+    else btn.classList.remove("show");
   });
-  btn.addEventListener('click',()=>{
-    window.scrollTo({top:0, behavior:'smooth'});
+  btn.addEventListener("click",()=>{
+    window.scrollTo({ top:0, behavior:"smooth" });
   });
 }
 
@@ -82,52 +82,51 @@ function setupTypedText(words, typedTextId){
   typeEffect();
 }
 
-// Появление секции
+// Плавное появление секции
 function setupScrollAnimations(sectionId){
   const section=document.getElementById(sectionId);
   if(!section)return;
-
   function onScroll(){
     const rect=section.getBoundingClientRect();
     if(rect.top<window.innerHeight-100){
-      section.classList.add('show');
-      window.removeEventListener('scroll',onScroll);
+      section.classList.add("show");
+      window.removeEventListener("scroll",onScroll);
     }
   }
-  window.addEventListener('scroll',onScroll);
+  window.addEventListener("scroll",onScroll);
 }
 
 // Избранное / Сравнение
 function addToFavorites(carId){
-  let favorites=JSON.parse(localStorage.getItem('favorites'))||[];
+  let favorites=JSON.parse(localStorage.getItem("favorites"))||[];
   if(!favorites.includes(carId)){
     favorites.push(carId);
-    localStorage.setItem('favorites',JSON.stringify(favorites));
+    localStorage.setItem("favorites",JSON.stringify(favorites));
     alert("Добавлено в избранное!");
   } else {
     alert("Уже в избранном!");
   }
 }
 function addToCompare(carId){
-  let compareList=JSON.parse(localStorage.getItem('compare'))||[];
+  let compareList=JSON.parse(localStorage.getItem("compare"))||[];
   if(!compareList.includes(carId)){
     compareList.push(carId);
-    localStorage.setItem('compare',JSON.stringify(compareList));
+    localStorage.setItem("compare",JSON.stringify(compareList));
     alert("Добавлено к сравнению!");
   } else {
-    alert("Этот автомобиль уже в списке сравнения!");
+    alert("Этот авто уже в списке сравнения!");
   }
 }
 
 // Catalog filters
 function applyFilters(){
-  // см. catalog.html
+  // ...
 }
 function loadMoreCars(){
-  // см. catalog.html
+  // ...
 }
 
-// IntersectionObserver для card show
+// IntersectionObserver для карточек
 function observeCards(selector){
   const cards=document.querySelectorAll(selector);
   const observer=new IntersectionObserver((entries)=>{
@@ -175,9 +174,9 @@ function setupChatBot(){
   // Пример автоответов
   const answers={
     "привет":"Здравствуйте! Чем могу помочь?",
-    "скидка":"Проверьте, не являетесь ли вы другом директора!",
-    "оплата":"У нас есть нал, карта, кредит",
-    "пока":"Спасибо за визит!"
+    "скидка":"У нас есть скидки для друзей директора!",
+    "оплата":"Принимаем нал, карты, кредит",
+    "пока":"Спасибо, до свидания!"
   };
 
   sendBtn.addEventListener('click',()=>{
@@ -186,7 +185,7 @@ function setupChatBot(){
     chatMessages.innerHTML+=`<div><strong>Вы:</strong> ${msg}</div>`;
     chatInput.value='';
     setTimeout(()=>{
-      let reply="Извините, я пока не очень умный бот.";
+      let reply="Пока не умею отвечать на это...";
       if(answers[msg]) reply=answers[msg];
       chatMessages.innerHTML+=`<div style="color: #ffcc00;"><strong>Бот:</strong> ${reply}</div>`;
       chatMessages.scrollTop=chatMessages.scrollHeight;
@@ -195,7 +194,7 @@ function setupChatBot(){
 }
 
 /***********************************************
- * initApp() — вызывать из каждого HTML (onload)
+ * initApp() — вызывать в <script> on load
  ***********************************************/
 function initApp(){
   // Тема

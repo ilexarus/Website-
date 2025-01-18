@@ -7,6 +7,7 @@
 </head>
 <body>
 
+<!-- ШАПКА -->
 <header class="parallax-header" style="background-image:url('https://via.placeholder.com/1920x1080?text=Parallax+Car');">
   <div class="nav-bar">
     <h2 onclick="location.href='index.html'">AutoSale</h2>
@@ -31,12 +32,13 @@
   </div>
 </header>
 
+<!-- Преимущества -->
 <section class="advantages" id="advantagesSection">
   <h2>Наши преимущества</h2>
   <div class="adv-cards">
     <div class="adv-card">
       <h3>Гарантия качества</h3>
-      <p>Тщательная проверка и документальная прозрачность каждого авто</p>
+      <p>Тщательная проверка, диагностика и честная история каждого авто</p>
     </div>
     <div class="adv-card">
       <h3>Удобная покупка</h3>
@@ -49,20 +51,35 @@
   </div>
 </section>
 
+<!-- Кнопка "Вверх" -->
 <button class="scroll-top-btn" id="scrollTopBtn">↑</button>
 
 <footer>
   <p>© 2025 Авто-Сервис | Все права защищены</p>
 </footer>
 
+<!-- Скрипт -->
 <script src="app.js"></script>
 <script>
   window.addEventListener('load',()=>{
     initApp();  
+    // Typed-текст
     setupTypedText(["комфорта","всей семьи","лёгких путешествий","надёжной жизни"], "typedText");
+    // Плавное появление advantages
     setupScrollAnimations("advantagesSection");
+    // Кнопка "Вверх"
     setupScrollTopBtn("scrollTopBtn");
   });
 </script>
 </body>
 </html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  ...
+  <script src="app.js"></script>
+  <script>
+    window.addEventListener('load', ()=>{ initApp(); /* observeCards('.car-card'), etc. */ });
+  </script>
+</body>
