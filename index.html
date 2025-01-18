@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8">
   <title>Главная — АвтоПродажа</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="parallax-header" style="background-image: url('https://via.placeholder.com/1920x1080?text=Parallax+Car');">
+<header class="parallax-header" style="background-image:url('https://via.placeholder.com/1920x1080?text=Parallax+Car');">
   <div class="nav-bar">
     <h2 onclick="location.href='index.html'">AutoSale</h2>
     <div class="nav-links">
@@ -36,7 +36,7 @@
   <div class="adv-cards">
     <div class="adv-card">
       <h3>Гарантия качества</h3>
-      <p>Тщательная проверка каждого авто и документальная прозрачность</p>
+      <p>Тщательная проверка и документальная прозрачность каждого авто</p>
     </div>
     <div class="adv-card">
       <h3>Удобная покупка</h3>
@@ -44,7 +44,7 @@
     </div>
     <div class="adv-card">
       <h3>Прозрачная сделка</h3>
-      <p>Официальные договора, юридическое сопровождение, безопасные расчёты</p>
+      <p>Официальное оформление, юридическое сопровождение, безопасные расчёты</p>
     </div>
   </div>
 </section>
@@ -57,14 +57,10 @@
 
 <script src="app.js"></script>
 <script>
-  // При загрузке страницы
-  window.addEventListener('load', ()=>{
-    initApp();  // тема, логин, чат-бот
-    // Typed-текст (массив слов, id элемента)
+  window.addEventListener('load',()=>{
+    initApp();  
     setupTypedText(["комфорта","всей семьи","лёгких путешествий","надёжной жизни"], "typedText");
-    // Плавное появление advantages
     setupScrollAnimations("advantagesSection");
-    // Кнопка "Вверх"
     setupScrollTopBtn("scrollTopBtn");
   });
 </script>
