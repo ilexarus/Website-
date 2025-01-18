@@ -1,20 +1,19 @@
-/***********************************************
- *  app.js: Общая логика и анимации для всех страниц
- ***********************************************/
+/**********************************************
+ * app.js — общий скрипт для сайта
+ **********************************************/
 
-// Переключение темы
-function applyTheme(isLight) {
+// Тема
+function applyTheme(isLight){
     if(isLight) document.body.classList.add('light-theme');
     else document.body.classList.remove('light-theme');
   }
-  
   function toggleTheme(){
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('siteTheme', isLight? 'dark':'light');
     applyTheme(!isLight);
   }
   
-  // Проверка логина (currentUser)
+  // Проверка логина
   function checkLoginStatus(){
     const currentUser = localStorage.getItem('currentUser');
     const loginLink = document.getElementById('loginLink');
@@ -44,11 +43,25 @@ function applyTheme(isLight) {
     });
   }
   
-  // Typed-текст (пример)
-  function setupTypedText(words, typedTextElementId){
-    let index=0, wordIndex=0, currentWord="", isDeleting=false;
-    const typedTextElement = document.getElementById(typedTextElementId);
+  // Кнопка "Вверх"
+  function setupScrollTopBtn(btnId){
+    const btn = document.getElementById(btnId);
+    if(!btn) return;
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY>300) btn.classList.add('show');
+      else btn.classList.remove('show');
+    });
+    btn.addEventListener('click', ()=>{
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+  }
+  
+  // Typed-текст
+  function setupTypedText(words, typedTextId){
+    const typedTextElement = document.getElementById(typedTextId);
     if(!typedTextElement) return;
+  
+    let index=0, wordIndex=0, currentWord="", isDeleting=false;
   
     function typeEffect(){
       const fullWord=words[wordIndex];
@@ -61,9 +74,7 @@ function applyTheme(isLight) {
         isDeleting=true;
         setTimeout(typeEffect,1000);
       } else if(isDeleting && index===0){
-        isDeleting=false;
-        wordIndex=(wordIndex+1)%words.length;
-        setTimeout(typeEffect,200);
+        isDeleting=false; wordIndex=(wordIndex+1)%words.length; setTimeout(typeEffect,200);
       } else {
         const speed=isDeleting?50:100;
         setTimeout(typeEffect,speed);
@@ -72,10 +83,11 @@ function applyTheme(isLight) {
     typeEffect();
   }
   
-  // Плавное появление секции (advantages)
+  // Плавное появление блока (sectionId)
   function setupScrollAnimations(sectionId){
     const section = document.getElementById(sectionId);
     if(!section) return;
+  
     function onScroll(){
       const rect=section.getBoundingClientRect();
       if(rect.top<window.innerHeight-100){
@@ -83,24 +95,10 @@ function applyTheme(isLight) {
         window.removeEventListener('scroll', onScroll);
       }
     }
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll',onScroll);
   }
   
-  // Кнопка "Вверх"
-  function setupScrollTopBtn(btnId){
-    const btn=document.getElementById(btnId);
-    if(!btn) return;
-    window.addEventListener('scroll', ()=>{
-      if(window.scrollY>300){
-        btn.classList.add('show');
-      } else {
-        btn.classList.remove('show');
-      }
-    });
-    // onclick="..."
-  }
-  
-  // Catalog: Избранное, Сравнение, Load More, Фильтр, ...
+  // Избранное/Сравнение
   function addToFavorites(carId){
     let favorites=JSON.parse(localStorage.getItem('favorites'))||[];
     if(!favorites.includes(carId)){
@@ -111,7 +109,6 @@ function applyTheme(isLight) {
       alert("Уже в избранном!");
     }
   }
-  
   function addToCompare(carId){
     let compareList=JSON.parse(localStorage.getItem('compare'))||[];
     if(!compareList.includes(carId)){
@@ -123,18 +120,19 @@ function applyTheme(isLight) {
     }
   }
   
+  // Фильтр/Сортировка (catalog)
   function applyFilters(){
-    // Реализация — смотрите пример catalog.html
+    // Реализуйте в catalog.html вызовом app.js
   }
-  
+  // LoadMore
   function loadMoreCars(){
-    // Реализация — смотрите пример catalog.html
+    // Тоже
   }
   
-  // Анимация появления карточек (IntersectionObserver)
+  // IntersectionObserver для карточек
   function observeCards(selector){
-    const cards = document.querySelectorAll(selector);
-    const observer = new IntersectionObserver((entries)=>{
+    const cards=document.querySelectorAll(selector);
+    const observer=new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
           entry.target.classList.add('show');
@@ -145,17 +143,62 @@ function applyTheme(isLight) {
     cards.forEach(card=>observer.observe(card));
   }
   
-  /***********************************************
-   * ИНИЦИАЛИЗАЦИЯ (вызываем из <script> в HTML)
-   ***********************************************/
+  /************************************************
+   * ЧАТ-БОТ (пример всплывающего окна)
+   ************************************************/
+  function setupChatBot(){
+    const chatBtn=document.createElement('button');
+    chatBtn.className='chat-bot-btn';
+    chatBtn.innerText='Чат';
+    document.body.appendChild(chatBtn);
   
+    const chatWindow=document.createElement('div');
+    chatWindow.className='chat-bot-window';
+    chatWindow.innerHTML=`
+      <div class="chat-bot-header">Бот поддержки</div>
+      <div class="chat-bot-messages" id="chatMessages"></div>
+      <div class="chat-bot-input">
+        <input type="text" id="chatInput" placeholder="Введите сообщение..." />
+        <button>Отправить</button>
+      </div>
+    `;
+    document.body.appendChild(chatWindow);
+  
+    let chatOpen=false;
+    chatBtn.addEventListener('click',()=>{
+      chatOpen=!chatOpen;
+      chatWindow.style.display=chatOpen? 'flex':'none';
+    });
+  
+    const sendBtn=chatWindow.querySelector('button');
+    const chatInput=chatWindow.querySelector('#chatInput');
+    const chatMessages=chatWindow.querySelector('#chatMessages');
+    sendBtn.addEventListener('click',()=>{
+      const msg=chatInput.value.trim();
+      if(!msg) return;
+      chatMessages.innerHTML+=`<div><strong>Вы:</strong> ${msg}</div>`;
+      chatInput.value='';
+      // Ответ бота (простейший)
+      setTimeout(()=>{
+        chatMessages.innerHTML+=`<div style="color: #ffcc00;"><strong>Бот:</strong> Я пока не очень умный бот, но спасибо за сообщение!</div>`;
+        chatMessages.scrollTop=chatMessages.scrollHeight;
+      },700);
+    });
+  }
+  
+  /************************************************
+   * initApp — общий инициализатор (вызываем в <script> on load)
+   ************************************************/
   function initApp(){
-    // 1) Применяем сохранённую тему
+    // Тема
     const savedTheme=localStorage.getItem('siteTheme');
     applyTheme(savedTheme==='light');
   
-    // 2) Проверяем логин
+    // Логин
     checkLoginStatus();
     setupLogoutBtn();
+  
+    // Чат-бот (пример)
+    setupChatBot();
   }
   
