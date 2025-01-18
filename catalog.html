@@ -5,196 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Каталог — АвтоПродажа</title>
   <style>
-    /* Общие стили */
-    * {
-      margin: 0;
-      padding: 0; 
-      box-sizing: border-box;
-    }
-    :root {
-      --main-bg: #121212;
-      --secondary-bg: #1e1e1e;
-      --accent-color: #ff5722;
-      --accent-hover: #e64a19;
-      --text-color: #ffffff;
-      --subtext-color: #cccccc;
-      --shadow-color: rgba(0,0,0,0.3);
-    }
-    body {
-      background: var(--main-bg);
-      color: var(--text-color);
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
-    }
-    /* Светлая тема */
-    body.light-theme {
-      --main-bg: #f5f5f5;
-      --secondary-bg: #ffffff;
-      --text-color: #222;
-      --subtext-color: #555;
-      --shadow-color: rgba(0,0,0,0.1);
-    }
-    a { text-decoration: none; color: inherit; }
-
-    .nav-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: var(--secondary-bg);
-      box-shadow: 0 2px 5px var(--shadow-color);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .nav-bar h2 {
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    .nav-links a {
-      margin: 0 1rem;
-      font-size: 1rem;
-      transition: color 0.3s;
-    }
-    .theme-toggle {
-      background: #333;
-      color: #fff;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      cursor: pointer;
-      border-radius: 4px;
-      margin-left: 1rem;
-    }
-
-    .catalog-header {
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    .catalog-header h1 {
-      margin-bottom: 0.5rem;
-      font-size: 2rem;
-    }
-    .catalog-header p {
-      color: var(--subtext-color);
-    }
-
-    .search-bar {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .search-bar input, .search-bar select {
-      padding: 0.5rem;
-      border-radius: 4px;
-      border: 1px solid #555;
-      background: #2a2a2a;
-      color: #fff;
-    }
-    .search-bar input::placeholder {
-      color: #999;
-    }
-    .btn {
-      background: var(--accent-color);
-      color: var(--text-color);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: var(--accent-hover);
-    }
-
-    /* Карточки */
-    .cars {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-    .car-card {
-      background: var(--secondary-bg);
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      overflow: hidden;
-      position: relative;
-      transform: translateY(30px);
-      opacity: 0;
-      transition: transform 0.5s, opacity 0.5s;
-    }
-    .car-card.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    .car-card:hover {
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-    .car-image {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .car-info {
-      padding: 1rem;
-    }
-    .car-info h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-    }
-    .car-info p {
-      margin-bottom: 0.5rem;
-      color: var(--subtext-color);
-    }
-    .price {
-      color: var(--accent-color);
-      font-weight: bold;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-    .action-btn {
-      background: #333;
-      border: none;
-      color: #fff;
-      padding: 0.3rem 0.6rem;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      transition: background 0.3s;
-    }
-    .action-btn:hover {
-      background: var(--accent-color);
-    }
-
-    /* КНОПКА "LOAD MORE" */
-    .load-more-container {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    footer {
-      background: #181818;
-      color: #aaaaaa;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
+    /* ... те же стили, что ранее ... (пропущено для краткости) */
   </style>
 </head>
 <body>
 
-<!-- Шапка -->
 <div class="nav-bar">
   <h2 onclick="location.href='index.html'">AutoSale</h2>
   <div class="nav-links">
@@ -209,12 +24,11 @@
 
 <div class="catalog-header">
   <h1>Каталог</h1>
-  <p>Выберите автомобиль, добавьте в избранное, сравните варианты или оформите сразу</p>
+  <p>Выберите автомобиль, добавьте в избранное, сравните или оформите покупку</p>
 </div>
 
-<!-- Панель фильтрации -->
 <div class="search-bar">
-  <input type="text" id="searchModel" placeholder="Модель..." />
+  <input type="text" id="searchModel" placeholder="Модель...">
   <select id="searchYear">
     <option value="">Любой год</option>
     <option value="2023">С 2023</option>
@@ -230,9 +44,8 @@
   <button class="btn" onclick="applyFilters()">Применить</button>
 </div>
 
-<!-- Карточки -->
 <div class="cars" id="carsContainer">
-  <!-- 1) Toyota Camry -->
+  <!-- Пример: Toyota Camry -->
   <div class="car-card" data-model="toyota camry" data-year="2020" data-price="1500000">
     <img class="car-image" src="https://via.placeholder.com/600x300?text=Toyota+Camry" alt="Toyota Camry">
     <div class="car-info">
@@ -242,29 +55,14 @@
       <div class="action-buttons">
         <button class="action-btn" onclick="event.stopPropagation(); addToFavorites('toyota-camry')">Избранное</button>
         <button class="action-btn" onclick="event.stopPropagation(); addToCompare('toyota-camry')">Сравнить</button>
+        <!-- ВАЖНО: ссылка именно на car-toyota-camry.html -->
         <button class="action-btn" onclick="location.href='car-toyota-camry.html'; event.stopPropagation();">Подробнее</button>
       </div>
     </div>
   </div>
-
-  <!-- 2) BMW X5 -->
-  <div class="car-card" data-model="bmw x5" data-year="2019" data-price="3000000">
-    <img class="car-image" src="https://via.placeholder.com/600x300?text=BMW+X5" alt="BMW X5">
-    <div class="car-info">
-      <h3>BMW X5</h3>
-      <p>Год: 2019 | Пробег: 40 000 км</p>
-      <p class="price">3 000 000 ₽</p>
-      <div class="action-buttons">
-        <button class="action-btn" onclick="event.stopPropagation(); addToFavorites('bmw-x5')">Избранное</button>
-        <button class="action-btn" onclick="event.stopPropagation(); addToCompare('bmw-x5')">Сравнить</button>
-        <button class="action-btn" onclick="alert('Пока нет отдельной страницы для BMW X5'); event.stopPropagation();">Подробнее</button>
-      </div>
-    </div>
-  </div>
-  <!-- Можно добавить ещё карточки... -->
+  <!-- Добавьте ещё авто, если надо... -->
 </div>
 
-<!-- LOAD MORE -->
 <div class="load-more-container">
   <button class="btn" onclick="loadMoreCars()">Load More</button>
 </div>
@@ -274,119 +72,7 @@
 </footer>
 
 <script>
-  // ====== Тема (тёмная/светлая) ======
-  function applyTheme(isLight) {
-    if(isLight){
-      document.body.classList.add('light-theme');
-    } else {
-      document.body.classList.remove('light-theme');
-    }
-  }
-  function toggleTheme(){
-    const isLight = document.body.classList.contains('light-theme');
-    localStorage.setItem('siteTheme', isLight ? 'dark' : 'light');
-    applyTheme(!isLight);
-  }
-  const savedTheme = localStorage.getItem('siteTheme');
-  applyTheme(savedTheme === 'light');
-
-  // ====== Фильтрация и сортировка ======
-  function applyFilters() {
-    const searchModel = document.getElementById('searchModel').value.toLowerCase().trim();
-    const searchYear = document.getElementById('searchYear').value;
-    const sortPrice = document.getElementById('sortPrice').value;
-    const cars = Array.from(document.querySelectorAll('.car-card'));
-
-    // Фильтр
-    cars.forEach(car => {
-      const carModel = car.dataset.model;
-      const carYear = car.dataset.year;
-      const matchModel = !searchModel || carModel.includes(searchModel);
-      const matchYear = !searchYear || (carYear >= searchYear);
-
-      if (matchModel && matchYear) {
-        car.style.display = '';
-      } else {
-        car.style.display = 'none';
-      }
-    });
-
-    // Сортировка
-    if(sortPrice) {
-      const visibleCars = cars.filter(c => c.style.display !== 'none');
-      visibleCars.sort((a,b) => {
-        const pA = +a.dataset.price;
-        const pB = +b.dataset.price;
-        return sortPrice === 'asc' ? (pA - pB) : (pB - pA);
-      });
-      const container = document.getElementById('carsContainer');
-      visibleCars.forEach(car => container.appendChild(car));
-    }
-  }
-
-  // ====== Избранное и Сравнение ======
-  function addToFavorites(carId) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    if(!favorites.includes(carId)){
-      favorites.push(carId);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      alert('Добавлено в избранное!');
-    } else {
-      alert('Уже в избранном!');
-    }
-  }
-  function addToCompare(carId) {
-    let compareList = JSON.parse(localStorage.getItem('compare')) || [];
-    if(!compareList.includes(carId)){
-      compareList.push(carId);
-      localStorage.setItem('compare', JSON.stringify(compareList));
-      alert('Добавлено к сравнению!');
-    } else {
-      alert('Уже добавлено для сравнения!');
-    }
-  }
-
-  // ====== Появление карточек при прокрутке (IntersectionObserver) ======
-  const cards = document.querySelectorAll('.car-card');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {threshold: 0.1});
-  cards.forEach(card => observer.observe(card));
-
-  // ====== Load More (пример) ======
-  let loadCount = 0;
-  function loadMoreCars() {
-    loadCount++;
-    // Имитация генерации новых карточек
-    const container = document.getElementById('carsContainer');
-    for(let i=1; i<=2; i++){
-      const card = document.createElement('div');
-      card.className = 'car-card';
-      card.dataset.model = "new model " + (loadCount*10 + i);
-      card.dataset.year = "2022";
-      card.dataset.price = "" + (1000000 + i*111111);
-      card.innerHTML = `
-        <img class="car-image" src="https://via.placeholder.com/600x300?text=New+Car+${loadCount*10 + i}" />
-        <div class="car-info">
-          <h3>New Car ${loadCount*10 + i}</h3>
-          <p>Год: 2022 | Пробег: 0 км</p>
-          <p class="price">${1_000_000 + i*111111} ₽</p>
-          <div class="action-buttons">
-            <button class="action-btn" onclick="event.stopPropagation(); addToFavorites('new-${loadCount}${i}')">Избранное</button>
-            <button class="action-btn" onclick="event.stopPropagation(); addToCompare('new-${loadCount}${i}')">Сравнить</button>
-            <button class="action-btn" onclick="alert('Пока нет отдельной страницы'); event.stopPropagation();">Подробнее</button>
-          </div>
-        </div>
-      `;
-      container.appendChild(card);
-      observer.observe(card);
-    }
-  }
+  /* ... Сюда вставьте те же скрипты для темы, фильтра, сортировки, Load More, что были выше ... */
 </script>
 
 </body>

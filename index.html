@@ -7,13 +7,8 @@
 
   <style>
     /* СБРОС */
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box;
-    }
-
-    /* ПЕРЕМЕННЫЕ ТЕМЫ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ПЕРЕМЕННЫЕ */
     :root {
       --main-bg: #121212;
       --secondary-bg: #1e1e1e;
@@ -23,7 +18,6 @@
       --subtext-color: #cccccc;
       --shadow-color: rgba(0,0,0,0.3);
     }
-
     body {
       background: var(--main-bg);
       color: var(--text-color);
@@ -31,32 +25,24 @@
       overflow-x: hidden;
       transition: background 0.3s, color 0.3s;
     }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* --- СВЕТЛАЯ ТЕМА (добавляется классом .light-theme на <body>) --- */
+    /* Светлая тема */
     body.light-theme {
       --main-bg: #f5f5f5;
       --secondary-bg: #ffffff;
-      --text-color: #222222;
-      --subtext-color: #555555;
+      --text-color: #222;
+      --subtext-color: #555;
       --shadow-color: rgba(0,0,0,0.1);
     }
+    a { text-decoration: none; color: inherit; }
 
-    /* ШАПКА / PARALLAX */
     header {
       position: relative;
       height: 100vh;
       background: url('https://via.placeholder.com/1920x1080?text=Parallax+Car') center/cover no-repeat;
-      background-attachment: fixed; /* Parallax эффект */
-      display: flex;
+      background-attachment: fixed; 
+      display: flex; 
       flex-direction: column;
     }
-
-    /* Навбар */
     .nav-bar {
       display: flex;
       justify-content: space-between;
@@ -77,15 +63,13 @@
       color: var(--accent-color);
     }
     .nav-links a {
-      margin: 0 1rem;
+      margin: 0 1rem; 
       font-size: 1rem;
       transition: color 0.3s;
     }
     .nav-links a:hover {
       color: var(--accent-color);
     }
-
-    /* Тумблер темы */
     .theme-toggle {
       background: #333;
       color: #fff;
@@ -93,14 +77,13 @@
       padding: 0.4rem 0.8rem;
       cursor: pointer;
       border-radius: 4px;
-      transition: background 0.3s;
       margin-left: 1rem;
+      transition: background 0.3s;
     }
     .theme-toggle:hover {
       background: var(--accent-color);
     }
 
-    /* Контент шапки */
     .header-content {
       margin: auto;
       text-align: center;
@@ -137,14 +120,10 @@
     }
 
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* СЕКЦИЯ ПРЕИМУЩЕСТВ */
-    .advantages {
+    section.advantages {
       padding: 3rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -169,12 +148,12 @@
       transition: 0.8s;
     }
     .advantages.show .adv-cards {
-      opacity: 1;
+      opacity: 1; 
       transform: translateY(0);
     }
     .adv-card {
       background: var(--secondary-bg);
-      padding: 2rem;
+      padding: 2rem; 
       border-radius: 8px;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
@@ -191,14 +170,13 @@
       color: var(--subtext-color);
     }
 
-    /* КНОПКА "ВВЕРХ" */
+    /* Кнопка "Вверх" */
     .scroll-top-btn {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      width: 50px;
-      height: 50px;
-      background: #333;
+      width: 50px; height: 50px;
+      background: #333; 
       color: #fff;
       border: none;
       border-radius: 50%;
@@ -217,7 +195,6 @@
       background: var(--accent-color);
     }
 
-    /* ПОДВАЛ */
     footer {
       background: #181818;
       color: #aaaaaa;
@@ -230,7 +207,6 @@
 <body>
 
 <header>
-  <!-- Навбар -->
   <div class="nav-bar">
     <h2 onclick="location.href='index.html'">AutoSale</h2>
     <div class="nav-links">
@@ -253,7 +229,6 @@
   </div>
 </header>
 
-<!-- Преимущества -->
 <section class="advantages" id="advantagesSection">
   <h2>Наши преимущества</h2>
   <div class="adv-cards">
@@ -272,16 +247,14 @@
   </div>
 </section>
 
-<!-- Кнопка "Вверх" -->
-<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior:'smooth'})">↑</button>
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 
 <footer>
   <p>© 2025 Авто-Сервис | Все права защищены</p>
 </footer>
 
-<!-- СКРИПТЫ -->
 <script>
-  // 1) Typed-эффект для заголовка
+  // Typed-эффект
   const words = ["комфорта", "всей семьи", "лёгких путешествий", "надёжной жизни"];
   let index = 0;
   let wordIndex = 0;
@@ -291,23 +264,18 @@
 
   function typeEffect() {
     const fullWord = words[wordIndex];
-
-    if (!isDeleting) {
+    if(!isDeleting) {
       currentWord = fullWord.substring(0, index + 1);
       index++;
     } else {
       currentWord = fullWord.substring(0, index - 1);
       index--;
     }
-
     typedTextElement.textContent = currentWord;
-
-    if (!isDeleting && index === fullWord.length) {
-      // Пауза
+    if(!isDeleting && index === fullWord.length) {
       isDeleting = true;
       setTimeout(typeEffect, 1000);
-    } else if (isDeleting && index === 0) {
-      // Следующее слово
+    } else if(isDeleting && index === 0) {
       isDeleting = false;
       wordIndex = (wordIndex + 1) % words.length;
       setTimeout(typeEffect, 200);
@@ -320,30 +288,30 @@
     typeEffect();
   });
 
-  // 2) Показ кнопки "Вверх" при прокрутке
+  // Кнопка "Вверх"
   const scrollTopBtn = document.getElementById('scrollTopBtn');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
+    if(window.scrollY > 300){
       scrollTopBtn.classList.add('show');
     } else {
       scrollTopBtn.classList.remove('show');
     }
   });
 
-  // 3) Плавное появление блока "advantages" при скролле
+  // Плавное появление блока advantages
   const advantagesSection = document.getElementById('advantagesSection');
-  function onScrollAnimations() {
+  function onScrollAnimations(){
     const rect = advantagesSection.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 100) {
+    if(rect.top < window.innerHeight - 100){
       advantagesSection.classList.add('show');
       window.removeEventListener('scroll', onScrollAnimations);
     }
   }
   window.addEventListener('scroll', onScrollAnimations);
 
-  // 4) Тёмная/Светлая тема (сохранение в localStorage)
+  // Тумблер темы
   function applyTheme(isLight) {
-    if(isLight){
+    if(isLight) {
       document.body.classList.add('light-theme');
     } else {
       document.body.classList.remove('light-theme');
@@ -354,7 +322,6 @@
     localStorage.setItem('siteTheme', isLight ? 'dark' : 'light');
     applyTheme(!isLight);
   }
-  // При загрузке страницы - установить тему
   const savedTheme = localStorage.getItem('siteTheme');
   applyTheme(savedTheme === 'light');
 </script>
