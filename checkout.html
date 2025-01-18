@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Оформление покупки — AutoSale</title>
   <style>
-    /* Общие стили */
+    /* СБРОС */
     * {
       margin: 0;
       padding: 0; 
@@ -61,7 +61,6 @@
       color: var(--accent-color);
     }
 
-    /* Контейнер */
     .checkout-container {
       max-width: 600px;
       margin: 2rem auto;
@@ -73,13 +72,10 @@
       transform: translateY(20px);
       opacity: 0;
     }
-
     h1 {
       text-align: center;
       margin-bottom: 1rem;
     }
-
-    /* Прогресс-бар */
     .progress-bar {
       display: flex;
       justify-content: space-between;
@@ -124,13 +120,12 @@
       color: #fff;
     }
 
-    /* Шаги формы */
     .step {
       display: none;
-      animation: slideIn 0.5s forwards;
     }
     .step.active {
       display: block;
+      animation: slideIn 0.3s forwards;
     }
 
     label {
@@ -161,7 +156,6 @@
       padding: 1rem;
       margin-top: 1rem;
     }
-
     .form-nav {
       display: flex;
       justify-content: space-between;
@@ -180,7 +174,6 @@
       background: var(--accent-hover);
     }
 
-    /* Подвал */
     footer {
       background: #181818;
       color: #aaaaaa;
@@ -189,7 +182,6 @@
       margin-top: auto;
     }
 
-    /* Анимации */
     @keyframes fadeIn {
       to {
         transform: translateY(0);
@@ -197,14 +189,8 @@
       }
     }
     @keyframes slideIn {
-      from {
-        transform: translateX(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
+      from {transform: translateX(50px); opacity: 0;}
+      to   {transform: translateX(0); opacity: 1;}
     }
   </style>
 </head>
@@ -216,6 +202,8 @@
     <a href="catalog.html">Каталог</a>
     <a href="contact.html">Контакты</a>
     <a href="login.html">Войти</a>
+    <a href="register.html">Регистрация</a>
+    <a href="checkout.html">Оформление</a>
   </div>
 </div>
 
@@ -230,9 +218,8 @@
     <div class="progress-step" data-step="4" id="stepLabel4">Подтверждение</div>
   </div>
 
-  <!-- Форма (4 шага) -->
   <form id="checkoutForm" onsubmit="event.preventDefault(); submitOrder();">
-    <!-- Шаг 1: Выбор города -->
+    <!-- Шаг 1 -->
     <div class="step active" id="step1">
       <label for="citySelect">Выберите ваш город:</label>
       <select id="citySelect">
@@ -245,35 +232,34 @@
       </select>
     </div>
 
-    <!-- Шаг 2: Способ доставки -->
+    <!-- Шаг 2 -->
     <div class="step" id="step2">
       <p>Выберите способ доставки:</p>
       <div class="delivery-options">
-        <label><input type="radio" name="delivery" value="pickup" /> Самовывоз из салона</label>
-        <label><input type="radio" name="delivery" value="courier" /> Доставка автовозом до города</label>
+        <label><input type="radio" name="delivery" value="Самовывоз" /> Самовывоз</label>
+        <label><input type="radio" name="delivery" value="Доставка автовозом" /> Доставка автовозом</label>
       </div>
     </div>
 
-    <!-- Шаг 3: Способ оплаты -->
+    <!-- Шаг 3 -->
     <div class="step" id="step3">
       <p>Выберите способ оплаты:</p>
       <div class="payment-options">
-        <label><input type="radio" name="payment" value="cash" /> Наличные</label>
-        <label><input type="radio" name="payment" value="card" /> Банковская карта</label>
-        <label><input type="radio" name="payment" value="credit" /> Кредит/Рассрочка</label>
+        <label><input type="radio" name="payment" value="Наличные" /> Наличные</label>
+        <label><input type="radio" name="payment" value="Карта" /> Банковская карта</label>
+        <label><input type="radio" name="payment" value="Кредит/Рассрочка" /> Кредит/Рассрочка</label>
       </div>
     </div>
 
-    <!-- Шаг 4: Подтверждение -->
+    <!-- Шаг 4 -->
     <div class="step" id="step4">
       <h3>Подтверждение заказа</h3>
       <div class="summary" id="orderSummary">
-        <!-- Здесь будет краткий итог выбранных опций -->
+        <!-- Итог выбора -->
       </div>
       <p style="margin-top:1rem;">Нажмите «Отправить», чтобы завершить покупку.</p>
     </div>
 
-    <!-- Кнопки навигации по шагам -->
     <div class="form-nav">
       <button class="btn" type="button" id="prevBtn" onclick="changeStep(-1)">Назад</button>
       <button class="btn" type="button" id="nextBtn" onclick="changeStep(1)">Далее</button>
@@ -295,20 +281,19 @@
   const orderSummary = document.getElementById('orderSummary');
 
   function showStep(step) {
-    for(let i=1; i<=totalSteps; i++){
+    for(let i = 1; i <= totalSteps; i++){
       document.getElementById('step'+ i).classList.remove('active');
       document.getElementById('stepLabel'+ i).classList.remove('active');
     }
     document.getElementById('step'+ step).classList.add('active');
     document.getElementById('stepLabel'+ step).classList.add('active');
 
-    // Кнопки
     document.getElementById('prevBtn').style.display = (step === 1) ? 'none' : 'inline-block';
     document.getElementById('nextBtn').textContent = (step === totalSteps) ? 'Отправить' : 'Далее';
   }
 
   function changeStep(n) {
-    // Если жмём "Далее" на последнем шаге - завершаем заказ
+    // Если "Далее" на последнем шаге -> submit
     if(n === 1 && currentStep === totalSteps) {
       submitOrder();
       return;
@@ -317,24 +302,17 @@
     if(currentStep < 1) currentStep = 1;
     if(currentStep > totalSteps) currentStep = totalSteps;
     showStep(currentStep);
-
-    // Дополнительно можно сделать проверку заполнения шагов, если нужно
+    updateSummary();
   }
 
   function submitOrder() {
-    // Формируем итог
     const city = citySelect.value || "не выбран";
-    let delivery = "не выбран";
-    let payment = "не выбран";
+    let delivery = "не выбрано";
+    let payment = "не выбрано";
+    deliveryOptions.forEach(opt => {if(opt.checked) delivery = opt.value;});
+    paymentOptions.forEach(opt => {if(opt.checked) payment = opt.value;});
 
-    deliveryOptions.forEach(opt => {
-      if(opt.checked) delivery = opt.value;
-    });
-    paymentOptions.forEach(opt => {
-      if(opt.checked) payment = opt.value;
-    });
-
-    // Сохранить в localStorage (при желании)
+    // Сохраним выбор в localStorage (по желанию)
     localStorage.setItem('checkoutCity', city);
     localStorage.setItem('checkoutDelivery', delivery);
     localStorage.setItem('checkoutPayment', payment);
@@ -343,18 +321,13 @@
     location.href = 'index.html';
   }
 
-  // При переходе на 4-й шаг - показать сводку
+  // При каждом переходе по шагам — обновляем краткую сводку
   function updateSummary() {
     const city = citySelect.value || "не выбран";
-    let delivery = "не выбран";
-    let payment = "не выбран";
-
-    deliveryOptions.forEach(opt => {
-      if(opt.checked) delivery = opt.value;
-    });
-    paymentOptions.forEach(opt => {
-      if(opt.checked) payment = opt.value;
-    });
+    let delivery = "не выбрано";
+    let payment = "не выбрано";
+    deliveryOptions.forEach(opt => {if(opt.checked) delivery = opt.value;});
+    paymentOptions.forEach(opt => {if(opt.checked) payment = opt.value;});
 
     orderSummary.innerHTML = `
       <p><strong>Город:</strong> ${city}</p>
@@ -363,13 +336,9 @@
     `;
   }
 
-  // Слежение за изменениями
-  citySelect.addEventListener('change', () => updateSummary());
-  deliveryOptions.forEach(opt => opt.addEventListener('change', () => updateSummary()));
-  paymentOptions.forEach(opt => opt.addEventListener('change', () => updateSummary()));
-
   // Инициализация
   showStep(currentStep);
+  updateSummary();
 </script>
 
 </body>

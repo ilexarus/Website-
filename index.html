@@ -6,7 +6,7 @@
   <title>Главная — АвтоПродажа</title>
 
   <style>
-    /* СБРОС */
+    /* СБРОС СТИЛЕЙ */
     * {
       margin: 0; 
       padding: 0; 
@@ -36,17 +36,17 @@
       color: inherit;
     }
 
-    /* ШАПКА */
+    /* ----- ШАПКА / PARALLAX ----- */
     header {
       position: relative;
       height: 100vh;
       background: url('https://via.placeholder.com/1920x1080?text=Parallax+Car') center/cover no-repeat;
-      background-attachment: fixed; /* Parallax эффект */
+      background-attachment: fixed; /* Parallax */
       display: flex;
       flex-direction: column;
     }
 
-    /* Навбар (фиксация при прокрутке) */
+    /* ----- НАВБАР ----- */
     .nav-bar {
       display: flex;
       justify-content: space-between;
@@ -58,7 +58,6 @@
       z-index: 1000;
       box-shadow: 0 2px 5px var(--shadow-color);
     }
-
     .nav-bar h2 {
       font-size: 1.5rem;
       cursor: pointer;
@@ -67,7 +66,6 @@
     .nav-bar h2:hover {
       color: var(--accent-color);
     }
-
     .nav-links a {
       margin: 0 1rem;
       font-size: 1rem;
@@ -77,7 +75,7 @@
       color: var(--accent-color);
     }
 
-    /* Контент шапки */
+    /* ----- КОНТЕНТ ШАПКИ ----- */
     .header-content {
       margin: auto;
       text-align: center;
@@ -98,7 +96,6 @@
       color: var(--subtext-color);
       margin-bottom: 2rem;
     }
-
     .btn {
       background: var(--accent-color);
       color: #fff;
@@ -113,13 +110,13 @@
       background: var(--accent-hover);
     }
 
-    /* АНИМАЦИИ */
+    /* ----- АНИМАЦИИ ----- */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* СЕКЦИЯ "Наши преимущества" */
+    /* ----- СЕКЦИЯ ПРЕИМУЩЕСТВ ----- */
     .advantages {
       padding: 3rem 2rem;
       max-width: 1200px;
@@ -163,17 +160,22 @@
       padding: 1rem;
       margin-top: 2rem;
     }
+
   </style>
 </head>
 <body>
 
+<!-- ШАПКА -->
 <header>
+  <!-- Навбар со всеми ссылками (включая новые «Регистрация» и «Оформление») -->
   <div class="nav-bar">
     <h2 onclick="location.href='index.html'">AutoSale</h2>
     <div class="nav-links">
       <a href="catalog.html">Каталог</a>
       <a href="contact.html">Контакты</a>
       <a href="login.html">Войти</a>
+      <a href="register.html">Регистрация</a>
+      <a href="checkout.html">Оформление</a>
     </div>
   </div>
 
@@ -187,20 +189,21 @@
   </div>
 </header>
 
+<!-- Преимущества -->
 <section class="advantages">
   <h2>Наши преимущества</h2>
   <div class="adv-cards">
     <div class="adv-card">
       <h3>Гарантия качества</h3>
-      <p>Тщательная проверка каждого авто: диагностика, осмотр документов, честная история</p>
+      <p>Тщательная проверка, диагностика, честная история авто</p>
     </div>
     <div class="adv-card">
       <h3>Удобная покупка</h3>
-      <p>Онлайн-бронирование, гибкая система оплаты, помощь в оформлении кредита</p>
+      <p>Онлайн-бронирование, гибкая система оплаты, помощь в оформлении</p>
     </div>
     <div class="adv-card">
       <h3>Прозрачная сделка</h3>
-      <p>Официальное оформление, безопасные расчёты, юридическое сопровождение</p>
+      <p>Официальное оформление, юридическое сопровождение, безопасные расчёты</p>
     </div>
   </div>
 </section>
@@ -209,9 +212,9 @@
   <p>© 2025 Авто-Сервис | Все права защищены</p>
 </footer>
 
-<!-- СКРИПТ: Typed.js-подобный эффект (упрощённый вариант на чистом JS) -->
+<!-- СКРИПТ: Typed-эффект (упрощённый) -->
 <script>
-  const words = ["комфорта", "всей семьи", "легких путешествий", "надёжной жизни"];
+  const words = ["комфорта", "всей семьи", "лёгких путешествий", "надёжной жизни"];
   let index = 0;
   let wordIndex = 0;
   let currentWord = "";
@@ -232,16 +235,15 @@
     typedTextElement.textContent = currentWord;
 
     if (!isDeleting && index === fullWord.length) {
-      // пауза перед удалением
+      // Пауза перед удалением
       isDeleting = true;
       setTimeout(typeEffect, 1000);
     } else if (isDeleting && index === 0) {
-      // переход к следующему слову
+      // Следующее слово
       isDeleting = false;
       wordIndex = (wordIndex + 1) % words.length;
       setTimeout(typeEffect, 200);
     } else {
-      // скорость печати/удаления
       const speed = isDeleting ? 50 : 100;
       setTimeout(typeEffect, speed);
     }
