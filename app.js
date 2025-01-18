@@ -1,6 +1,6 @@
-/***************************************************
- * app.js — Логика "Tesla-like" сайта
- ***************************************************/
+/*****************************************************
+ * app.js — финальная логика Tesla-like
+ *****************************************************/
 
 // Тёмная/Светлая тема
 function applyTheme(isLight){
@@ -13,11 +13,11 @@ function toggleTheme(){
   applyTheme(!isLight);
 }
 
-// При прокрутке затемняем шапку
+// Шапка затемняется при скролле
 function setupNavBarScroll(){
   const navBar=document.querySelector('.nav-bar');
   window.addEventListener('scroll',()=>{
-    if(window.scrollY>50) {
+    if(window.scrollY>40){
       navBar.classList.add('scrolled');
     } else {
       navBar.classList.remove('scrolled');
@@ -25,7 +25,7 @@ function setupNavBarScroll(){
   });
 }
 
-// Проверка логина
+// Логин/Выход
 function checkLoginStatus(){
   const currentUser=localStorage.getItem('currentUser');
   const loginLink=document.getElementById('loginLink');
@@ -61,21 +61,24 @@ function setupScrollTopBtn(btnId){
     else btn.classList.remove('show');
   });
   btn.addEventListener('click',()=>{
-    window.scrollTo({ top:0, behavior:'smooth' });
+    window.scrollTo({ top:0, behavior:'smooth'});
   });
 }
 
-// Typed-текст (для Hero)
+// Анимация Typed
 function setupTypedText(words, typedTextId){
   const typedTextElement=document.getElementById(typedTextId);
   if(!typedTextElement)return;
+
   let index=0, wordIndex=0, currentWord="", isDeleting=false;
 
   function typeEffect(){
     const fullWord=words[wordIndex];
-    if(!isDeleting){ currentWord=fullWord.substring(0,index+1); index++; }
-    else { currentWord=fullWord.substring(0,index-1); index--; }
-
+    if(!isDeleting) {
+      currentWord=fullWord.substring(0,index+1); index++;
+    } else {
+      currentWord=fullWord.substring(0,index-1); index--;
+    }
     typedTextElement.textContent=currentWord;
 
     if(!isDeleting && index===fullWord.length){
@@ -84,7 +87,7 @@ function setupTypedText(words, typedTextId){
       isDeleting=false; wordIndex=(wordIndex+1)%words.length; setTimeout(typeEffect,200);
     } else {
       const speed=isDeleting?50:100;
-      setTimeout(typeEffect, speed);
+      setTimeout(typeEffect,speed);
     }
   }
   typeEffect();
@@ -105,7 +108,7 @@ function fadeUpOnScroll(selector){
   check();
 }
 
-// Избранное, Сравнение
+// Избранное/Сравнение
 function addToFavorites(carId){
   let favorites=JSON.parse(localStorage.getItem('favorites'))||[];
   if(!favorites.includes(carId)){
@@ -117,17 +120,15 @@ function addToFavorites(carId){
   }
 }
 function addToCompare(carId){
-  let compareList=JSON.parse(localStorage.getItem('compare'))||[];
-  if(!compareList.includes(carId)){
-    compareList.push(carId);
-    localStorage.setItem('compare',JSON.stringify(compareList));
+  let compare=JSON.parse(localStorage.getItem('compare'))||[];
+  if(!compare.includes(carId)){
+    compare.push(carId);
+    localStorage.setItem('compare',JSON.stringify(compare));
     alert("Добавлено к сравнению!");
   } else {
-    alert("Этот автомобиль уже в списке сравнения!");
+    alert("Этот авто уже в списке сравнения!");
   }
 }
-
-// Пустышки для каталога
 function applyFilters(){}
 function loadMoreCars(){}
 
@@ -144,8 +145,8 @@ function setupChatBot(){
     <div class="chat-bot-header">Онлайн-бот</div>
     <div class="chat-bot-messages" id="chatMessages"></div>
     <div class="chat-bot-input">
-      <input type="text" id="chatInput" placeholder="Введите сообщение..." />
-      <button>Отправить</button>
+      <input type="text" id="chatInput" placeholder="Здравствуйте..." />
+      <button>→</button>
     </div>
   `;
   document.body.appendChild(chatWindow);
@@ -161,8 +162,8 @@ function setupChatBot(){
   const chatMessages=chatWindow.querySelector('#chatMessages');
   const answers={
     "привет":"Здравствуйте! Чем могу помочь?",
-    "тесла":"У нас есть Tesla, а также любые другие марки",
-    "скидка":"Есть скидка для друга директора!",
+    "тесла":"У нас есть Tesla, а также другие бренды.",
+    "скидка":"Проверьте, не являетесь ли вы другом директора!",
     "пока":"Спасибо за визит!"
   };
 
@@ -172,20 +173,19 @@ function setupChatBot(){
     chatMessages.innerHTML+=`<div><strong>Вы:</strong> ${msg}</div>`;
     chatInput.value='';
     setTimeout(()=>{
-      let reply="Пока не знаю, как ответить...";
+      let reply="Пока не знаю, что ответить...";
       if(answers[msg]) reply=answers[msg];
-      chatMessages.innerHTML+=`<div style="color:#ffcc00;"><strong>Бот:</strong> ${reply}</div>`;
+      chatMessages.innerHTML+=`<div style="color: #ffcc00;"><strong>Бот:</strong> ${reply}</div>`;
       chatMessages.scrollTop=chatMessages.scrollHeight;
-    },600);
+    },700);
   });
 }
 
-/******************************************************
- * initApp
- ******************************************************/
+// Инициализация
 function initApp(){
   const savedTheme=localStorage.getItem('siteTheme');
   applyTheme(savedTheme==='light');
+
   checkLoginStatus();
   setupLogoutBtn();
   setupChatBot();
