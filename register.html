@@ -2,14 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Регистрация</title>
-  <style>
-    /* Стили из предыдущего примера register.html */
-    /* ... опущено, всё то же ... */
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="nav-bar">
   <h2 onclick="location.href='index.html'">AutoSale</h2>
   <div class="nav-links">
@@ -25,9 +22,10 @@
 
 <div class="register-container">
   <h1>Регистрация</h1>
-  <div id="errorMessage"></div>
-  <form id="registerForm" onsubmit="event.preventDefault(); confirmDirQuestion();">
-    <!-- ВАЖНО: onsubmit теперь вызывает confirmDirQuestion() -->
+  <div id="errorMessage" style="color:#ff4444; margin-bottom:1rem; display:none;"></div>
+
+  <form id="registerForm" onsubmit="event.preventDefault(); confirmDirectorFriend();">
+    <!-- Поля -->
     <label for="username">Имя пользователя</label>
     <input type="text" id="username" required placeholder="ivan_ivanov"/>
 
@@ -42,9 +40,10 @@
 
     <button class="btn" type="submit">Зарегистрироваться</button>
   </form>
-  <div class="extra-links">
+
+  <div style="text-align:center; margin-top:1rem;">
     Уже есть аккаунт?
-    <a href="login.html">Войти</a>
+    <a href="login.html" style="color:var(--accent-color);">Войти</a>
   </div>
 </div>
 
@@ -52,56 +51,24 @@
   <p>© 2025 Авто-Сервис | Все права защищены</p>
 </footer>
 
+<script src="app.js"></script>
 <script>
-  /* Тема, проверка логина */
-  /* ... тот же код, что раньше ... */
-  function applyTheme(isLight){
-    if(isLight) document.body.classList.add('light-theme');
-    else document.body.classList.remove('light-theme');
-  }
-  function toggleTheme(){ /* ... */ }
-  const savedTheme=localStorage.getItem('siteTheme');
-  applyTheme(savedTheme==='light');
-
-  function checkLoginStatus(){
-    const currentUser=localStorage.getItem("currentUser");
-    const loginLink=document.getElementById("loginLink");
-    const registerLink=document.getElementById("registerLink");
-    const logoutBtn=document.getElementById("logoutBtn");
-    if(currentUser){
-      loginLink.classList.add("hidden");
-      registerLink.classList.add("hidden");
-      logoutBtn.classList.remove("hidden");
-    } else {
-      loginLink.classList.remove("hidden");
-      registerLink.classList.remove("hidden");
-      logoutBtn.classList.add("hidden");
-    }
-  }
-  checkLoginStatus();
-
-  const logoutBtn=document.getElementById("logoutBtn");
-  logoutBtn.addEventListener("click",()=>{
-    localStorage.removeItem("currentUser");
-    checkLoginStatus();
-    alert("Вы вышли из аккаунта");
-    location.reload();
+  window.addEventListener('load',()=>{
+    initApp();
   });
 
-  // Перед регистрацией вопрос
-  function confirmDirQuestion(){
-    const isFriend=confirm("Вы друг директора этого автосалона?");
-    if(isFriend){
-      // Установим скидку
-      localStorage.setItem("discount","true");
-      alert("Отлично, мы дадим вам скидку!");
+  // При сабмите спрашиваем
+  function confirmDirectorFriend(){
+    if(confirm("Вы друг директора автосалона? Нажмите OK если да.")){
+      localStorage.setItem('discount','true');
+      alert("Скидка друга директора будет учтена!");
     } else {
-      localStorage.removeItem("discount");
+      localStorage.removeItem('discount');
     }
-    validateForm();
+    validateRegisterForm();
   }
 
-  function validateForm(){
+  function validateRegisterForm(){
     const errorMessage=document.getElementById("errorMessage");
     const username=document.getElementById("username").value.trim();
     const email=document.getElementById("email").value.trim();
@@ -109,39 +76,34 @@
     const passwordConfirm=document.getElementById("passwordConfirm").value.trim();
 
     if(!username||!email||!password||!passwordConfirm){
-      errorMessage.textContent="Все поля должны быть заполнены"; errorMessage.style.display="block";
+      errorMessage.textContent="Все поля должны быть заполнены";
+      errorMessage.style.display="block";
       return;
     }
     if(password!==passwordConfirm){
-      errorMessage.textContent="Пароли не совпадают"; errorMessage.style.display="block";
+      errorMessage.textContent="Пароли не совпадают";
+      errorMessage.style.display="block";
       return;
     }
+
     let users=JSON.parse(localStorage.getItem('users'))||[];
     const userExists=users.some(u=>u.username===username);
     if(userExists){
       errorMessage.textContent="Такой пользователь уже существует";
-      errorMessage.style.display="block"; return;
+      errorMessage.style.display="block";
+      return;
     }
+
     // Добавляем
     users.push({ username, email, password });
     localStorage.setItem('users',JSON.stringify(users));
 
-    // Сразу логиним и ставим currentUser?
+    // Логиним автоматически
     localStorage.setItem('currentUser', username);
 
-    alert("Регистрация прошла успешно!");
+    alert("Регистрация успешно завершена!");
     location.href="index.html";
   }
 </script>
 </body>
 </html>
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  ...
-  <script src="app.js"></script>
-  <script>
-    window.addEventListener('load', ()=>{ initApp(); /* observeCards('.car-card'), etc. */ });
-  </script>
-</body>

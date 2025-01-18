@@ -1,11 +1,11 @@
-/* ==================== СБРОС ==================== */
+/* ==================== RESET ==================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ==================== ПЕРЕМЕННЫЕ ТЕМЫ ==================== */
+/* ==================== THEME VARIABLES ==================== */
 :root {
   --main-bg: #121212;
   --secondary-bg: #1e1e1e;
@@ -15,13 +15,11 @@
   --subtext-color: #cccccc;
   --shadow-color: rgba(0,0,0,0.3);
 
-  /* Формы */
-  --form-bg: #2b2b2b; 
+  --form-bg: #2b2b2b;
   --input-bg: #2a2a2a;
   --border-radius: 8px;
 }
 
-/* ==================== ТЁМНАЯ / СВЕТЛАЯ ТЕМА ==================== */
 body {
   background: var(--main-bg);
   color: var(--text-color);
@@ -37,41 +35,39 @@ body.light-theme {
   --subtext-color: #555;
   --shadow-color: rgba(0,0,0,0.1);
 
-  /* Формы */
   --form-bg: #fff;
   --input-bg: #fafafa;
 }
 
-/* Ссылки, кнопки, и пр. */
 a {
   text-decoration: none;
   color: inherit;
 }
-.hidden { display: none; }
 
-/* ==================== АНИМАЦИИ ==================== */
+.hidden {
+  display: none;
+}
+
+/* ==================== KEYFRAMES ==================== */
 @keyframes fadeInUp {
-  0% { opacity:0; transform:translateY(30px);}
-  100% { opacity:1; transform:translateY(0);}
+  0% { opacity:0; transform: translateY(30px);}
+  100% { opacity:1; transform: translateY(0);}
 }
 @keyframes floatBtn {
-  0%, 100% { transform:translateY(0);}
+  0%,100% { transform:translateY(0);}
   50% { transform:translateY(-8px);}
 }
 @keyframes hueRotate {
-  0%   { filter:hue-rotate(0deg);}
+  0% { filter:hue-rotate(0deg);}
   100% { filter:hue-rotate(360deg);}
 }
 
 /* ==================== NAV-BAR ==================== */
 .nav-bar {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center;
-  padding: 1rem 2rem;
-  background: var(--secondary-bg);
-  box-shadow: 0 2px 5px var(--shadow-color);
-  position: sticky; top:0; z-index:100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding:1rem 2rem; background:var(--secondary-bg);
+  box-shadow:0 2px 5px var(--shadow-color);
+  position:sticky; top:0; z-index:100;
 }
 .nav-bar h2 {
   font-size:1.5rem; cursor:pointer; transition:color 0.3s;
@@ -89,23 +85,16 @@ a {
   color: var(--accent-color);
 }
 .theme-toggle {
-  background:#333; color:#fff; border:none; 
-  padding:0.4rem 0.8rem; border-radius:4px; margin-left:1rem;
-  cursor:pointer; transition:background 0.3s;
+  background:#333; color:#fff; border:none; padding:0.4rem 0.8rem; border-radius:4px; margin-left:1rem; cursor:pointer; transition:background 0.3s;
 }
 .theme-toggle:hover {
   background: var(--accent-color);
 }
 
-/* ==================== ОБЩИЕ КНОПКИ ==================== */
+/* ==================== BUTTON .btn ==================== */
 .btn {
   background: var(--accent-color);
-  color:#fff; 
-  border:none; 
-  padding:0.75rem 1.5rem;
-  margin:0 0.5rem;
-  border-radius:4px;
-  cursor:pointer;
+  color:#fff; border:none; padding:0.75rem 1.5rem; border-radius:4px; cursor:pointer;
   transition: background 0.3s, transform 0.3s;
 }
 .btn:hover {
@@ -113,47 +102,37 @@ a {
   animation: floatBtn 0.6s ease-in-out 1;
 }
 
-/* ==================== ПАРАЛЛАКС-ШАПКА ==================== */
+/* ==================== PARALLAX HEADER ==================== */
 .parallax-header {
-  height: 100vh;
-  background-attachment: fixed;
-  background-position:center;
-  background-repeat:no-repeat;
-  background-size:cover;
-  animation: hueRotate 15s infinite linear alternate; /* меняем оттенок фона */
-  display:flex;
-  flex-direction:column;
+  height:100vh; 
+  background-attachment: fixed; background-position:center; background-repeat:no-repeat; background-size:cover;
+  animation: hueRotate 15s infinite linear alternate;
+  display:flex; flex-direction:column;
 }
 
-/* ==================== HEADER-CONTENT ==================== */
 .header-content {
-  margin: auto;
-  text-align:center;
+  margin:auto; text-align:center; 
   animation: fadeInUp 1.2s ease forwards;
-  opacity:0; transform: translateY(30px);
+  opacity:0; transform:translateY(30px);
 }
 .header-content h1 {
-  font-size:3rem;
-  margin-bottom:1rem;
+  font-size:3rem; margin-bottom:1rem;
   text-shadow:0 0 10px rgba(0,0,0,0.5);
 }
 .typing-text {
-  color: var(--accent-color);
-  font-weight:bold;
+  color:var(--accent-color); font-weight:bold;
 }
 
-/* ==================== КНОПКА ВВЕРХ ==================== */
+/* ==================== SCROLL TOP BTN ==================== */
 .scroll-top-btn {
-  position:fixed; bottom:30px; right:30px; width:50px; height:50px;
-  background:#333; color:#fff; border:none; border-radius:50%; cursor:pointer;
-  opacity:0; pointer-events:none; transition:opacity 0.3s,transform 0.3s; z-index:999;
+  position:fixed; bottom:30px; right:30px; width:50px; height:50px; background:#333; color:#fff; border:none; border-radius:50%; cursor:pointer;
+  opacity:0; pointer-events:none; transition:opacity 0.3s, transform 0.3s; z-index:999;
 }
 .scroll-top-btn.show {
   opacity:0.8; pointer-events:all;
 }
 .scroll-top-btn:hover {
-  transform:translateY(-3px);
-  background: var(--accent-color);
+  transform:translateY(-3px); background: var(--accent-color);
 }
 
 /* ==================== FOOTER ==================== */
@@ -161,12 +140,12 @@ footer {
   background:#181818; color:#aaaaaa; text-align:center; padding:1rem; margin-top:2rem;
 }
 
-/* ==================== ADVANTAGES ==================== */
+/* ==================== ADVANTAGES (index) ==================== */
 .advantages {
   padding:3rem 2rem; max-width:1200px; margin:0 auto;
 }
 .advantages h2 {
-  text-align:center; margin-bottom:2rem;
+  text-align:center; margin-bottom:2rem; 
   opacity:0; transform:translateY(30px); transition:0.8s;
 }
 .advantages.show h2 {
@@ -180,22 +159,25 @@ footer {
   opacity:1; transform:translateY(0);
 }
 .adv-card {
-  background: var(--secondary-bg);
+  background:var(--secondary-bg);
   padding:2rem; border-radius:8px;
   text-align:center; box-shadow:0 4px 10px var(--shadow-color);
-  transition:transform 0.3s, box-shadow 0.3s;
+  transition:transform 0.3s,box-shadow 0.3s;
 }
 .adv-card:hover {
-  transform:translateY(-5px);
-  box-shadow:0 8px 20px var(--shadow-color);
+  transform:translateY(-5px); box-shadow:0 8px 20px var(--shadow-color);
 }
 
-/* ==================== CATALOG / CAR-CARD ==================== */
+/* ==================== CATALOG / CAR CARDS ==================== */
 .catalog-header {
   text-align:center; padding:2rem 1rem;
 }
-.catalog-header h1 { margin-bottom:0.5rem; font-size:2rem;}
-.catalog-header p { color: var(--subtext-color);}
+.catalog-header h1 {
+  margin-bottom:0.5rem; font-size:2rem;
+}
+.catalog-header p {
+  color:var(--subtext-color);
+}
 .search-bar {
   display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;
 }
@@ -205,19 +187,19 @@ footer {
 .search-bar input::placeholder { color:#999;}
 
 .cars {
-  display:grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr)); gap:2rem; max-width:1200px; margin:0 auto; padding:1rem;
+  display:grid; grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+  gap:2rem; max-width:1200px; margin:0 auto; padding:1rem;
 }
 .car-card {
   background:var(--secondary-bg);
   border-radius:8px;
   box-shadow:0 4px 10px rgba(0,0,0,0.5);
   overflow:hidden; position:relative;
-  transform:translateY(30px);
-  opacity:0; transition:transform 0.5s,opacity 0.5s;
+  transform:translateY(30px); opacity:0;
+  transition:transform 0.5s, opacity 0.5s;
 }
 .car-card.show {
-  transform:translateY(0);
-  opacity:1;
+  transform:translateY(0); opacity:1;
 }
 .car-card:hover {
   box-shadow:0 0 15px rgba(255,255,255,0.2);
@@ -235,8 +217,7 @@ footer {
   margin-bottom:0.5rem; color:var(--subtext-color);
 }
 .price {
-  color:var(--accent-color);
-  font-weight:bold;
+  color:var(--accent-color); font-weight:bold;
 }
 .action-buttons {
   display:flex; gap:0.5rem; margin-top:1rem; flex-wrap:wrap;
@@ -244,18 +225,20 @@ footer {
 .action-btn {
   background:#333; border:none; color:#fff; padding:0.3rem 0.6rem; border-radius:4px; cursor:pointer; font-size:0.9rem; transition: background 0.3s;
 }
-.action-btn:hover { background:var(--accent-color);}
+.action-btn:hover {
+  background: var(--accent-color);
+}
 .load-more-container {
   text-align:center; margin-bottom:2rem;
 }
 
-/* ==================== FORMS (login, register, contact, checkout) ==================== */
+/* ==================== FORMS: login, register, contact, checkout ==================== */
 .login-container,
 .register-container,
 .contact-form,
 .checkout-container {
-  background: var(--form-bg);
-  border-radius: var(--border-radius);
+  background:var(--form-bg);
+  border-radius:var(--border-radius);
   box-shadow:0 4px 10px var(--shadow-color);
   padding:2rem; max-width:600px; margin:2rem auto;
   animation: fadeIn 0.8s forwards;
@@ -272,9 +255,7 @@ label {
   display:block; margin-bottom:0.5rem; font-weight:bold;
 }
 input, textarea {
-  width:100%; padding:0.75rem; margin-bottom:1rem; 
-  border:1px solid #555; border-radius:4px;
-  background: var(--input-bg); color: var(--text-color);
+  width:100%; padding:0.75rem; margin-bottom:1rem; border:1px solid #555; border-radius:4px; background:var(--input-bg); color:var(--text-color);
 }
 .form-nav {
   display:flex; justify-content:space-between; margin-top:2rem;
@@ -282,12 +263,11 @@ input, textarea {
 #togglePwd {
   margin-top:-1.2rem; margin-bottom:1rem; text-align:right; cursor:pointer; color:var(--subtext-color); font-size:0.9rem;
 }
-#togglePwd:hover { color: var(--accent-color);}
+#togglePwd:hover { color:var(--accent-color);}
 
 /* ==================== MODAL (car-page) ==================== */
 .modal {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.7);
+  position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7);
   display:flex; align-items:center; justify-content:center;
   opacity:0; visibility:hidden; transition:0.5s; z-index:9999;
 }
@@ -295,10 +275,9 @@ input, textarea {
   opacity:1; visibility:visible;
 }
 .modal-content {
-  background: var(--secondary-bg); 
+  background: var(--secondary-bg);
   padding:2rem; border-radius:8px;
-  width:90%; max-width:500px;
-  position:relative;
+  width:90%; max-width:500px; position:relative;
 }
 .modal-header {
   font-size:1.5rem; margin-bottom:1rem;
@@ -311,7 +290,7 @@ input, textarea {
 }
 .modal-form input,
 .modal-form textarea {
-  width:100%; padding:0.75rem; margin-bottom:1rem; border:1px solid #555; border-radius:4px; background: var(--input-bg); color: var(--text-color);
+  width:100%; padding:0.75rem; margin-bottom:1rem; border:1px solid #555; border-radius:4px; background: var(--input-bg); color:var(--text-color);
 }
 .modal-form button {
   background:var(--accent-color); color:#fff; border:none; padding:0.75rem 1.5rem; border-radius:4px; cursor:pointer; transition:0.3s;
@@ -320,7 +299,7 @@ input, textarea {
   background:var(--accent-hover);
 }
 
-/* ==================== CAR-DETAILS (car-xxx.html) ==================== */
+/* ==================== CAR DETAILS (car-xxx.html) ==================== */
 .car-details {
   max-width:1200px; margin:2rem auto; padding:0 1rem; display:flex; flex-wrap:wrap; gap:2rem;
 }
@@ -331,22 +310,20 @@ input, textarea {
   width:100%; height:300px; object-fit:cover; border-radius:8px; transition:transform 0.3s; cursor:pointer;
 }
 .main-image:hover { transform: scale(1.03);}
-.thumbs { display:flex; gap:1rem;}
+.thumbs {
+  display:flex; gap:1rem;
+}
 .thumbs img {
-  width:80px; height:50px; object-fit:cover; border-radius:4px; cursor:pointer; border:2px solid transparent; transition:transform 0.3s,border 0.3s;
+  width:80px; height:50px; object-fit:cover; border-radius:4px; cursor:pointer; border:2px solid transparent; transition:transform 0.3s, border 0.3s;
 }
 .thumbs img:hover {
-  transform:scale(1.05); border-color: var(--accent-color);
+  transform:scale(1.05); border-color:var(--accent-color);
 }
 .car-info {
   flex:1 1 400px; background:var(--secondary-bg); padding:1.5rem; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.5);
 }
-.car-info h1 {
-  margin-bottom:1rem;
-}
-.car-info p {
-  margin-bottom:0.5rem; color:var(--subtext-color);
-}
+.car-info h1 { margin-bottom:1rem;}
+.car-info p { margin-bottom:0.5rem; color:var(--subtext-color);}
 .price {
   color: var(--accent-color); font-weight:bold; font-size:1.2rem; margin-top:1rem;
 }
@@ -358,7 +335,7 @@ input, textarea {
 .share-btns button {
   margin-right:0.5rem; background:#444; color:#fff; border:none; padding:0.5rem 1rem; border-radius:4px; cursor:pointer; transition: background 0.3s;
 }
-.share-btns button:hover { background: var(--accent-color);}
+.share-btns button:hover { background:var(--accent-color);}
 
 /* ==================== ЧАТ-БОТ ==================== */
 .chat-bot-btn {
@@ -369,8 +346,7 @@ input, textarea {
   transform:translateY(-5px);
 }
 .chat-bot-window {
-  position:fixed; bottom:160px; right:20px;
-  width:300px; height:400px; background:var(--secondary-bg); color:var(--text-color);
+  position:fixed; bottom:160px; right:20px; width:300px; height:400px; background:var(--secondary-bg); color:var(--text-color);
   border-radius:8px; box-shadow:0 4px 10px var(--shadow-color);
   display:none; flex-direction:column;
 }

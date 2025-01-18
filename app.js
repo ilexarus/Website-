@@ -1,19 +1,18 @@
 /***********************************************
- * app.js — дополнительная логика
+ * app.js — вся логика
  ***********************************************/
 
-// Тема
 function applyTheme(isLight){
   if(isLight) document.body.classList.add('light-theme');
   else document.body.classList.remove('light-theme');
 }
 function toggleTheme(){
   const isLight = document.body.classList.contains('light-theme');
-  localStorage.setItem('siteTheme', isLight ? 'dark' : 'light');
+  localStorage.setItem('siteTheme', isLight?'dark':'light');
   applyTheme(!isLight);
 }
 
-// Проверка логина
+// Проверяем логин
 function checkLoginStatus(){
   const currentUser=localStorage.getItem("currentUser");
   const loginLink=document.getElementById("loginLink");
@@ -30,8 +29,6 @@ function checkLoginStatus(){
     if(logoutBtn) logoutBtn.classList.add("hidden");
   }
 }
-
-// Logout
 function setupLogoutBtn(){
   const logoutBtn=document.getElementById("logoutBtn");
   if(!logoutBtn)return;
@@ -52,7 +49,7 @@ function setupScrollTopBtn(btnId){
     else btn.classList.remove("show");
   });
   btn.addEventListener("click",()=>{
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({top:0, behavior:"smooth"});
   });
 }
 
@@ -65,9 +62,8 @@ function setupTypedText(words, typedTextId){
 
   function typeEffect(){
     const fullWord=words[wordIndex];
-    if(!isDeleting) { currentWord=fullWord.substring(0,index+1); index++; }
+    if(!isDeleting){ currentWord=fullWord.substring(0,index+1); index++; }
     else { currentWord=fullWord.substring(0,index-1); index--; }
-
     typedTextElement.textContent=currentWord;
 
     if(!isDeleting && index===fullWord.length){
@@ -82,7 +78,7 @@ function setupTypedText(words, typedTextId){
   typeEffect();
 }
 
-// Плавное появление секции
+// Появление секции
 function setupScrollAnimations(sectionId){
   const section=document.getElementById(sectionId);
   if(!section)return;
@@ -90,7 +86,7 @@ function setupScrollAnimations(sectionId){
     const rect=section.getBoundingClientRect();
     if(rect.top<window.innerHeight-100){
       section.classList.add("show");
-      window.removeEventListener("scroll",onScroll);
+      window.removeEventListener("scroll", onScroll);
     }
   }
   window.addEventListener("scroll",onScroll);
@@ -98,20 +94,20 @@ function setupScrollAnimations(sectionId){
 
 // Избранное / Сравнение
 function addToFavorites(carId){
-  let favorites=JSON.parse(localStorage.getItem("favorites"))||[];
+  let favorites=JSON.parse(localStorage.getItem('favorites'))||[];
   if(!favorites.includes(carId)){
     favorites.push(carId);
-    localStorage.setItem("favorites",JSON.stringify(favorites));
+    localStorage.setItem('favorites',JSON.stringify(favorites));
     alert("Добавлено в избранное!");
   } else {
     alert("Уже в избранном!");
   }
 }
 function addToCompare(carId){
-  let compareList=JSON.parse(localStorage.getItem("compare"))||[];
+  let compareList=JSON.parse(localStorage.getItem('compare'))||[];
   if(!compareList.includes(carId)){
     compareList.push(carId);
-    localStorage.setItem("compare",JSON.stringify(compareList));
+    localStorage.setItem('compare',JSON.stringify(compareList));
     alert("Добавлено к сравнению!");
   } else {
     alert("Этот авто уже в списке сравнения!");
@@ -119,12 +115,8 @@ function addToCompare(carId){
 }
 
 // Catalog filters
-function applyFilters(){
-  // ...
-}
-function loadMoreCars(){
-  // ...
-}
+function applyFilters(){}
+function loadMoreCars(){}
 
 // IntersectionObserver для карточек
 function observeCards(selector){
@@ -171,12 +163,12 @@ function setupChatBot(){
   const chatInput=chatWindow.querySelector('#chatInput');
   const chatMessages=chatWindow.querySelector('#chatMessages');
   
-  // Пример автоответов
   const answers={
     "привет":"Здравствуйте! Чем могу помочь?",
-    "скидка":"У нас есть скидки для друзей директора!",
-    "оплата":"Принимаем нал, карты, кредит",
-    "пока":"Спасибо, до свидания!"
+    "директор":"Вы можете получить скидку, если являетесь другом директора.",
+    "скидка":"У нас есть скидки для постоянных клиентов и друзей директора.",
+    "оплата":"Принимаем наличные, карты, кредит. Для уточнения: 'кредит'?",
+    "пока":"Спасибо за визит. Всего доброго!"
   };
 
   sendBtn.addEventListener('click',()=>{
@@ -185,26 +177,26 @@ function setupChatBot(){
     chatMessages.innerHTML+=`<div><strong>Вы:</strong> ${msg}</div>`;
     chatInput.value='';
     setTimeout(()=>{
-      let reply="Пока не умею отвечать на это...";
+      let reply="Пока не знаю, как ответить...";
       if(answers[msg]) reply=answers[msg];
       chatMessages.innerHTML+=`<div style="color: #ffcc00;"><strong>Бот:</strong> ${reply}</div>`;
       chatMessages.scrollTop=chatMessages.scrollHeight;
-    },600);
+    },700);
   });
 }
 
 /***********************************************
- * initApp() — вызывать в <script> on load
+ * initApp — вызываем при загрузке
  ***********************************************/
 function initApp(){
-  // Тема
+  // Применить тему из localStorage
   const savedTheme=localStorage.getItem('siteTheme');
   applyTheme(savedTheme==='light');
 
-  // Логин
+  // Проверить логин
   checkLoginStatus();
   setupLogoutBtn();
 
-  // Чат-бот
+  // Запуск чат-бота
   setupChatBot();
 }
