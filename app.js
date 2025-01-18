@@ -1,6 +1,6 @@
-/*****************************************************
- * app.js — финальная логика Tesla-like
- *****************************************************/
+/*************************************************
+ * app.js — Tesla-like logic
+ *************************************************/
 
 // Тёмная/Светлая тема
 function applyTheme(isLight){
@@ -13,7 +13,7 @@ function toggleTheme(){
   applyTheme(!isLight);
 }
 
-// Шапка затемняется при скролле
+// NavBar scroll effect
 function setupNavBarScroll(){
   const navBar=document.querySelector('.nav-bar');
   window.addEventListener('scroll',()=>{
@@ -61,59 +61,31 @@ function setupScrollTopBtn(btnId){
     else btn.classList.remove('show');
   });
   btn.addEventListener('click',()=>{
-    window.scrollTo({ top:0, behavior:'smooth'});
+    window.scrollTo({top:0, behavior:'smooth'});
   });
 }
 
-// Анимация Typed
-function setupTypedText(words, typedTextId){
-  const typedTextElement=document.getElementById(typedTextId);
-  if(!typedTextElement)return;
-
-  let index=0, wordIndex=0, currentWord="", isDeleting=false;
-
-  function typeEffect(){
-    const fullWord=words[wordIndex];
-    if(!isDeleting) {
-      currentWord=fullWord.substring(0,index+1); index++;
-    } else {
-      currentWord=fullWord.substring(0,index-1); index--;
-    }
-    typedTextElement.textContent=currentWord;
-
-    if(!isDeleting && index===fullWord.length){
-      isDeleting=true; setTimeout(typeEffect,1000);
-    } else if(isDeleting && index===0){
-      isDeleting=false; wordIndex=(wordIndex+1)%words.length; setTimeout(typeEffect,200);
-    } else {
-      const speed=isDeleting?50:100;
-      setTimeout(typeEffect,speed);
-    }
-  }
-  typeEffect();
-}
-
-// Fade-up
+// fade-up
 function fadeUpOnScroll(selector){
   const elements=document.querySelectorAll(selector);
   function check(){
     elements.forEach(el=>{
       const rect=el.getBoundingClientRect();
-      if(rect.top<window.innerHeight-100){
+      if(rect.top<window.innerHeight-80){
         el.classList.add('show');
       }
     });
   }
-  window.addEventListener('scroll',check);
+  window.addEventListener('scroll', check);
   check();
 }
 
-// Избранное/Сравнение
+// Избранное / Сравнение
 function addToFavorites(carId){
   let favorites=JSON.parse(localStorage.getItem('favorites'))||[];
   if(!favorites.includes(carId)){
     favorites.push(carId);
-    localStorage.setItem('favorites',JSON.stringify(favorites));
+    localStorage.setItem('favorites', JSON.stringify(favorites));
     alert("Добавлено в избранное!");
   } else {
     alert("Уже в избранном!");
@@ -123,10 +95,10 @@ function addToCompare(carId){
   let compare=JSON.parse(localStorage.getItem('compare'))||[];
   if(!compare.includes(carId)){
     compare.push(carId);
-    localStorage.setItem('compare',JSON.stringify(compare));
+    localStorage.setItem('compare', JSON.stringify(compare));
     alert("Добавлено к сравнению!");
   } else {
-    alert("Этот авто уже в списке сравнения!");
+    alert("Этот авто уже в сравнении!");
   }
 }
 function applyFilters(){}
@@ -145,7 +117,7 @@ function setupChatBot(){
     <div class="chat-bot-header">Онлайн-бот</div>
     <div class="chat-bot-messages" id="chatMessages"></div>
     <div class="chat-bot-input">
-      <input type="text" id="chatInput" placeholder="Здравствуйте..." />
+      <input type="text" id="chatInput" placeholder="Спросите..."/>
       <button>→</button>
     </div>
   `;
@@ -162,18 +134,17 @@ function setupChatBot(){
   const chatMessages=chatWindow.querySelector('#chatMessages');
   const answers={
     "привет":"Здравствуйте! Чем могу помочь?",
-    "тесла":"У нас есть Tesla, а также другие бренды.",
-    "скидка":"Проверьте, не являетесь ли вы другом директора!",
+    "тесла":"У нас есть Tesla, а также любые марки",
+    "скидка":"Скидка друга директора? Проверьте при регистрации!",
     "пока":"Спасибо за визит!"
   };
-
   sendBtn.addEventListener('click',()=>{
     const msg=chatInput.value.trim().toLowerCase();
     if(!msg)return;
     chatMessages.innerHTML+=`<div><strong>Вы:</strong> ${msg}</div>`;
     chatInput.value='';
     setTimeout(()=>{
-      let reply="Пока не знаю, что ответить...";
+      let reply="Пока не знаю, как ответить...";
       if(answers[msg]) reply=answers[msg];
       chatMessages.innerHTML+=`<div style="color: #ffcc00;"><strong>Бот:</strong> ${reply}</div>`;
       chatMessages.scrollTop=chatMessages.scrollHeight;
@@ -181,7 +152,7 @@ function setupChatBot(){
   });
 }
 
-// Инициализация
+// initApp
 function initApp(){
   const savedTheme=localStorage.getItem('siteTheme');
   applyTheme(savedTheme==='light');

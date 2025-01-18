@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Tesla Model S — Детали</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nav-bar">
+  <h2 onclick="location.href='index.html'">AutoSale</h2>
+  <div class="nav-links">
+    <a href="catalog.html" id="catalogLink">Каталог</a>
+    <a href="contact.html" id="contactLink">Контакты</a>
+    <a href="login.html"   id="loginLink">Войти</a>
+    <a href="register.html"id="registerLink">Регистрация</a>
+    <button id="logoutBtn" class="hidden">Выход</button>
+    <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
+  </div>
+</div>
+
+<!-- Детальная страница авто -->
+<div style="padding-top:70px;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; gap:2rem; padding:1rem;">
+    <div style="flex:1 1 400px;">
+      <img src="https://via.placeholder.com/800x400?text=Tesla+Model+S" style="width:100%; border-radius:8px;"/>
+    </div>
+    <div style="flex:1 1 400px; background:var(--secondary-bg); padding:1rem; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.5);">
+      <h1>Tesla Model S</h1>
+      <p>Год: 2022, Пробег: 15 000 км</p>
+      <p>Электродвигатель, запаса хода ~650 км</p>
+      <p style="color: var(--accent-color); font-weight:bold; font-size:1.2rem; margin:1rem 0;">Цена: 7 000 000 ₽</p>
+      <button class="btn" onclick="location.href='checkout.html';">Оформить покупку</button>
+
+      <div style="margin-top:1rem;">
+        <button class="action-btn" onclick="addToFavorites('model-s')">Избранное</button>
+        <button class="action-btn" onclick="addToCompare('model-s')">Сравнить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 Авто-Сервис | Все права защищены</p>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  window.addEventListener('load',()=>{ initApp(); });
+</script>
+</body>
+</html>

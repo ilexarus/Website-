@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Контакты — АвтоПродажа</title>
+  <meta charset="UTF-8"/>
+  <title>Контакты — Tesla-like AutoSale</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,52 +12,48 @@
   <div class="nav-links">
     <a href="catalog.html" id="catalogLink">Каталог</a>
     <a href="contact.html" id="contactLink">Контакты</a>
-    <a href="login.html" id="loginLink">Войти</a>
-    <a href="register.html" id="registerLink">Регистрация</a>
+    <a href="login.html"   id="loginLink">Войти</a>
+    <a href="register.html"id="registerLink">Регистрация</a>
     <button id="logoutBtn" class="hidden">Выход</button>
-
     <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
   </div>
 </div>
 
-<!-- Карта + Форма -->
-<div style="max-width:1200px; margin:2rem auto; display:flex; flex-wrap:wrap; gap:2rem; padding:0 1rem;">
+<div style="padding-top:70px; max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; gap:2rem; padding:1rem;">
   <!-- Карта -->
   <div style="flex:1 1 400px; min-height:300px; border-radius:8px; overflow:hidden;">
-    <!-- В реальном проекте подставьте валидный iframe:
-         Пример: <iframe src="https://maps.google.com/maps?q=Moscow&z=13&output=embed" allowfullscreen></iframe>
-    -->
-    <iframe src="https://maps.google.com/maps?q=moscow&z=13&output=embed" 
-            width="100%" height="100%" style="border:0;" allowfullscreen=""></iframe>
+    <iframe
+      src="https://maps.google.com/maps?q=moscow&z=13&output=embed"
+      width="100%" height="100%" style="border:0;" allowfullscreen=""></iframe>
   </div>
 
-  <!-- Трёхшаговая форма -->
-  <div class="contact-form" id="contactForm" style="flex:1 1 400px;">
+  <!-- 3-шаговая форма -->
+  <div class="form-container" style="flex:1 1 400px;">
     <h1>Связаться с нами</h1>
-    <form id="multiStepForm" onsubmit="event.preventDefault(); finishForm();">
-      <div class="step active" id="step1">
-        <label for="name">Ваше имя</label>
-        <input type="text" id="name" placeholder="Иван Иванов" required/>
+    <form id="contactForm" onsubmit="event.preventDefault(); finishContactForm();">
+      <div class="step" id="step1">
+        <label for="contactName">Ваше имя</label>
+        <input type="text" id="contactName" required placeholder="Иван Иванов"/>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="example@mail.com" required/>
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" required placeholder="example@mail.com"/>
       </div>
 
       <div class="step" id="step2" style="display:none;">
-        <label for="phone">Телефон</label>
-        <input type="tel" id="phone" placeholder="+7 (999) 999-99-99" required/>
+        <label for="contactPhone">Телефон</label>
+        <input type="tel" id="contactPhone" placeholder="+7 (999) 999-99-99"/>
 
-        <label for="city">Город</label>
-        <input type="text" id="city" placeholder="Москва"/>
+        <label for="contactCity">Город</label>
+        <input type="text" id="contactCity" placeholder="Москва"/>
       </div>
 
       <div class="step" id="step3" style="display:none;">
-        <label for="message">Сообщение</label>
-        <textarea id="message" rows="4" placeholder="Ваш вопрос или комментарий..." required></textarea>
+        <label for="contactMessage">Сообщение</label>
+        <textarea id="contactMessage" rows="4" placeholder="Ваш вопрос..."></textarea>
       </div>
 
       <div class="form-nav">
-        <button class="btn" type="button" id="prevBtn" onclick="changeStep(-1)" style="display:none;">Назад</button>
+        <button class="btn" type="button" id="prevBtn" onclick="changeStep(-1)">Назад</button>
         <button class="btn" type="button" id="nextBtn" onclick="changeStep(1)">Далее</button>
       </div>
     </form>
@@ -71,16 +67,15 @@
 <script src="app.js"></script>
 <script>
   let currentStep=1, totalSteps=3;
-
-  window.addEventListener('load',()=>{
-    initApp(); 
-  });
+  window.addEventListener('load',()=>{ initApp(); showStep(currentStep); });
 
   function showStep(step){
     for(let i=1;i<=totalSteps;i++){
-      document.getElementById('step'+i).style.display='none';
+      const s=document.getElementById('step'+i);
+      if(s) s.style.display='none';
     }
-    document.getElementById('step'+ step).style.display='block';
+    const stepDiv=document.getElementById('step'+ step);
+    if(stepDiv) stepDiv.style.display='block';
 
     const prevBtn=document.getElementById('prevBtn');
     const nextBtn=document.getElementById('nextBtn');
@@ -90,7 +85,7 @@
 
   function changeStep(n){
     if(n===1 && currentStep===totalSteps){
-      finishForm();
+      finishContactForm();
       return;
     }
     currentStep+=n;
@@ -99,33 +94,10 @@
     showStep(currentStep);
   }
 
-  function finishForm(){
-    alert("Сообщение отправлено! Мы свяжемся с вами.");
+  function finishContactForm(){
+    alert("Сообщение отправлено! Скоро свяжемся.");
     location.href="index.html";
   }
-
-  // Инициализация формы
-  showStep(currentStep);
 </script>
 </body>
 </html>
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  ...
-  <script src="app.js"></script>
-  <script>
-    window.addEventListener('load', ()=>{ initApp(); /* observeCards('.car-card'), etc. */ });
-  </script>
-</body>
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  ...
-  <script src="app.js"></script>
-  <script>
-    window.addEventListener('load', ()=>{ initApp(); /* observeCards('.car-card'), etc. */ });
-  </script>
-</body>

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8"/>
-  <title>Регистрация</title>
+  <title>Регистрация — Tesla-like AutoSale</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,38 +12,33 @@
   <div class="nav-links">
     <a href="catalog.html" id="catalogLink">Каталог</a>
     <a href="contact.html" id="contactLink">Контакты</a>
-    <a href="login.html" id="loginLink">Войти</a>
-    <a href="register.html" id="registerLink">Регистрация</a>
+    <a href="login.html"   id="loginLink">Войти</a>
+    <a href="register.html"id="registerLink">Регистрация</a>
     <button id="logoutBtn" class="hidden">Выход</button>
-
     <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
   </div>
 </div>
 
-<div class="register-container">
+<div class="form-container">
   <h1>Регистрация</h1>
-  <div id="errorMessage" style="color:#ff4444; margin-bottom:1rem; display:none;"></div>
+  <div id="regError" class="error-msg"></div>
+  <form onsubmit="event.preventDefault(); confirmDirectorFriend();">
+    <label for="regUsername">Имя пользователя</label>
+    <input type="text" id="regUsername" placeholder="ivan_ivanov"/>
 
-  <form id="registerForm" onsubmit="event.preventDefault(); confirmDirectorFriend();">
-    <!-- Поля -->
-    <label for="username">Имя пользователя</label>
-    <input type="text" id="username" required placeholder="ivan_ivanov"/>
+    <label for="regEmail">Email</label>
+    <input type="email" id="regEmail" placeholder="example@mail.com"/>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" required placeholder="example@mail.com"/>
+    <label for="regPassword">Пароль</label>
+    <input type="password" id="regPassword" placeholder="Пароль"/>
 
-    <label for="password">Пароль</label>
-    <input type="password" id="password" required placeholder="Введите пароль"/>
-
-    <label for="passwordConfirm">Повторите пароль</label>
-    <input type="password" id="passwordConfirm" required placeholder="Повторите пароль"/>
+    <label for="regPassword2">Повторите пароль</label>
+    <input type="password" id="regPassword2" placeholder="Пароль ещё раз"/>
 
     <button class="btn" type="submit">Зарегистрироваться</button>
   </form>
-
-  <div style="text-align:center; margin-top:1rem;">
-    Уже есть аккаунт?
-    <a href="login.html" style="color:var(--accent-color);">Войти</a>
+  <div class="extra-links">
+    Уже есть аккаунт? <a href="login.html" style="color:var(--accent-color);">Войти</a>
   </div>
 </div>
 
@@ -53,55 +48,48 @@
 
 <script src="app.js"></script>
 <script>
-  window.addEventListener('load',()=>{
-    initApp();
-  });
+  window.addEventListener('load',()=>{ initApp(); });
 
-  // При сабмите спрашиваем
   function confirmDirectorFriend(){
-    if(confirm("Вы друг директора автосалона? Нажмите OK если да.")){
+    if(confirm("Вы друг директора? (ОК — Да)")){
       localStorage.setItem('discount','true');
       alert("Скидка друга директора будет учтена!");
     } else {
       localStorage.removeItem('discount');
     }
-    validateRegisterForm();
+    validateRegister();
   }
 
-  function validateRegisterForm(){
-    const errorMessage=document.getElementById("errorMessage");
-    const username=document.getElementById("username").value.trim();
-    const email=document.getElementById("email").value.trim();
-    const password=document.getElementById("password").value.trim();
-    const passwordConfirm=document.getElementById("passwordConfirm").value.trim();
+  function validateRegister(){
+    const regError=document.getElementById('regError');
+    const username=document.getElementById('regUsername').value.trim();
+    const email=document.getElementById('regEmail').value.trim();
+    const password=document.getElementById('regPassword').value.trim();
+    const password2=document.getElementById('regPassword2').value.trim();
 
-    if(!username||!email||!password||!passwordConfirm){
-      errorMessage.textContent="Все поля должны быть заполнены";
-      errorMessage.style.display="block";
+    if(!username || !email || !password || !password2){
+      regError.textContent="Заполните все поля";
+      regError.style.display='block';
       return;
     }
-    if(password!==passwordConfirm){
-      errorMessage.textContent="Пароли не совпадают";
-      errorMessage.style.display="block";
+    if(password!==password2){
+      regError.textContent="Пароли не совпадают";
+      regError.style.display='block';
       return;
     }
-
     let users=JSON.parse(localStorage.getItem('users'))||[];
     const userExists=users.some(u=>u.username===username);
     if(userExists){
-      errorMessage.textContent="Такой пользователь уже существует";
-      errorMessage.style.display="block";
+      regError.textContent="Такой логин уже существует";
+      regError.style.display='block';
       return;
     }
 
-    // Добавляем
-    users.push({ username, email, password });
-    localStorage.setItem('users',JSON.stringify(users));
-
-    // Логиним автоматически
+    users.push({username, email, password});
+    localStorage.setItem('users', JSON.stringify(users));
     localStorage.setItem('currentUser', username);
 
-    alert("Регистрация успешно завершена!");
+    alert("Регистрация успешна!");
     location.href="index.html";
   }
 </script>
