@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Главная — АвтоПродажа</title>
+
+  <style>
+    /* СБРОС */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+
+    /* ПЕРЕМЕННЫЕ */
+    :root {
+      --main-bg: #121212;
+      --secondary-bg: #1e1e1e;
+      --accent-color: #ff5722;
+      --accent-hover: #e64a19;
+      --text-color: #ffffff;
+      --subtext-color: #cccccc;
+      --shadow-color: rgba(0,0,0,0.3);
+    }
+
+    body {
+      background: var(--main-bg);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ШАПКА */
+    header {
+      position: relative;
+      height: 100vh;
+      background: url('https://via.placeholder.com/1920x1080?text=Parallax+Car') center/cover no-repeat;
+      background-attachment: fixed; /* Parallax эффект */
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Навбар (фиксация при прокрутке) */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--main-bg);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px var(--shadow-color);
+    }
+
+    .nav-bar h2 {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .nav-bar h2:hover {
+      color: var(--accent-color);
+    }
+
+    .nav-links a {
+      margin: 0 1rem;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Контент шапки */
+    .header-content {
+      margin: auto;
+      text-align: center;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+
+    h1 {
+      font-size: 3rem;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+      margin-bottom: 1rem;
+    }
+    .typing-text {
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+    p {
+      font-size: 1.2rem;
+      color: var(--subtext-color);
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin: 0 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+
+    /* АНИМАЦИИ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* СЕКЦИЯ "Наши преимущества" */
+    .advantages {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .advantages h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .adv-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .adv-card {
+      background: var(--secondary-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .adv-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .adv-card h3 {
+      margin-bottom: 1rem;
+    }
+    .adv-card p {
+      color: var(--subtext-color);
+    }
+
+    /* ПОДВАЛ */
+    footer {
+      background: #181818;
+      color: #aaaaaa;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-bar">
+    <h2 onclick="location.href='index.html'">AutoSale</h2>
+    <div class="nav-links">
+      <a href="catalog.html">Каталог</a>
+      <a href="contact.html">Контакты</a>
+      <a href="login.html">Войти</a>
+    </div>
+  </div>
+
+  <div class="header-content">
+    <h1>Автомобили для <span class="typing-text" id="typedText"></span></h1>
+    <p>Легко выбрать, просто купить, надёжно ездить</p>
+    <div>
+      <button class="btn" onclick="location.href='catalog.html'">Наши автомобили</button>
+      <button class="btn" onclick="location.href='contact.html'">Связаться с нами</button>
+    </div>
+  </div>
+</header>
+
+<section class="advantages">
+  <h2>Наши преимущества</h2>
+  <div class="adv-cards">
+    <div class="adv-card">
+      <h3>Гарантия качества</h3>
+      <p>Тщательная проверка каждого авто: диагностика, осмотр документов, честная история</p>
+    </div>
+    <div class="adv-card">
+      <h3>Удобная покупка</h3>
+      <p>Онлайн-бронирование, гибкая система оплаты, помощь в оформлении кредита</p>
+    </div>
+    <div class="adv-card">
+      <h3>Прозрачная сделка</h3>
+      <p>Официальное оформление, безопасные расчёты, юридическое сопровождение</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Авто-Сервис | Все права защищены</p>
+</footer>
+
+<!-- СКРИПТ: Typed.js-подобный эффект (упрощённый вариант на чистом JS) -->
+<script>
+  const words = ["комфорта", "всей семьи", "легких путешествий", "надёжной жизни"];
+  let index = 0;
+  let wordIndex = 0;
+  let currentWord = "";
+  let isDeleting = false;
+  const typedTextElement = document.getElementById("typedText");
+
+  function typeEffect() {
+    const fullWord = words[wordIndex];
+
+    if (!isDeleting) {
+      currentWord = fullWord.substring(0, index + 1);
+      index++;
+    } else {
+      currentWord = fullWord.substring(0, index - 1);
+      index--;
+    }
+
+    typedTextElement.textContent = currentWord;
+
+    if (!isDeleting && index === fullWord.length) {
+      // пауза перед удалением
+      isDeleting = true;
+      setTimeout(typeEffect, 1000);
+    } else if (isDeleting && index === 0) {
+      // переход к следующему слову
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(typeEffect, 200);
+    } else {
+      // скорость печати/удаления
+      const speed = isDeleting ? 50 : 100;
+      setTimeout(typeEffect, speed);
+    }
+  }
+
+  window.addEventListener("load", () => {
+    typeEffect();
+  });
+</script>
+
+</body>
+</html>
