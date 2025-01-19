@@ -2,56 +2,64 @@
  * cars: уникальный ассортимент
  ***************************************************/
 const cars = [
-    {
-      model: "Tesla Model 3",
-      year: "2023",
-      image: "img/tesla-model-3-2023.webp",
-      fallbackImage: "img/tesla-model-3-2023.png",
-      description: "Компактный электромобиль с отличным запасом хода."
-    },
-    {
-      model: "Toyota Camry",
-      year: "2023",
-      image: "img/toyota-camry-2023.webp",
-      fallbackImage: "img/toyota-camry-2023.png",
-      description: "Надёжный седан бизнес-класса, комфорт и практичность."
-    },
-    {
-      model: "BMW iX",
-      year: "2024",
-      image: "img/bmw-ix-2024.webp",
-      fallbackImage: "img/bmw-ix-2024.png",
-      description: "Полностью электрический кроссовер с современным дизайном."
-    },
-    {
-      model: "Mercedes-Benz E-Class",
-      year: "2022",
-      image: "img/mercedes-e-class-2022.webp",
-      fallbackImage: "img/mercedes-e-class-2022.png",
-      description: "Престижный седан, идеальный для дальних поездок."
-    },
-    {
-      model: "Honda Civic",
-      year: "2022",
-      image: "img/honda-civic-2022.webp",
-      fallbackImage: "img/honda-civic-2022.png",
-      description: "Популярный городской авто: экономичность и стиль."
-    },
-    {
-      model: "Audi Q5",
-      year: "2024",
-      image: "img/audi-q5-2024.webp",
-      fallbackImage: "img/audi-q5-2024.png",
-      description: "Престижный кроссовер с полным приводом и комфортом."
-    },
-    {
-      model: "Range Rover Velar",
-      year: "2023",
-      image: "img/range-rover-velar-2023.webp",
-      fallbackImage: "img/range-rover-velar-2023.png",
-      description: "Роскошный SUV, сочетание проходимости и изысканного дизайна."
-    }
-  ];
+  {
+    model: "Tesla Model 3",
+    year: "2023",
+    price: 44990, // Цена в USD
+    image: "img/tesla-model-3-2023.webp",
+    fallbackImage: "img/tesla-model-3-2023.png",
+    description: "Компактный электромобиль с отличным запасом хода и автопилотом."
+  },
+  {
+    model: "Toyota Camry",
+    year: "2023",
+    price: 25990,
+    image: "img/toyota-camry-2023.webp",
+    fallbackImage: "img/toyota-camry-2023.png",
+    description: "Надёжный седан бизнес-класса, комфорт и практичность."
+  },
+  {
+    model: "BMW iX",
+    year: "2024",
+    price: 84900,
+    image: "img/bmw-ix-2024.webp",
+    fallbackImage: "img/bmw-ix-2024.png",
+    description: "Электрический кроссовер с современным дизайном и технологиями."
+  },
+  {
+    model: "Mercedes-Benz E-Class",
+    year: "2022",
+    price: 55900,
+    image: "img/mercedes-e-class-2022.webp",
+    fallbackImage: "img/mercedes-e-class-2022.png",
+    description: "Элегантный и престижный седан, идеальный для дальних поездок."
+  },
+  {
+    model: "Honda Civic",
+    year: "2022",
+    price: 22500,
+    image: "img/honda-civic-2022.webp",
+    fallbackImage: "img/honda-civic-2022.png",
+    description: "Популярный городской авто: экономичность, стиль и надёжность."
+  },
+  {
+    model: "Audi Q5",
+    year: "2024",
+    price: 49900,
+    image: "img/audi-q5-2024.webp",
+    fallbackImage: "img/audi-q5-2024.png",
+    description: "Престижный кроссовер с полным приводом и отличной управляемостью."
+  },
+  {
+    model: "Range Rover Velar",
+    year: "2023",
+    price: 63900,
+    image: "img/range-rover-velar-2023.webp",
+    fallbackImage: "img/range-rover-velar-2023.png",
+    description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
+  }
+];
+
   
   /***************************************************
    * loadCars / filterCars / searchCars
@@ -72,6 +80,7 @@ const cars = [
           </picture>
           <h3>${car.model} (${car.year})</h3>
           <p>${car.description}</p>
+          <p class="car-price">Цена: $${car.price.toLocaleString()}</p>
           <button class="buy-btn" onclick="openBuyModal('${car.model} (${car.year})')">Купить</button>
         `;
         catalog.appendChild(card);
@@ -79,6 +88,7 @@ const cars = [
     });
     if (typeof AOS !== 'undefined') AOS.refresh();
   }
+  
   
   function filterCars(year) {
     const buttons = document.querySelectorAll(".filter-btn");
