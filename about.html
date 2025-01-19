@@ -1,121 +1,88 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSaling - О нас</title>
-    <meta name="description" content="Узнайте больше о компании AutoSaling, наших ценностях и команде профессионалов.">
-    <meta name="keywords" content="AutoSaling, о нас, команда, ценности, история">
-    <meta name="author" content="AutoSaling">
-    <!-- Open Graph метатеги для социальных сетей -->
-    <meta property="og:title" content="AutoSaling - О нас">
-    <meta property="og:description" content="Узнайте больше о компании AutoSaling, наших ценностях и команде профессионалов.">
-    <meta property="og:image" content="img/og-image-about.jpg">
-    <meta property="og:url" content="https://www.autosaling.com/about.html">
-    <meta property="og:type" content="website">
-    <!-- Подключение шрифтов Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Подключение AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Подключение Font Awesome для иконок -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Подключение основного CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoSaling - О нас</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-    <!-- Шапка -->
-    <header class="header">
-        <div class="container">
-            <h1 class="logo"><a href="index.html">AutoSaling</a></h1>
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="services.html">Услуги</a></li>
-                    <li><a href="#catalog">Каталог</a></li>
-                    <li><a href="#benefits">Преимущества</a></li>
-                    <li><a href="#reviews">Отзывы</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
-                </ul>
-            </nav>
-            <!-- Кнопка переключения темы -->
-            <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">
-                <i class="fas fa-moon"></i>
-            </button>
-            <!-- Кнопка меню для мобильных устройств -->
-            <button class="menu-toggle" id="menu-toggle" aria-label="Открыть меню">
-                <i class="fas fa-bars"></i>
-            </button>
+  <!-- Плавающая кнопка меню -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Плавающая кнопка темы -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav id="side-menu" class="side-menu">
+    <button id="close-menu" class="close-menu" aria-label="Закрыть меню">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul>
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="about.html">О нас</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
+    </ul>
+  </nav>
+
+  <section class="about-page" style="padding:60px 20px;">
+    <div class="container">
+      <h1 data-aos="fade-down">О нас</h1>
+      <p data-aos="fade-right" style="max-width:700px; margin: 0 auto;">
+        Компания <strong>AutoSaling</strong> — это молодой, но опытный коллектив, увлечённый упрощением процесса покупки автомобилей. Мы упорно работаем, чтобы каждый клиент мог найти автомобиль своей мечты в пару кликов.
+      </p>
+      <div class="about-features" style="margin-top:40px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+        <div class="feature-block" data-aos="zoom-in">
+          <i class="fas fa-code fa-3x"></i>
+          <h3>Технологии</h3>
+          <p>Современные веб-технологии, плавные анимации, выбор темы — всё ради лучшего UX.</p>
         </div>
-    </header>
-
-    <!-- Секция О нас -->
-    <section class="about fixed-header-padding">
-        <div class="container">
-            <h2 data-aos="fade-down">О нашей компании</h2>
-            <div class="about-content" data-aos="fade-up">
-                <div class="about-text">
-                    <p>
-                        Компания <strong>AutoSaling</strong> была основана в 2010 году с целью предоставить клиентам широкий выбор качественных автомобилей по доступным ценам. Наша команда состоит из опытных профессионалов, которые готовы помочь вам найти автомобиль вашей мечты.
-                    </p>
-                    <p>
-                        Мы ценим каждого клиента и стремимся обеспечить высокий уровень обслуживания на всех этапах покупки. От первого обращения до завершения сделки – мы здесь, чтобы сделать процесс максимально комфортным и прозрачным.
-                    </p>
-                    <p>
-                        Наша миссия – сделать покупку автомобиля простой и приятной, предлагая только проверенные автомобили и честные условия. Мы гордимся нашей репутацией надежного партнера и продолжаем работать над улучшением наших услуг.
-                    </p>
-                </div>
-                <div class="about-image" data-aos="zoom-in">
-                    <img src="img/about-us.jpg" alt="Команда AutoSaling" loading="lazy">
-                </div>
-            </div>
+        <div class="feature-block" data-aos="zoom-in" data-aos-delay="200">
+          <i class="fas fa-palette fa-3x"></i>
+          <h3>Дизайн</h3>
+          <p>Никаких лишних элементов — только самое нужное. Минимализм в полной мере.</p>
         </div>
-    </section>
-
-    <!-- Модальное окно для покупки автомобиля -->
-    <div id="buyModal" class="modal">
-        <div class="modal-content" data-aos="zoom-in">
-            <span class="close" onclick="closeBuyModal()">&times;</span>
-            <h2>Купить автомобиль</h2>
-            <div id="selected-car-info">
-                <!-- Здесь будет отображаться выбранный автомобиль -->
-            </div>
-            <form id="buy-form">
-                <label for="buy-name">Имя:</label>
-                <input type="text" id="buy-name" name="buy-name" required>
-
-                <label for="buy-email">Email:</label>
-                <input type="email" id="buy-email" name="buy-email" required>
-
-                <label for="buy-phone">Телефон:</label>
-                <input type="tel" id="buy-phone" name="buy-phone" required pattern="^\+?\d{7,15}$" title="Введите корректный номер телефона">
-
-                <label for="buy-car">Модель автомобиля:</label>
-                <input type="text" id="buy-car" name="buy-car" readonly>
-
-                <label for="buy-message">Сообщение:</label>
-                <textarea id="buy-message" name="buy-message" rows="4" required></textarea>
-
-                <button type="submit" class="btn" data-aos="zoom-in-up">Отправить заявку</button>
-            </form>
+        <div class="feature-block" data-aos="zoom-in" data-aos-delay="400">
+          <i class="fas fa-user-friends fa-3x"></i>
+          <h3>Поддержка</h3>
+          <p>Поможем с выбором авто, оформлением документов и любыми вопросами в процессе.</p>
         </div>
+      </div>
+
+      <!-- История -->
+      <div class="timeline" style="margin-top:60px;">
+        <h2 data-aos="fade-up">Наша история</h2>
+        <div class="timeline-item" data-aos="fade-right">
+          <div class="timeline-year">2018</div>
+          <div class="timeline-desc">Возникла идея создать онлайн-платформу для быстрого и приятного подбора автомобилей.</div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-desc">Маленькая команда из энтузиастов начала работу над прототипом Minimal Car Shop.</div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-desc">Прошли бета-тест, получили отзывы и оптимизировали логику и дизайн.</div>
+        </div>
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-desc">Переименовались в AutoSaling, добавили выбор темы, плавающее меню и расширили ассортимент.</div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2025 AutoSaling. Все права защищены.</p>
-            <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Подключение AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Подключение основного JS -->
-    <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
