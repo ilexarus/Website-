@@ -1,54 +1,213 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Главная — Tesla-like AutoSale</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoSaling - Найди свою машину</title>
+    <meta name="description" content="AutoSaling - лучший выбор автомобилей различных годов выпуска. Найдите свою мечту уже сегодня!">
+    <meta name="keywords" content="автомобили, продажа машин, BMW X5, Hyundai Solaris, Tesla Model S">
+    <meta name="author" content="AutoSaling">
+    <!-- Open Graph метатеги для социальных сетей -->
+    <meta property="og:title" content="AutoSaling - Найди свою машину">
+    <meta property="og:description" content="AutoSaling - лучший выбор автомобилей различных годов выпуска. Найдите свою мечту уже сегодня!">
+    <meta property="og:image" content="img/og-image.jpg">
+    <meta property="og:url" content="https://www.autosaling.com">
+    <meta property="og:type" content="website">
+    <!-- Подключение шрифтов Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Подключение AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Подключение Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Подключение Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-sA+4PqJtJHbOZvfV3k5X3xkqLF0Gq+Nhi2+0kP3t+5E="
+          crossorigin=""/>
+    <!-- Подключение основного CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><a href="index.html">AutoSaling</a></h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="about.html">О нас</a></li>
+                    <li><a href="services.html">Услуги</a></li>
+                    <li><a href="#catalog">Каталог</a></li>
+                    <li><a href="#benefits">Преимущества</a></li>
+                    <li><a href="#reviews">Отзывы</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </nav>
+            <!-- Кнопка переключения темы -->
+            <button class="theme-toggle" id="theme-toggle" aria-label="Переключить тему">
+                <i class="fas fa-moon"></i>
+            </button>
+            <!-- Кнопка меню для мобильных устройств -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Открыть меню">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
 
-<div class="nav-bar">
-  <h2 onclick="location.href='index.html'">AutoSale</h2>
-  <div class="nav-links">
-    <a href="catalog.html"    id="catalogLink">Каталог</a>
-    <a href="contact.html"    id="contactLink">Контакты</a>
-    <a href="login.html"      id="loginLink">Войти</a>
-    <a href="register.html"   id="registerLink">Регистрация</a>
-    <button id="logoutBtn" class="hidden">Выход</button>
-    <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
-  </div>
-</div>
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h2 class="hero-title">Найдите свой идеальный автомобиль</h2>
+            <p class="hero-description">Широкий выбор машин различных годов выпуска</p>
+            <a href="#catalog" class="btn" data-aos="zoom-in">Перейти в каталог</a>
+        </div>
+    </section>
 
-<!-- Hero -->
-<div class="hero" style="background-image:url('https://via.placeholder.com/1920x1080?text=Tesla+Hero');">
-  <h1 class="hero-title">Новая Эра Автомобилей</h1>
-  <p class="hero-subtitle">Откройте инновации Tesla и другие ведущие бренды</p>
-  <div>
-    <button class="btn" onclick="location.href='catalog.html'">В каталог</button>
-    <button class="btn" onclick="location.href='contact.html'">Связаться</button>
-  </div>
-</div>
+    <!-- Каталог -->
+    <section id="catalog" class="catalog">
+        <div class="container">
+            <h2 data-aos="fade-down">Каталог машин</h2>
+            <div class="filter" data-aos="fade-up">
+                <input type="text" id="search-input" placeholder="Поиск по модели" aria-label="Поиск по модели автомобиля">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterCars('all')" data-aos="fade-left">Все</button>
+                    <button class="filter-btn" onclick="filterCars('2024')" data-aos="fade-left" data-aos-delay="100">2024</button>
+                    <button class="filter-btn" onclick="filterCars('2023')" data-aos="fade-left" data-aos-delay="200">2023</button>
+                    <button class="filter-btn" onclick="filterCars('2022')" data-aos="fade-left" data-aos-delay="300">2022</button>
+                    <button class="filter-btn" onclick="filterCars('2020')" data-aos="fade-left" data-aos-delay="400">2020</button>
+                </div>
+            </div>
+            <div class="catalog-cards" id="catalog-cards">
+                <!-- Карточки будут загружены через JavaScript -->
+            </div>
+        </div>
+    </section>
 
-<section class="fade-up" style="padding:3rem; text-align:center;">
-  <h2>Почему мы?</h2>
-  <p style="color:var(--subtext-color); max-width:600px; margin:1rem auto;">
-    Минимум лишнего, максимум технологий и удобства. Точно как у Tesla!
-  </p>
-</section>
+    <!-- Преимущества -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2 data-aos="fade-down">Почему выбирают нас</h2>
+            <div class="benefit-list">
+                <div class="benefit-item" data-aos="zoom-in">
+                    <i class="fas fa-car-side fa-3x"></i>
+                    <h3>Большой выбор</h3>
+                    <p>Множество моделей на любой вкус и бюджет.</p>
+                </div>
+                <div class="benefit-item" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-dollar-sign fa-3x"></i>
+                    <h3>Выгодные цены</h3>
+                    <p>Мы предлагаем самые выгодные условия и акции.</p>
+                </div>
+                <div class="benefit-item" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-shield-alt fa-3x"></i>
+                    <h3>Гарантия качества</h3>
+                    <p>Полное сопровождение и сервисное обслуживание.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<button class="scroll-top-btn" id="scrollTopBtn">↑</button>
+    <!-- Отзывы -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 data-aos="fade-down">Отзывы клиентов</h2>
+            <div class="reviews-list" data-aos="fade-up">
+                <div class="review-item" data-aos="fade-right">
+                    <p>"Отличный сервис и большой выбор автомобилей! Нашли идеальный автомобиль за короткое время."</p>
+                    <h4>Иван Петров</h4>
+                </div>
+                <div class="review-item" data-aos="fade-right" data-aos-delay="100">
+                    <p>"Очень доволен покупкой и обслуживанием. Рекомендую всем, кто ищет качественные автомобили."</p>
+                    <h4>Мария Иванова</h4>
+                </div>
+                <div class="review-item" data-aos="fade-right" data-aos-delay="200">
+                    <p>"Профессиональный подход и выгодные цены. С AutoSaling моя мечта стала реальностью."</p>
+                    <h4>Алексей Смирнов</h4>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>
-  <p>© 2025 Авто-Сервис | Все права защищены</p>
-</footer>
+    <!-- Контакты -->
+    <section id="contacts" class="contacts">
+        <div class="container">
+            <h2 data-aos="fade-down">Свяжитесь с нами</h2>
+            <div class="contact-info" data-aos="fade-up">
+                <p>Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a></p>
+                <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                <p>Адрес: г. Москва, ул. Автомобильная, д. 10</p>
+            </div>
+            <!-- Форма обратной связи -->
+            <form class="contact-form" data-aos="fade-up" aria-label="Форма обратной связи">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
 
-<script src="app.js"></script>
-<script>
-  window.addEventListener('load',()=>{
-    initApp();
-    fadeUpOnScroll(".fade-up");
-    setupScrollTopBtn("scrollTopBtn");
-  });
-</script>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Сообщение:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit" class="btn" data-aos="zoom-in-up">Отправить</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Интерактивная карта -->
+    <section id="map" class="map">
+        <div class="container">
+            <h2 data-aos="fade-down">Наше местоположение</h2>
+            <div id="leaflet-map" data-aos="fade-up"></div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для покупки автомобиля -->
+    <div id="buyModal" class="modal">
+        <div class="modal-content" data-aos="zoom-in">
+            <span class="close" onclick="closeBuyModal()">&times;</span>
+            <h2>Купить автомобиль</h2>
+            <div id="selected-car-info">
+                <!-- Здесь будет отображаться выбранный автомобиль -->
+            </div>
+            <form id="buy-form">
+                <label for="buy-name">Имя:</label>
+                <input type="text" id="buy-name" name="buy-name" required>
+
+                <label for="buy-email">Email:</label>
+                <input type="email" id="buy-email" name="buy-email" required>
+
+                <label for="buy-phone">Телефон:</label>
+                <input type="tel" id="buy-phone" name="buy-phone" required pattern="^\+?\d{7,15}$" title="Введите корректный номер телефона">
+
+                <label for="buy-car">Модель автомобиля:</label>
+                <input type="text" id="buy-car" name="buy-car" readonly>
+
+                <label for="buy-message">Сообщение:</label>
+                <textarea id="buy-message" name="buy-message" rows="4" required></textarea>
+
+                <button type="submit" class="btn" data-aos="zoom-in-up">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 AutoSaling. Все права защищены.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-o9N1j6V6nbP0n5wGkH3JtpuNFpGH3lF4RTv6Fg6+8BM="
+            crossorigin=""></script>
+    <!-- Подключение AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Подключение основного JS -->
+    <script src="script.js"></script>
 </body>
 </html>
