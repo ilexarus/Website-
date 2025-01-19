@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AutoSaling - Главная</title>
-  <meta name="description" content="AutoSaling: минималистичный сайт для выбора и покупки автомобилей. Тёмная тема, боковое меню, плавные анимации."/>
-  <meta name="keywords" content="автомобили, покупка, минимализм, dark theme"/>
+  <meta name="description" content="AutoSaling: минималистичный сайт для выбора и покупки автомобилей. Тёмная тема, боковое меню, плавные анимации, отзывы."/>
+  <meta name="keywords" content="автомобили, покупка, минимализм, dark theme, отзывы"/>
   <meta name="author" content="AutoSaling">
 
   <!-- Google Fonts -->
@@ -44,15 +44,17 @@
       <li><a href="#benefits">Преимущества</a></li>
       <li><a href="#reviews">Отзывы</a></li>
       <li><a href="contacts.html">Контакты</a></li>
+      <li><a href="auth.html">Вход/Регистрация</a></li>
+      <li><a href="admin.html">Админ-панель</a></li>
     </ul>
   </nav>
 
   <!-- Hero (Главный экран) -->
   <section class="hero" data-aos="fade-up">
     <div class="hero-content">
-      <h1 class="hero-title">AutoSaling: Всё для вашего авто</h1>
+      <h1 class="hero-title">AutoSaling — Найдите своё авто</h1>
       <p class="hero-description">
-        Минимализм, выбор темы и все нужные функции в одном месте. Встречайте новую эру онлайн-покупки автомобилей!
+        Минимализм, выбор темы и все нужные функции: регистрация, отзывы, техподдержка. Добро пожаловать!
       </p>
       <a href="#catalog" class="btn" data-aos="zoom-in">Посмотреть каталог</a>
     </div>
@@ -72,7 +74,7 @@
         </div>
       </div>
       <div class="catalog-cards" id="catalog-cards">
-        <!-- Заполняется скриптом -->
+        <!-- Заполняется script.js -->
       </div>
     </div>
   </section>
@@ -84,15 +86,15 @@
       <div class="benefit-list">
         <div class="benefit-item" data-aos="flip-left">
           <i class="fas fa-car-side fa-2x"></i>
-          <p>Огромный ассортимент авто</p>
+          <p>Огромный ассортимент</p>
         </div>
         <div class="benefit-item" data-aos="flip-left" data-aos-delay="200">
           <i class="fas fa-handshake fa-2x"></i>
-          <p>Честные сделки без лишней бюрократии</p>
+          <p>Честные сделки и сервис</p>
         </div>
         <div class="benefit-item" data-aos="flip-left" data-aos-delay="400">
           <i class="fas fa-shield-alt fa-2x"></i>
-          <p>Гарантия и сервис на все автомобили</p>
+          <p>Гарантия и поддержка</p>
         </div>
       </div>
     </div>
@@ -101,25 +103,21 @@
   <!-- Отзывы -->
   <section id="reviews" class="reviews" data-aos="fade-up">
     <div class="container">
-      <h2>Отзывы</h2>
-      <div class="reviews-list">
-        <div class="review-item" data-aos="fade-right">
-          <p>"Купил авто за пару кликов, очень удобно!"</p>
-          <h4>Игорь</h4>
-        </div>
-        <div class="review-item" data-aos="fade-right" data-aos-delay="100">
-          <p>"Обожаю тёмную тему, глаза не устают."</p>
-          <h4>Ольга</h4>
-        </div>
-        <div class="review-item" data-aos="fade-right" data-aos-delay="200">
-          <p>"Минимализм и функциональность — класс!"</p>
-          <h4>Роман</h4>
+      <h2>Отзывы о сайте</h2>
+      <div class="reviews-list" id="reviews-list">
+        <!-- Отображаются отзывы из localStorage -->
+      </div>
+      <div class="add-review" data-aos="fade-right" style="margin-top:30px;">
+        <h3>Оставить отзыв</h3>
+        <div id="review-form-block">
+          <!-- Если пользователь авторизован, показываем форму для отзыва -->
+          <!-- Если нет — пишем, что нужно войти -->
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Контакты (мини-блок) -->
+  <!-- Контакты (минимальный блок) -->
   <section id="contacts" class="contacts" data-aos="fade-up">
     <div class="container">
       <h2>Связаться с нами</h2>
@@ -163,7 +161,7 @@
   <!-- Футер -->
   <footer class="footer" data-aos="fade-up">
     <div class="container">
-      <p>© 2025 AutoSaling — Всё, что вам нужно для покупки авто.</p>
+      <p>© 2025 AutoSaling — Покупка авто ещё проще.</p>
     </div>
   </footer>
 

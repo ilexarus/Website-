@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AutoSaling - Админ-панель</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <!-- Плавающая кнопка меню -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
+    <i class="fas fa-bars"></i>
+  </button>
+  <!-- Плавающая кнопка темы -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav id="side-menu" class="side-menu">
+    <button id="close-menu" class="close-menu" aria-label="Закрыть меню">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul>
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="about.html">О нас</a></li>
+      <li><a href="services.html">Услуги</a></li>
+      <li><a href="contacts.html">Контакты</a></li>
+      <li><a href="auth.html">Вход/Регистрация</a></li>
+    </ul>
+  </nav>
+
+  <section class="admin-page" style="padding:60px 20px;">
+    <div class="container" data-aos="fade-up">
+      <h1>Админ-панель</h1>
+      <p id="admin-status" style="text-align:center; margin-top:20px;"></p>
+      <div id="tickets-block" style="margin-top:40px;">
+        <h2>Запросы в техподдержку</h2>
+        <div id="tickets-list" style="margin-top:20px;">
+          <!-- Список тикетов для админа -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

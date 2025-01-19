@@ -4,59 +4,57 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AutoSaling - Контакты</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 
-  <!-- AOS CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- AOS, Font Awesome -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Плавающая кнопка меню -->
-  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню">
-    <i class="fas fa-bars"></i>
-  </button>
-  <!-- Плавающая кнопка темы -->
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
-    <i class="fas fa-moon"></i>
-  </button>
-
-  <!-- Боковое меню -->
-  <nav id="side-menu" class="side-menu">
-    <button id="close-menu" class="close-menu" aria-label="Закрыть меню">
-      <i class="fas fa-times"></i>
-    </button>
+  <!-- Меню слева -->
+  <nav id="side-menu" class="side-menu active">
     <ul>
       <li><a href="index.html">Главная</a></li>
       <li><a href="about.html">О нас</a></li>
       <li><a href="services.html">Услуги</a></li>
-      <li><a href="contacts.html">Контакты</a></li>
+      <li><a href="auth.html">Личный кабинет</a></li>
+      <li><a href="admin.html" id="admin-link" style="display:none;">Админ</a></li>
     </ul>
   </nav>
 
-  <section class="contact-page" data-aos="fade-up" style="padding:60px 20px;">
+  <!-- Кнопка темы -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <section class="contact-page" style="padding:60px 20px;">
     <div class="container">
-      <h1>Контакты</h1>
-      <div class="contact-info" style="text-align:center;">
-        <p data-aos="fade-right">Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a></p>
-        <p data-aos="fade-right" data-aos-delay="200">Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
-        <p data-aos="fade-right" data-aos-delay="400">Адрес: г. Москва, ул. Автомобильная, д. 10</p>
+      <h1 data-aos="fade-down">Контакты</h1>
+      <p data-aos="fade-right" style="max-width:600px; margin:0 auto;">
+        Свяжитесь с нами любым удобным способом — мы всегда рады помочь. Также вы можете оставить сообщение техподдержке.
+      </p>
+      <div class="contact-info" data-aos="fade-up" style="text-align:center; margin-top:30px;">
+        <p>Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a></p>
+        <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+        <p>Адрес: г. Москва, ул. Автомобильная, д. 10</p>
       </div>
-      <form class="contact-form" data-aos="zoom-in">
-        <label for="contact-name">Имя:</label>
-        <input type="text" id="contact-name" name="contact-name" required />
 
-        <label for="contact-email">Email:</label>
-        <input type="email" id="contact-email" name="contact-email" required />
+      <!-- Форма техподдержки -->
+      <div class="support-form-container" style="margin-top:50px;" data-aos="fade-up">
+        <h2>Сообщение в техподдержку</h2>
+        <form id="support-form" style="max-width:400px; margin:0 auto;">
+          <label for="support-name">Ваше имя:</label>
+          <input type="text" id="support-name" required/>
 
-        <label for="contact-phone">Телефон:</label>
-        <input type="tel" id="contact-phone" name="contact-phone" required pattern="^\\+?\\d{7,15}$" />
+          <label for="support-email">Email:</label>
+          <input type="email" id="support-email" required/>
 
-        <label for="contact-message">Сообщение:</label>
-        <textarea id="contact-message" name="contact-message" rows="4" required></textarea>
+          <label for="support-message">Сообщение:</label>
+          <textarea id="support-message" rows="4" required></textarea>
 
-        <button type="submit" class="btn">Отправить</button>
-      </form>
+          <button type="submit" class="btn" style="margin-top:10px;">Отправить</button>
+        </form>
+      </div>
     </div>
   </section>
 

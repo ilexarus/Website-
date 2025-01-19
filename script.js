@@ -1,5 +1,5 @@
 /***************************************************
- * Новый массив cars: все модели разные.
+ * cars: уникальный ассортимент
  ***************************************************/
 const cars = [
     {
@@ -7,54 +7,54 @@ const cars = [
       year: "2023",
       image: "img/tesla-model-3-2023.webp",
       fallbackImage: "img/tesla-model-3-2023.png",
-      description: "Компактный электромобиль с отличным запасом хода и автопилотом."
+      description: "Компактный электромобиль с отличным запасом хода."
     },
     {
       model: "Toyota Camry",
       year: "2023",
       image: "img/toyota-camry-2023.webp",
       fallbackImage: "img/toyota-camry-2023.png",
-      description: "Надёжный седан бизнес-класса, комфорт и практичность в одном."
+      description: "Надёжный седан бизнес-класса, комфорт и практичность."
     },
     {
       model: "BMW iX",
       year: "2024",
       image: "img/bmw-ix-2024.webp",
       fallbackImage: "img/bmw-ix-2024.png",
-      description: "Полностью электрический кроссовер с современным дизайном и технологиями."
+      description: "Полностью электрический кроссовер с современным дизайном."
     },
     {
       model: "Mercedes-Benz E-Class",
       year: "2022",
       image: "img/mercedes-e-class-2022.webp",
       fallbackImage: "img/mercedes-e-class-2022.png",
-      description: "Элегантный и престижный седан, идеальный для дальних поездок."
+      description: "Престижный седан, идеальный для дальних поездок."
     },
     {
       model: "Honda Civic",
       year: "2022",
       image: "img/honda-civic-2022.webp",
       fallbackImage: "img/honda-civic-2022.png",
-      description: "Популярный городской автомобиль: экономичность, стиль и надёжность."
+      description: "Популярный городской авто: экономичность и стиль."
     },
     {
       model: "Audi Q5",
       year: "2024",
       image: "img/audi-q5-2024.webp",
       fallbackImage: "img/audi-q5-2024.png",
-      description: "Престижный кроссовер с полным приводом и отличной управляемостью."
+      description: "Престижный кроссовер с полным приводом и комфортом."
     },
     {
       model: "Range Rover Velar",
       year: "2023",
       image: "img/range-rover-velar-2023.webp",
       fallbackImage: "img/range-rover-velar-2023.png",
-      description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
+      description: "Роскошный SUV, сочетание проходимости и изысканного дизайна."
     }
   ];
   
   /***************************************************
-   * Загрузка и фильтрация автомобилей
+   * loadCars / filterCars / searchCars
    ***************************************************/
   function loadCars(filter = 'all') {
     const catalog = document.getElementById("catalog-cards");
@@ -92,7 +92,10 @@ const cars = [
   }
   
   function searchCars() {
-    const query = document.getElementById('search-input').value.toLowerCase();
+    const input = document.getElementById('search-input');
+    if (!input) return;
+    const query = input.value.toLowerCase();
+  
     const catalog = document.getElementById("catalog-cards");
     if (!catalog) return;
   
@@ -117,7 +120,7 @@ const cars = [
   }
   
   /***************************************************
-   * Открытие и закрытие модального окна
+   * Модальное окно "Купить автомобиль"
    ***************************************************/
   function openBuyModal(carName) {
     const buyModal = document.getElementById("buyModal");
@@ -160,48 +163,127 @@ const cars = [
   };
   
   /***************************************************
-   * Обработка формы покупки
+   * Локальное хранение: users + currentUser
    ***************************************************/
-  document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-      searchInput.addEventListener('input', searchCars);
-    }
-  
-    const buyForm = document.getElementById('buy-form');
-    if (buyForm) {
-      buyForm.addEventListener('submit', e => {
-        e.preventDefault();
-        const name = document.getElementById('buy-name').value.trim();
-        const email = document.getElementById('buy-email').value.trim();
-        const phone = document.getElementById('buy-phone').value.trim();
-        const car = document.getElementById('buy-car').value.trim();
-        const message = document.getElementById('buy-message').value.trim();
-  
-        if (!name || !email || !phone || !car || !message) {
-          alert("Пожалуйста, заполните все поля формы.");
-          return;
-        }
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-          alert("Введите корректный Email.");
-          return;
-        }
-        const phonePattern = /^\+?\d{7,15}$/;
-        if (!phonePattern.test(phone)) {
-          alert("Введите корректный номер телефона.");
-          return;
-        }
-  
-        alert(`Спасибо, ${name}! Ваша заявка на покупку ${car} принята.`);
-        buyForm.reset();
-        closeBuyModal();
-      });
-    }
-  });
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('users') || '[]');
+  }
+  function setUsers(users) {
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  function getCurrentUser() {
+    return JSON.parse(localStorage.getItem('currentUser') || 'null');
+  }
+  function setCurrentUser(user) {
+    if (user) localStorage.setItem('currentUser', JSON.stringify(user));
+    else localStorage.removeItem('currentUser');
+  }
   
   /***************************************************
-   * Плавающие кнопки: меню и тема
+   * Регистрация: admin + admin123 => isAdmin
+   ***************************************************/
+  function registerUser(username, password, email) {
+    let users = getUsers();
+    // Проверка занятости
+    if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
+      alert("Такой логин уже используется!");
+      return false;
+    }
+  
+    let isAdmin = false;
+    // Если логин = 'admin', пароль = 'admin123'
+    if (username.toLowerCase() === 'admin' && password === 'admin123') {
+      isAdmin = true;
+    }
+  
+    const newUser = { username, password, email, isAdmin };
+    users.push(newUser);
+    setUsers(users);
+  
+    alert("Регистрация успешно завершена!");
+    return true;
+  }
+  
+  function loginUser(username, password) {
+    let users = getUsers();
+    const user = users.find(u => 
+      u.username.toLowerCase() === username.toLowerCase() &&
+      u.password === password
+    );
+    if (!user) {
+      alert("Неверный логин или пароль!");
+      return null;
+    }
+    setCurrentUser(user);
+    alert(`Здравствуйте, ${user.username}!`);
+    return user;
+  }
+  
+  function logoutUser() {
+    setCurrentUser(null);
+    location.reload();
+  }
+  
+  /***************************************************
+   * Инициализация auth.html
+   ***************************************************/
+  function initAuthPage() {
+    const regForm = document.getElementById("register-form");
+    if (regForm) {
+      regForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const username = document.getElementById("reg-username").value.trim();
+        const password = document.getElementById("reg-password").value.trim();
+        const email = document.getElementById("reg-email").value.trim();
+        if (!username || !password || !email) {
+          alert("Заполните все поля!");
+          return;
+        }
+        if (registerUser(username, password, email)) {
+          regForm.reset();
+        }
+      });
+    }
+  
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+      loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const username = document.getElementById("login-username").value.trim();
+        const password = document.getElementById("login-password").value.trim();
+        if (!username || !password) {
+          alert("Введите логин и пароль!");
+          return;
+        }
+        const user = loginUser(username, password);
+        if (user) {
+          loginForm.reset();
+          location.href = "index.html";
+        }
+      });
+    }
+  }
+  
+  /***************************************************
+   * Админ-панель (admin.html)
+   ***************************************************/
+  function initAdminPage() {
+    const adminStatus = document.getElementById("admin-status");
+    const ticketsBlock = document.getElementById("tickets-block");
+    if (!adminStatus || !ticketsBlock) return;
+  
+    const currentUser = getCurrentUser();
+    if (!currentUser || !currentUser.isAdmin) {
+      adminStatus.innerHTML = "У вас нет прав доступа.";
+      ticketsBlock.style.display = "none";
+      return;
+    }
+    adminStatus.innerHTML = `Здравствуйте, <strong>${currentUser.username}</strong> (администратор).`;
+    // Здесь логика вывода заявок, если нужно
+  }
+  
+  /***************************************************
+   * Тема (dark/light) + боковое меню
    ***************************************************/
   const menuFab = document.getElementById("menu-fab");
   const sideMenu = document.getElementById("side-menu");
@@ -224,13 +306,13 @@ const cars = [
       updateThemeIcon('dark');
     }
   
-    themeFab.addEventListener('click', () => {
-      document.body.classList.toggle('dark-theme');
+    themeFab.addEventListener("click", () => {
+      document.body.classList.toggle("dark-theme");
       let theme = 'light';
-      if (document.body.classList.contains('dark-theme')) {
+      if (document.body.classList.contains("dark-theme")) {
         theme = 'dark';
       }
-      localStorage.setItem('theme', theme);
+      localStorage.setItem("theme", theme);
       updateThemeIcon(theme);
     });
   }
@@ -248,10 +330,59 @@ const cars = [
   }
   
   /***************************************************
-   * Инициализация при загрузке страницы
+   * Форма покупки (buy-form)
    ***************************************************/
-  window.onload = () => {
-    loadCars();
+  document.addEventListener("DOMContentLoaded", () => {
+    // Index
+    if (document.getElementById("catalog-cards")) {
+      loadCars();
+      const searchInput = document.getElementById("search-input");
+      if (searchInput) {
+        searchInput.addEventListener("input", searchCars);
+      }
+    }
+  
+    // Auth
+    if (document.getElementById("register-form") || document.getElementById("login-form")) {
+      initAuthPage();
+    }
+  
+    // Admin
+    if (document.getElementById("admin-status")) {
+      initAdminPage();
+    }
+  
+    // Покупка
+    const buyForm = document.getElementById("buy-form");
+    if (buyForm) {
+      buyForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("buy-name").value.trim();
+        const email = document.getElementById("buy-email").value.trim();
+        const phone = document.getElementById("buy-phone").value.trim();
+        const car = document.getElementById("buy-car").value.trim();
+        const message = document.getElementById("buy-message").value.trim();
+        if (!name || !email || !phone || !car || !message) {
+          alert("Заполните все поля формы!");
+          return;
+        }
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert("Неверный формат Email.");
+          return;
+        }
+        const phonePattern = /^\+?\\d{7,15}$/;
+        if (!phonePattern.test(phone)) {
+          alert("Введите корректный номер телефона.");
+          return;
+        }
+        alert(`Спасибо, ${name}! Ваша заявка на покупку ${car} принята.`);
+        buyForm.reset();
+        closeBuyModal();
+      });
+    }
+  
+    // Инициализация AOS
     if (typeof AOS !== 'undefined') {
       AOS.init({
         duration: 1400,
@@ -259,5 +390,5 @@ const cars = [
         once: true
       });
     }
-  };
+  });
   
