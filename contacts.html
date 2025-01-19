@@ -6,53 +6,58 @@
   <title>AutoSaling - Контакты</title>
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- AOS, Font Awesome -->
+  <!-- AOS CSS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Меню слева -->
-  <nav id="side-menu" class="side-menu active">
+  <!-- Плавающая кнопка меню -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
+    <i class="fas fa-bars"></i>
+  </button>
+  <!-- Плавающая кнопка темы -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- Боковое меню -->
+  <nav id="side-menu" class="side-menu">
+    <button id="close-menu" class="close-menu" aria-label="Закрыть меню">
+      <i class="fas fa-times"></i>
+    </button>
     <ul>
       <li><a href="index.html">Главная</a></li>
       <li><a href="about.html">О нас</a></li>
       <li><a href="services.html">Услуги</a></li>
-      <li><a href="auth.html">Личный кабинет</a></li>
-      <li><a href="admin.html" id="admin-link" style="display:none;">Админ</a></li>
+      <li><a href="auth.html">Вход/Регистрация</a></li>
+      <li><a href="admin.html">Админ-панель</a></li>
     </ul>
   </nav>
 
-  <!-- Кнопка темы -->
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
-    <i class="fas fa-moon"></i>
-  </button>
-
-  <section class="contact-page" style="padding:60px 20px;">
-    <div class="container">
-      <h1 data-aos="fade-down">Контакты</h1>
-      <p data-aos="fade-right" style="max-width:600px; margin:0 auto;">
-        Свяжитесь с нами любым удобным способом — мы всегда рады помочь. Также вы можете оставить сообщение техподдержке.
+  <section class="contacts" style="padding:60px 20px;">
+    <div class="container" data-aos="fade-up">
+      <h1>Контакты</h1>
+      <p style="text-align:center; margin-bottom:20px;">
+        Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a><br>
+        Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a><br>
+        Адрес: г. Москва, ул. Автомобильная, д. 10
       </p>
-      <div class="contact-info" data-aos="fade-up" style="text-align:center; margin-top:30px;">
-        <p>Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a></p>
-        <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
-        <p>Адрес: г. Москва, ул. Автомобильная, д. 10</p>
-      </div>
 
-      <!-- Форма техподдержки -->
-      <div class="support-form-container" style="margin-top:50px;" data-aos="fade-up">
-        <h2>Сообщение в техподдержку</h2>
+      <!-- Форма обращения в техподдержку -->
+      <div class="support-form" data-aos="zoom-in">
+        <h2>Написать в техподдержку</h2>
         <form id="support-form" style="max-width:400px; margin:0 auto;">
           <label for="support-name">Ваше имя:</label>
-          <input type="text" id="support-name" required/>
+          <input type="text" id="support-name" required>
 
-          <label for="support-email">Email:</label>
-          <input type="email" id="support-email" required/>
+          <label for="support-phone">Телефон:</label>
+          <input type="text" id="support-phone" placeholder="+7 (999) 123-45-67">
 
           <label for="support-message">Сообщение:</label>
           <textarea id="support-message" rows="4" required></textarea>
 
-          <button type="submit" class="btn" style="margin-top:10px;">Отправить</button>
+          <button type="submit" class="btn" style="margin-top:15px;">Отправить</button>
         </form>
       </div>
     </div>

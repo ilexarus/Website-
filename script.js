@@ -1,5 +1,5 @@
 /***************************************************
- * cars: список уникальных автомобилей (с ценами)
+ * Массив автомобилей: цены и описания
  ***************************************************/
 const cars = [
   {
@@ -8,7 +8,7 @@ const cars = [
     price: 44990,
     image: "img/tesla-model-3-2023.webp",
     fallbackImage: "img/tesla-model-3-2023.png",
-    description: "Компактный электромобиль с отличным запасом хода."
+    description: "Компактный электромобиль с автопилотом."
   },
   {
     model: "Toyota Camry",
@@ -16,7 +16,7 @@ const cars = [
     price: 25990,
     image: "img/toyota-camry-2023.webp",
     fallbackImage: "img/toyota-camry-2023.png",
-    description: "Надёжный седан бизнес-класса, комфорт и практичность."
+    description: "Надёжный седан бизнес-класса."
   },
   {
     model: "BMW iX",
@@ -24,7 +24,7 @@ const cars = [
     price: 84900,
     image: "img/bmw-ix-2024.webp",
     fallbackImage: "img/bmw-ix-2024.png",
-    description: "Электрический кроссовер с современным дизайном и технологиями."
+    description: "Электрический кроссовер с современным дизайном."
   },
   {
     model: "Mercedes-Benz E-Class",
@@ -32,7 +32,7 @@ const cars = [
     price: 55900,
     image: "img/mercedes-e-class-2022.webp",
     fallbackImage: "img/mercedes-e-class-2022.png",
-    description: "Элегантный и престижный седан, идеальный для дальних поездок."
+    description: "Престижный седан, комфорт везде."
   },
   {
     model: "Honda Civic",
@@ -40,7 +40,7 @@ const cars = [
     price: 22500,
     image: "img/honda-civic-2022.webp",
     fallbackImage: "img/honda-civic-2022.png",
-    description: "Популярный городской авто: экономичность, стиль и надёжность."
+    description: "Популярный городской авто, экономичность и стиль."
   },
   {
     model: "Audi Q5",
@@ -48,7 +48,7 @@ const cars = [
     price: 49900,
     image: "img/audi-q5-2024.webp",
     fallbackImage: "img/audi-q5-2024.png",
-    description: "Престижный кроссовер с полным приводом и отличной управляемостью."
+    description: "Престижный кроссовер с полным приводом."
   },
   {
     model: "Range Rover Velar",
@@ -56,22 +56,19 @@ const cars = [
     price: 63900,
     image: "img/range-rover-velar-2023.webp",
     fallbackImage: "img/range-rover-velar-2023.png",
-    description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
+    description: "Роскошный SUV, проходимость и изысканный дизайн."
   }
 ];
 
 /***************************************************
- * Гарантированно создаём учётку админа (admin/admin123)
- * при старте, если её нет
+ * Автоматическое создание admin/admin123
  ***************************************************/
 function ensureAdminExists() {
   let users = getUsers();
-  let adminUser = users.find(u => 
-    u.username.toLowerCase() === 'admin' &&
-    u.password === 'admin123'
+  let adminUser = users.find(u =>
+    u.username.toLowerCase() === 'admin' && u.password === 'admin123'
   );
   if (!adminUser) {
-    // создаём
     const newAdmin = {
       username: 'admin',
       password: 'admin123',
@@ -80,12 +77,12 @@ function ensureAdminExists() {
     };
     users.push(newAdmin);
     setUsers(users);
-    console.log("Админ-учётка создана автоматически (admin / admin123).");
+    console.log("Админ (admin/admin123) создан автоматически.");
   }
 }
 
 /***************************************************
- * Локальное хранение users + currentUser
+ * Локальное хранение: users, currentUser, tickets
  ***************************************************/
 function getUsers() {
   return JSON.parse(localStorage.getItem('users') || '[]');
@@ -93,41 +90,47 @@ function getUsers() {
 function setUsers(users) {
   localStorage.setItem('users', JSON.stringify(users));
 }
+
 function getCurrentUser() {
   return JSON.parse(localStorage.getItem('currentUser') || 'null');
 }
 function setCurrentUser(user) {
-  if (user) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-  } else {
-    localStorage.removeItem('currentUser');
-  }
+  if (user) localStorage.setItem('currentUser', JSON.stringify(user));
+  else localStorage.removeItem('currentUser');
+}
+
+function getTickets() {
+  return JSON.parse(localStorage.getItem('tickets') || '[]');
+}
+function setTickets(arr) {
+  localStorage.setItem('tickets', JSON.stringify(arr));
 }
 
 /***************************************************
- * Регистрация
- * Если (username.toLowerCase()==='admin' && password==='admin123') => isAdmin=true
+ * Регистрация/Вход
  ***************************************************/
 function registerUser(username, password, email) {
   let users = getUsers();
+  // Проверка занятости
   if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
-    alert("Такой логин уже существует!");
+    alert("Такой логин уже есть!");
     return false;
   }
   let isAdmin = false;
+  // Если admin/admin123 => isAdmin
   if (username.toLowerCase() === 'admin' && password === 'admin123') {
     isAdmin = true;
   }
   const newUser = { username, password, email, isAdmin };
   users.push(newUser);
   setUsers(users);
-  alert("Регистрация успешно завершена!");
+  alert("Регистрация прошла успешно!");
   return true;
 }
 
 function loginUser(username, password) {
   let users = getUsers();
-  const user = users.find(u => 
+  const user = users.find(u =>
     u.username.toLowerCase() === username.toLowerCase() &&
     u.password === password
   );
@@ -179,19 +182,20 @@ function initAuthPage() {
       const user = loginUser(username, password);
       if (user) {
         loginForm.reset();
-        location.href = "index.html"; // переходим на главную
+        location.href = "index.html";
       }
     });
   }
 }
 
 /***************************************************
- * Админ-панель (admin.html)
+ * Админ-панель (admin.html): отображение tickets
  ***************************************************/
 function initAdminPage() {
   const adminStatus = document.getElementById("admin-status");
   const ticketsBlock = document.getElementById("tickets-block");
-  if (!adminStatus || !ticketsBlock) return;
+  const ticketsList = document.getElementById("tickets-list");
+  if (!adminStatus || !ticketsBlock || !ticketsList) return;
 
   const currentUser = getCurrentUser();
   if (!currentUser || !currentUser.isAdmin) {
@@ -201,11 +205,26 @@ function initAdminPage() {
   }
   adminStatus.innerHTML = `Здравствуйте, <strong>${currentUser.username}</strong> (администратор).`;
 
-  // Здесь можно выводить заявки и т.д.
+  // Выведем заявки
+  const tickets = getTickets();
+  ticketsList.innerHTML = "";
+  if (!tickets.length) {
+    ticketsList.innerHTML = "<p>Нет запросов в техподдержку.</p>";
+    return;
+  }
+  tickets.forEach((t) => {
+    const div = document.createElement("div");
+    div.classList.add("ticket-item");
+    div.style.marginBottom = "15px";
+    div.innerHTML = `
+      <p><strong>${t.name}</strong> (${t.phone}): "${t.message}" <span style="color:#999;">(${t.date})</span></p>
+    `;
+    ticketsList.appendChild(div);
+  });
 }
 
 /***************************************************
- * Каталог (cars) / Фильтры / Поиск
+ * Каталог (cars): loadCars / filterCars / searchCars
  ***************************************************/
 function loadCars(filter = 'all') {
   const catalog = document.getElementById("catalog-cards");
@@ -236,7 +255,7 @@ function filterCars(year) {
   const buttons = document.querySelectorAll(".filter-btn");
   buttons.forEach(btn => {
     btn.classList.remove("active");
-    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')){
+    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')) {
       btn.classList.add("active");
     }
   });
@@ -244,7 +263,7 @@ function filterCars(year) {
 }
 
 function searchCars() {
-  const input = document.getElementById('search-input');
+  const input = document.getElementById("search-input");
   if (!input) return;
   const query = input.value.toLowerCase();
 
@@ -304,7 +323,9 @@ function openBuyModal(carName) {
 
 function closeBuyModal() {
   const buyModal = document.getElementById("buyModal");
-  if (buyModal) buyModal.style.display = "none";
+  if (buyModal) {
+    buyModal.style.display = "none";
+  }
 }
 
 window.onclick = function(event) {
@@ -315,7 +336,7 @@ window.onclick = function(event) {
 };
 
 /***************************************************
- * Плавающие кнопки: меню и тема
+ * Плавающее меню (theme, menu)
  ***************************************************/
 const menuFab = document.getElementById("menu-fab");
 const sideMenu = document.getElementById("side-menu");
@@ -332,16 +353,16 @@ if (menuFab && sideMenu && closeMenuBtn) {
 
 const themeFab = document.getElementById("theme-fab");
 if (themeFab) {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark-theme');
-    updateThemeIcon('dark');
+  const savedTheme = localStorage.getItem("theme") || "light";
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-theme");
+    updateThemeIcon("dark");
   }
   themeFab.addEventListener("click", () => {
     document.body.classList.toggle("dark-theme");
-    let theme = 'light';
+    let theme = "light";
     if (document.body.classList.contains("dark-theme")) {
-      theme = 'dark';
+      theme = "dark";
     }
     localStorage.setItem("theme", theme);
     updateThemeIcon(theme);
@@ -361,12 +382,10 @@ function updateThemeIcon(theme) {
 }
 
 /***************************************************
- * Обработка формы покупки (buy-form)
- * Упростим проверку телефона
+ * Форма покупки
  ***************************************************/
 document.addEventListener("DOMContentLoaded", () => {
-  // Сначала убедимся, что админ-учётка есть
-  ensureAdminExists();
+  ensureAdminExists(); // Гарантируем, что есть admin/admin123
 
   // Если index.html (catalog-cards существует)
   if (document.getElementById("catalog-cards")) {
@@ -387,7 +406,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initAdminPage();
   }
 
-  // Форма покупки
+  // Форма "Купить"
   const buyForm = document.getElementById("buy-form");
   if (buyForm) {
     buyForm.addEventListener("submit", (e) => {
@@ -402,16 +421,14 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Заполните все поля!");
         return;
       }
-      // Проверка email
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email)) {
         alert("Неверный формат Email.");
         return;
       }
-      // Упрощённая проверка телефона (5-15 цифр, опционально +)
-      const phonePattern = /^\+?\d{5,15}$/;
-      if (!phonePattern.test(phone)) {
-        alert("Неверный формат телефона. Пример: +79991234567 или 89991234567");
+      // Не используем строгий паттерн. Достаточно непустого
+      if (!phone) {
+        alert("Введите телефон!");
         return;
       }
 
@@ -421,34 +438,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Форма "support-form" (contacts.html)
+  const supportForm = document.getElementById("support-form");
+  if (supportForm) {
+    supportForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const sname = document.getElementById("support-name").value.trim();
+      const sphone = document.getElementById("support-phone").value.trim();
+      const smessage = document.getElementById("support-message").value.trim();
+      if (!sname || !smessage) {
+        alert("Введите имя и сообщение!");
+        return;
+      }
+      // Телефон тоже не пустой
+      if (!sphone) {
+        alert("Введите телефон!");
+        return;
+      }
+
+      // Создадим новый тикет
+      let tickets = getTickets();
+      const newTicket = {
+        name: sname,
+        phone: sphone,
+        message: smessage,
+        date: new Date().toLocaleString()
+      };
+      tickets.push(newTicket);
+      setTickets(tickets);
+
+      alert("Ваш запрос отправлен в техподдержку!");
+      supportForm.reset();
+    });
+  }
+
   // Инициализация AOS
   if (typeof AOS !== 'undefined') {
     AOS.init({
-      duration: 2000, // Увеличим длительность для "триллиона" анимаций
+      duration: 2000,
       easing: 'ease-out-cubic',
       once: true
     });
   }
 });
-
-/***************************************************
- * Автоматическое создание admin при запуске
- ***************************************************/
-function ensureAdminExists() {
-  let users = getUsers();
-  let adminUser = users.find(u => 
-    u.username.toLowerCase() === 'admin' &&
-    u.password === 'admin123'
-  );
-  if (!adminUser) {
-    const newAdmin = {
-      username: 'admin',
-      password: 'admin123', // только вы знаете
-      email: 'admin@site',
-      isAdmin: true
-    };
-    users.push(newAdmin);
-    setUsers(users);
-    console.log("Админ-аккаунт (admin/admin123) создан автоматически.");
-  }
-}
