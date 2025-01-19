@@ -1,5 +1,8 @@
 /***************************************************
- * Массив автомобилей: цены и описания
+ * cars: список авто
+ ***************************************************/
+/***************************************************
+ * Расширенный массив cars: добавлено больше моделей
  ***************************************************/
 const cars = [
   {
@@ -8,7 +11,7 @@ const cars = [
     price: 44990,
     image: "img/tesla-model-3-2023.webp",
     fallbackImage: "img/tesla-model-3-2023.png",
-    description: "Компактный электромобиль с автопилотом."
+    description: "Компактный электромобиль с автопилотом и большим запасом хода."
   },
   {
     model: "Toyota Camry",
@@ -16,7 +19,7 @@ const cars = [
     price: 25990,
     image: "img/toyota-camry-2023.webp",
     fallbackImage: "img/toyota-camry-2023.png",
-    description: "Надёжный седан бизнес-класса."
+    description: "Надёжный седан бизнес-класса, комфорт и практичность для города и трассы."
   },
   {
     model: "BMW iX",
@@ -24,7 +27,7 @@ const cars = [
     price: 84900,
     image: "img/bmw-ix-2024.webp",
     fallbackImage: "img/bmw-ix-2024.png",
-    description: "Электрический кроссовер с современным дизайном."
+    description: "Электрический кроссовер с современными технологиями и спортивным дизайном."
   },
   {
     model: "Mercedes-Benz E-Class",
@@ -32,7 +35,7 @@ const cars = [
     price: 55900,
     image: "img/mercedes-e-class-2022.webp",
     fallbackImage: "img/mercedes-e-class-2022.png",
-    description: "Престижный седан, комфорт везде."
+    description: "Престижный седан, создающий идеальные условия для дальних поездок."
   },
   {
     model: "Honda Civic",
@@ -40,7 +43,7 @@ const cars = [
     price: 22500,
     image: "img/honda-civic-2022.webp",
     fallbackImage: "img/honda-civic-2022.png",
-    description: "Популярный городской авто, экономичность и стиль."
+    description: "Популярный городской авто: экономичность, стиль и надёжность."
   },
   {
     model: "Audi Q5",
@@ -48,7 +51,7 @@ const cars = [
     price: 49900,
     image: "img/audi-q5-2024.webp",
     fallbackImage: "img/audi-q5-2024.png",
-    description: "Престижный кроссовер с полным приводом."
+    description: "Престижный кроссовер с полным приводом и отличной управляемостью."
   },
   {
     model: "Range Rover Velar",
@@ -56,12 +59,53 @@ const cars = [
     price: 63900,
     image: "img/range-rover-velar-2023.webp",
     fallbackImage: "img/range-rover-velar-2023.png",
-    description: "Роскошный SUV, проходимость и изысканный дизайн."
+    description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
+  },
+  {
+    model: "Hyundai Solaris",
+    year: "2023",
+    price: 16900,
+    image: "img/hyundai-solaris-2023.webp",
+    fallbackImage: "img/hyundai-solaris-2023.png",
+    description: "Доступный и надёжный седан с небольшим расходом топлива."
+  },
+  {
+    model: "Ford Mustang",
+    year: "2022",
+    price: 55900,
+    image: "img/ford-mustang-2022.webp",
+    fallbackImage: "img/ford-mustang-2022.png",
+    description: "Легендарный американский мускул-кар со стильным дизайном и мощным двигателем."
+  },
+  {
+    model: "Chevrolet Tahoe",
+    year: "2023",
+    price: 59900,
+    image: "img/chevrolet-tahoe-2023.webp",
+    fallbackImage: "img/chevrolet-tahoe-2023.png",
+    description: "Большой внедорожник с просторным салоном и отличной проходимостью."
+  },
+  {
+    model: "Volkswagen Golf GTI",
+    year: "2024",
+    price: 32900,
+    image: "img/vw-golf-gti-2024.webp",
+    fallbackImage: "img/vw-golf-gti-2024.png",
+    description: "Спортивный хэтчбек с узнаваемым дизайном и динамичным характером."
   }
 ];
 
 /***************************************************
- * Автоматическое создание admin/admin123
+ * Ниже логика (admin, localStorage, темы, покупка), 
+ * остаётся такой же, как в прошлых примерах.
+ ***************************************************/
+// ... дальше идёт весь ваш код loginUser, logoutUser, initAuthPage,
+//    initAdminPage, loadCars, filterCars, openBuyModal, closeBuyModal, etc.
+//    без изменений
+
+
+/***************************************************
+ * Убедимся, что admin/admin123 есть
  ***************************************************/
 function ensureAdminExists() {
   let users = getUsers();
@@ -77,12 +121,12 @@ function ensureAdminExists() {
     };
     users.push(newAdmin);
     setUsers(users);
-    console.log("Админ (admin/admin123) создан автоматически.");
+    console.log("Admin (admin/admin123) auto-created.");
   }
 }
 
 /***************************************************
- * Локальное хранение: users, currentUser, tickets
+ * LocalStorage: users, currentUser, tickets
  ***************************************************/
 function getUsers() {
   return JSON.parse(localStorage.getItem('users') || '[]');
@@ -107,24 +151,22 @@ function setTickets(arr) {
 }
 
 /***************************************************
- * Регистрация/Вход
+ * Регистрация / Вход
  ***************************************************/
 function registerUser(username, password, email) {
   let users = getUsers();
-  // Проверка занятости
   if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
     alert("Такой логин уже есть!");
     return false;
   }
   let isAdmin = false;
-  // Если admin/admin123 => isAdmin
   if (username.toLowerCase() === 'admin' && password === 'admin123') {
     isAdmin = true;
   }
   const newUser = { username, password, email, isAdmin };
   users.push(newUser);
   setUsers(users);
-  alert("Регистрация прошла успешно!");
+  alert("Регистрация успешно завершена!");
   return true;
 }
 
@@ -149,7 +191,7 @@ function logoutUser() {
 }
 
 /***************************************************
- * Инициализация auth.html
+ * auth.html
  ***************************************************/
 function initAuthPage() {
   const regForm = document.getElementById("register-form");
@@ -189,7 +231,7 @@ function initAuthPage() {
 }
 
 /***************************************************
- * Админ-панель (admin.html): отображение tickets
+ * admin.html
  ***************************************************/
 function initAdminPage() {
   const adminStatus = document.getElementById("admin-status");
@@ -205,26 +247,24 @@ function initAdminPage() {
   }
   adminStatus.innerHTML = `Здравствуйте, <strong>${currentUser.username}</strong> (администратор).`;
 
-  // Выведем заявки
   const tickets = getTickets();
-  ticketsList.innerHTML = "";
   if (!tickets.length) {
     ticketsList.innerHTML = "<p>Нет запросов в техподдержку.</p>";
-    return;
+  } else {
+    ticketsList.innerHTML = "";
+    tickets.forEach(t => {
+      const div = document.createElement("div");
+      div.style.marginBottom = "15px";
+      div.innerHTML = `
+        <p><strong>${t.name}</strong> (${t.phone}): "${t.message}" <span style="color:#999;">(${t.date})</span></p>
+      `;
+      ticketsList.appendChild(div);
+    });
   }
-  tickets.forEach((t) => {
-    const div = document.createElement("div");
-    div.classList.add("ticket-item");
-    div.style.marginBottom = "15px";
-    div.innerHTML = `
-      <p><strong>${t.name}</strong> (${t.phone}): "${t.message}" <span style="color:#999;">(${t.date})</span></p>
-    `;
-    ticketsList.appendChild(div);
-  });
 }
 
 /***************************************************
- * Каталог (cars): loadCars / filterCars / searchCars
+ * Каталог
  ***************************************************/
 function loadCars(filter = 'all') {
   const catalog = document.getElementById("catalog-cards");
@@ -255,7 +295,7 @@ function filterCars(year) {
   const buttons = document.querySelectorAll(".filter-btn");
   buttons.forEach(btn => {
     btn.classList.remove("active");
-    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')) {
+    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')){
       btn.classList.add("active");
     }
   });
@@ -292,7 +332,7 @@ function searchCars() {
 }
 
 /***************************************************
- * Модальное окно "Купить автомобиль"
+ * Модальное окно "Купить"
  ***************************************************/
 function openBuyModal(carName) {
   const buyModal = document.getElementById("buyModal");
@@ -327,7 +367,6 @@ function closeBuyModal() {
     buyModal.style.display = "none";
   }
 }
-
 window.onclick = function(event) {
   const buyModal = document.getElementById("buyModal");
   if (buyModal && event.target === buyModal) {
@@ -336,7 +375,7 @@ window.onclick = function(event) {
 };
 
 /***************************************************
- * Плавающее меню (theme, menu)
+ * Плавающее меню + тема
  ***************************************************/
 const menuFab = document.getElementById("menu-fab");
 const sideMenu = document.getElementById("side-menu");
@@ -360,9 +399,9 @@ if (themeFab) {
   }
   themeFab.addEventListener("click", () => {
     document.body.classList.toggle("dark-theme");
-    let theme = "light";
+    let theme = 'light';
     if (document.body.classList.contains("dark-theme")) {
-      theme = "dark";
+      theme = 'dark';
     }
     localStorage.setItem("theme", theme);
     updateThemeIcon(theme);
@@ -382,12 +421,12 @@ function updateThemeIcon(theme) {
 }
 
 /***************************************************
- * Форма покупки
+ * Формы при DOMContentLoaded
  ***************************************************/
 document.addEventListener("DOMContentLoaded", () => {
-  ensureAdminExists(); // Гарантируем, что есть admin/admin123
+  ensureAdminExists(); // Создаём admin/admin123, если нет
 
-  // Если index.html (catalog-cards существует)
+  // index.html
   if (document.getElementById("catalog-cards")) {
     loadCars();
     const searchInput = document.getElementById("search-input");
@@ -396,17 +435,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Если auth.html
+  // auth.html
   if (document.getElementById("register-form") || document.getElementById("login-form")) {
     initAuthPage();
   }
 
-  // Если admin.html
+  // admin.html
   if (document.getElementById("admin-status")) {
     initAdminPage();
   }
 
-  // Форма "Купить"
+  // Покупка авто
   const buyForm = document.getElementById("buy-form");
   if (buyForm) {
     buyForm.addEventListener("submit", (e) => {
@@ -416,29 +455,26 @@ document.addEventListener("DOMContentLoaded", () => {
       const phone = document.getElementById("buy-phone").value.trim();
       const car = document.getElementById("buy-car").value.trim();
       const message = document.getElementById("buy-message").value.trim();
-
       if (!name || !email || !phone || !car || !message) {
         alert("Заполните все поля!");
         return;
       }
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(email)) {
-        alert("Неверный формат Email.");
+        alert("Неверный формат Email!");
         return;
       }
-      // Не используем строгий паттерн. Достаточно непустого
-      if (!phone) {
-        alert("Введите телефон!");
+      if (phone.length < 5) {
+        alert("Введите нормальный телефон (не меньше 5 символов).");
         return;
       }
-
       alert(`Спасибо, ${name}! Ваша заявка на покупку ${car} принята.`);
       buyForm.reset();
       closeBuyModal();
     });
   }
 
-  // Форма "support-form" (contacts.html)
+  // Техподдержка (contacts.html)
   const supportForm = document.getElementById("support-form");
   if (supportForm) {
     supportForm.addEventListener("submit", (e) => {
@@ -446,17 +482,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const sname = document.getElementById("support-name").value.trim();
       const sphone = document.getElementById("support-phone").value.trim();
       const smessage = document.getElementById("support-message").value.trim();
+
       if (!sname || !smessage) {
         alert("Введите имя и сообщение!");
         return;
       }
-      // Телефон тоже не пустой
-      if (!sphone) {
-        alert("Введите телефон!");
+      if (sphone.length < 5) {
+        alert("Введите нормальный телефон (не меньше 5 символов).");
         return;
       }
 
-      // Создадим новый тикет
       let tickets = getTickets();
       const newTicket = {
         name: sname,

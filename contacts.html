@@ -12,11 +12,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Плавающая кнопка меню -->
+  <!-- Меню / Тема -->
   <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
     <i class="fas fa-bars"></i>
   </button>
-  <!-- Плавающая кнопка темы -->
   <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
     <i class="fas fa-moon"></i>
   </button>
@@ -44,7 +43,6 @@
         Адрес: г. Москва, ул. Автомобильная, д. 10
       </p>
 
-      <!-- Форма обращения в техподдержку -->
       <div class="support-form" data-aos="zoom-in">
         <h2>Написать в техподдержку</h2>
         <form id="support-form" style="max-width:400px; margin:0 auto;">
@@ -52,7 +50,7 @@
           <input type="text" id="support-name" required>
 
           <label for="support-phone">Телефон:</label>
-          <input type="text" id="support-phone" placeholder="+7 (999) 123-45-67">
+          <input type="text" id="support-phone" placeholder="Например: +7 999 123-45-67" required>
 
           <label for="support-message">Сообщение:</label>
           <textarea id="support-message" rows="4" required></textarea>

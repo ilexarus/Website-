@@ -12,13 +12,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Плавающая кнопка меню -->
-  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню">
+  <!-- Кнопка меню (сверху слева) -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
     <i class="fas fa-bars"></i>
   </button>
-
-  <!-- Плавающая кнопка темы -->
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
+  <!-- Кнопка темы (сверху справа) -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
     <i class="fas fa-moon"></i>
   </button>
 
@@ -32,51 +31,32 @@
       <li><a href="about.html">О нас</a></li>
       <li><a href="services.html">Услуги</a></li>
       <li><a href="contacts.html">Контакты</a></li>
+      <li><a href="auth.html">Вход/Регистрация</a></li>
+      <li><a href="admin.html">Админ-панель</a></li>
     </ul>
   </nav>
 
   <section class="about-page" style="padding:60px 20px;">
-    <div class="container">
-      <h1 data-aos="fade-down">О нас</h1>
-      <p data-aos="fade-right" style="max-width:700px; margin: 0 auto;">
-        Компания <strong>AutoSaling</strong> — это молодой, но опытный коллектив, увлечённый упрощением процесса покупки автомобилей. Мы упорно работаем, чтобы каждый клиент мог найти автомобиль своей мечты в пару кликов.
+    <div class="container" data-aos="fade-up">
+      <h1>О нас</h1>
+      <p style="max-width:700px; margin:0 auto;" data-aos="fade-right">
+        Компания <strong>AutoSaling</strong> — молодой, но опытный коллектив, увлечённый автоматизацией и упрощением покупки автомобилей. Мы стремимся сделать процесс поиска и приобретения авто максимально удобным, предлагая минималистичный дизайн, выбор темы и плавающее боковое меню.
       </p>
-      <div class="about-features" style="margin-top:40px; display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+      <div class="about-features" style="margin-top:40px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
         <div class="feature-block" data-aos="zoom-in">
           <i class="fas fa-code fa-3x"></i>
           <h3>Технологии</h3>
-          <p>Современные веб-технологии, плавные анимации, выбор темы — всё ради лучшего UX.</p>
+          <p>Используем современные веб-инструменты и localStorage для хранения данных без сервера.</p>
         </div>
         <div class="feature-block" data-aos="zoom-in" data-aos-delay="200">
           <i class="fas fa-palette fa-3x"></i>
           <h3>Дизайн</h3>
-          <p>Никаких лишних элементов — только самое нужное. Минимализм в полной мере.</p>
+          <p>Минимализм, темная тема, плавные анимации. Ничего лишнего.</p>
         </div>
         <div class="feature-block" data-aos="zoom-in" data-aos-delay="400">
           <i class="fas fa-user-friends fa-3x"></i>
           <h3>Поддержка</h3>
-          <p>Поможем с выбором авто, оформлением документов и любыми вопросами в процессе.</p>
-        </div>
-      </div>
-
-      <!-- История -->
-      <div class="timeline" style="margin-top:60px;">
-        <h2 data-aos="fade-up">Наша история</h2>
-        <div class="timeline-item" data-aos="fade-right">
-          <div class="timeline-year">2018</div>
-          <div class="timeline-desc">Возникла идея создать онлайн-платформу для быстрого и приятного подбора автомобилей.</div>
-        </div>
-        <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
-          <div class="timeline-year">2019</div>
-          <div class="timeline-desc">Маленькая команда из энтузиастов начала работу над прототипом Minimal Car Shop.</div>
-        </div>
-        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
-          <div class="timeline-year">2020</div>
-          <div class="timeline-desc">Прошли бета-тест, получили отзывы и оптимизировали логику и дизайн.</div>
-        </div>
-        <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
-          <div class="timeline-year">2022</div>
-          <div class="timeline-desc">Переименовались в AutoSaling, добавили выбор темы, плавающее меню и расширили ассортимент.</div>
+          <p>Ответим на любые вопросы: форма техподдержки, админ-панель для быстрой обратной связи.</p>
         </div>
       </div>
     </div>

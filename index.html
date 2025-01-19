@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AutoSaling - Главная</title>
-  <meta name="description" content="AutoSaling: минималистичный сайт для выбора и покупки автомобилей. Тёмная тема, боковое меню, плавные анимации, отзывы."/>
-  <meta name="keywords" content="автомобили, покупка, минимализм, dark theme, отзывы"/>
+  <meta name="description" content="AutoSaling: современный минималистичный сайт для выбора и покупки автомобилей, с тёмной темой, параллакс-эффектом и боковым меню."/>
+  <meta name="keywords" content="автомобили, покупка, минимализм, dark theme, parallax"/>
   <meta name="author" content="AutoSaling">
 
   <!-- Google Fonts -->
@@ -21,13 +21,13 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <!-- Плавающая кнопка меню -->
-  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню">
+  <!-- Кнопка меню (сверху слева) -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right" data-aos-delay="300">
     <i class="fas fa-bars"></i>
   </button>
 
-  <!-- Плавающая кнопка темы -->
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
+  <!-- Кнопка темы (сверху справа) -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left" data-aos-delay="300">
     <i class="fas fa-moon"></i>
   </button>
 
@@ -37,26 +37,25 @@
       <i class="fas fa-times"></i>
     </button>
     <ul>
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="about.html">О нас</a></li>
-      <li><a href="services.html">Услуги</a></li>
-      <li><a href="#catalog">Каталог</a></li>
-      <li><a href="#benefits">Преимущества</a></li>
-      <li><a href="#reviews">Отзывы</a></li>
-      <li><a href="contacts.html">Контакты</a></li>
-      <li><a href="auth.html">Вход/Регистрация</a></li>
-      <li><a href="admin.html">Админ-панель</a></li>
+      <li data-aos="fade-right"><a href="index.html">Главная</a></li>
+      <li data-aos="fade-right" data-aos-delay="100"><a href="about.html">О нас</a></li>
+      <li data-aos="fade-right" data-aos-delay="200"><a href="services.html">Услуги</a></li>
+      <li data-aos="fade-right" data-aos-delay="300"><a href="#catalog">Каталог</a></li>
+      <li data-aos="fade-right" data-aos-delay="400"><a href="contacts.html">Контакты</a></li>
+      <li data-aos="fade-right" data-aos-delay="500"><a href="auth.html">Вход/Регистрация</a></li>
+      <li data-aos="fade-right" data-aos-delay="600"><a href="admin.html">Админ-панель</a></li>
     </ul>
   </nav>
 
-  <!-- Hero (Главный экран) -->
-  <section class="hero" data-aos="fade-up">
+  <!-- Hero (Главный экран) с параллакс-эффектом -->
+  <section class="hero parallax-hero" data-aos="fade-up">
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">AutoSaling — Найдите своё авто</h1>
-      <p class="hero-description">
-        Минимализм, выбор темы и все нужные функции: регистрация, отзывы, техподдержка. Добро пожаловать!
+      <h1 class="hero-title" data-aos="zoom-in">AutoSaling — Найдите свой идеальный автомобиль</h1>
+      <p class="hero-description" data-aos="zoom-in" data-aos-delay="200">
+        Минимализм, тёмная тема, параллакс-фон, техподдержка, админ-панель — всё в одном месте!
       </p>
-      <a href="#catalog" class="btn" data-aos="zoom-in">Посмотреть каталог</a>
+      <a href="#catalog" class="btn" data-aos="zoom-in" data-aos-delay="300">Посмотреть каталог</a>
     </div>
   </section>
 
@@ -73,58 +72,8 @@
           <button class="filter-btn" onclick="filterCars('2022')">2022</button>
         </div>
       </div>
-      <div class="catalog-cards" id="catalog-cards">
-        <!-- Заполняется script.js -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Преимущества -->
-  <section id="benefits" class="benefits" data-aos="fade-up">
-    <div class="container">
-      <h2>Почему мы</h2>
-      <div class="benefit-list">
-        <div class="benefit-item" data-aos="flip-left">
-          <i class="fas fa-car-side fa-2x"></i>
-          <p>Огромный ассортимент</p>
-        </div>
-        <div class="benefit-item" data-aos="flip-left" data-aos-delay="200">
-          <i class="fas fa-handshake fa-2x"></i>
-          <p>Честные сделки и сервис</p>
-        </div>
-        <div class="benefit-item" data-aos="flip-left" data-aos-delay="400">
-          <i class="fas fa-shield-alt fa-2x"></i>
-          <p>Гарантия и поддержка</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Отзывы -->
-  <section id="reviews" class="reviews" data-aos="fade-up">
-    <div class="container">
-      <h2>Отзывы о сайте</h2>
-      <div class="reviews-list" id="reviews-list">
-        <!-- Отображаются отзывы из localStorage -->
-      </div>
-      <div class="add-review" data-aos="fade-right" style="margin-top:30px;">
-        <h3>Оставить отзыв</h3>
-        <div id="review-form-block">
-          <!-- Если пользователь авторизован, показываем форму для отзыва -->
-          <!-- Если нет — пишем, что нужно войти -->
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Контакты (минимальный блок) -->
-  <section id="contacts" class="contacts" data-aos="fade-up">
-    <div class="container">
-      <h2>Связаться с нами</h2>
-      <div class="contact-info">
-        <p>Email: <a href="mailto:info@autosaling.com">info@autosaling.com</a></p>
-        <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
-        <p>Адрес: Москва, ул. Автомобильная, д. 10</p>
+      <div class="catalog-cards" id="catalog-cards" data-aos="fade-up" data-aos-delay="200">
+        <!-- Заполняется скриптом -->
       </div>
     </div>
   </section>
@@ -145,7 +94,7 @@
         <input type="email" id="buy-email" name="buy-email" required/>
 
         <label for="buy-phone">Телефон:</label>
-        <input type="tel" id="buy-phone" name="buy-phone" required pattern="^\\+?\\d{7,15}$"/>
+        <input type="text" id="buy-phone" name="buy-phone" required/>
 
         <label for="buy-car">Модель автомобиля:</label>
         <input type="text" id="buy-car" name="buy-car" readonly/>
@@ -158,10 +107,9 @@
     </div>
   </div>
 
-  <!-- Футер -->
   <footer class="footer" data-aos="fade-up">
     <div class="container">
-      <p>© 2025 AutoSaling — Покупка авто ещё проще.</p>
+      <p>© 2025 AutoSaling — комфортная покупка авто.</p>
     </div>
   </footer>
 

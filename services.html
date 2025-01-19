@@ -12,12 +12,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Плавающая кнопка меню -->
-  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню">
+  <!-- Меню / Тема -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
     <i class="fas fa-bars"></i>
   </button>
-  <!-- Плавающая кнопка темы -->
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему">
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
     <i class="fas fa-moon"></i>
   </button>
 
@@ -31,54 +30,38 @@
       <li><a href="about.html">О нас</a></li>
       <li><a href="services.html">Услуги</a></li>
       <li><a href="contacts.html">Контакты</a></li>
+      <li><a href="auth.html">Вход/Регистрация</a></li>
+      <li><a href="admin.html">Админ-панель</a></li>
     </ul>
   </nav>
 
   <section class="services-page" style="padding:60px 20px;">
-    <div class="container">
-      <h1 data-aos="fade-down">Наши услуги</h1>
-      <p data-aos="fade-right" style="max-width:700px; margin: 0 auto;">
-        Наша задача — предложить вам полный спектр услуг, связанных с покупкой и владением автомобилем. От выбора машины и оценки вашего авто до полноценного сервисного обслуживания и оформления документов.
+    <div class="container" data-aos="fade-up">
+      <h1>Наши услуги</h1>
+      <p style="max-width:700px; margin:0 auto;" data-aos="fade-right">
+        Полный спектр услуг: от покупки и продажи авто до оформления документов и сервисного обслуживания.
       </p>
 
-      <!-- Карточки услуг -->
       <div class="services-list" style="margin-top:40px; display:grid; gap:30px; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));">
         <div class="service-item" data-aos="zoom-in">
           <i class="fas fa-car fa-3x"></i>
           <h3>Продажа автомобилей</h3>
-          <p>Новые и проверенные б/у авто со всей страны. Выбирайте по брендам, моделям и характеристикам.</p>
+          <p>Новые и б/у модели со всей страны. Фильтры по году, модели и бюджету.</p>
         </div>
         <div class="service-item" data-aos="zoom-in" data-aos-delay="200">
           <i class="fas fa-handshake fa-3x"></i>
           <h3>Покупка вашего авто</h3>
-          <p>Быстрая оценка и выкуп без лишних хлопот. Мы ценим ваше время и ваше авто.</p>
+          <p>Оценим и выкупим по честной цене, без лишних хлопот и комиссий.</p>
         </div>
         <div class="service-item" data-aos="zoom-in" data-aos-delay="400">
           <i class="fas fa-tools fa-3x"></i>
           <h3>Обслуживание и ремонт</h3>
-          <p>Партнёрские СТО и сервисные центры готовы помочь с любыми техническими вопросами.</p>
+          <p>Сертифицированные СТО, партнёрские сервис-центры и скидки на запчасти.</p>
         </div>
         <div class="service-item" data-aos="zoom-in" data-aos-delay="600">
           <i class="fas fa-file-alt fa-3x"></i>
           <h3>Документы и страховка</h3>
-          <p>Моментальное оформление всех бумаг, регистрация в ГИБДД и поиск лучших страховых решений.</p>
-        </div>
-      </div>
-
-      <!-- FAQ блок -->
-      <div class="faq" style="margin-top:60px;">
-        <h2 data-aos="fade-up">Вопросы и ответы</h2>
-        <div class="faq-item" data-aos="fade-right">
-          <h3>1. Можно ли купить авто в кредит?</h3>
-          <p>Да, мы сотрудничаем с банками и страховыми компаниями, так что вы можете подобрать оптимальный кредит или лизинг.</p>
-        </div>
-        <div class="faq-item" data-aos="fade-right" data-aos-delay="100">
-          <h3>2. Как происходит оценка моего автомобиля?</h3>
-          <p>Оценка может быть сделана онлайн по фотографиям и документам, а также при осмотре на наших партнёрских СТО.</p>
-        </div>
-        <div class="faq-item" data-aos="fade-right" data-aos-delay="200">
-          <h3>3. Предоставляете ли вы гарантию?</h3>
-          <p>На большинство автомобилей (новых и б/у с небольшой историей) действует гарантия. Уточняйте детали у менеджера.</p>
+          <p>Оперативное оформление, регистрация, помощь в подборе страховых решений.</p>
         </div>
       </div>
     </div>
