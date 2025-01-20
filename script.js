@@ -1,4 +1,99 @@
 /***************************************************
+ * Подключение к серверу Socket.io
+ ***************************************************/
+const socket = io();
+
+let currentTicketId = null; // ID текущего тикета
+let currentUserName = null; // Имя пользователя (или admin)
+
+/***************************************************
+ * Создание тикета
+ ***************************************************/
+function createTicket(userName) {
+  currentUserName = userName || `User_${Date.now()}`;
+  currentTicketId = `TICKET_${Date.now()}`;
+
+  // Уведомляем сервер о создании тикета
+  socket.emit("createTicket", currentTicketId, currentUserName);
+
+  // Слушаем обновления тикета от сервера
+  socket.on("ticketData", (ticket) => {
+    renderMessages(ticket);
+  });
+}
+
+/***************************************************
+ * Отправка сообщения
+ ***************************************************/
+function sendMessage(text) {
+  if (!currentTicketId || !text.trim()) return;
+
+  const message = {
+    ticketId: currentTicketId,
+    from: currentUserName,
+    text: text.trim(),
+  };
+
+  socket.emit("sendMessage", message);
+}
+
+/***************************************************
+ * Отрисовка сообщений в чате
+ ***************************************************/
+function renderMessages(ticket) {
+  const messagesContainer = document.getElementById("chat-messages");
+  if (!messagesContainer || !ticket) return;
+
+  messagesContainer.innerHTML = "";
+  ticket.messages.forEach((msg) => {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = msg.from.toLowerCase() === "admin" ? "msg-admin" : "msg-user";
+    msgDiv.innerHTML = `<strong>${msg.from}</strong> <span style="font-size:0.8rem;color:#999;">(${msg.date})</span><br>${msg.text}`;
+    messagesContainer.appendChild(msgDiv);
+  });
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+/***************************************************
+ * Инициализация чата
+ ***************************************************/
+function initChat() {
+  const chatForm = document.getElementById("chat-form");
+  const chatInput = document.getElementById("chat-input");
+  const openChatBtn = document.getElementById("open-chat");
+  const closeChatBtn = document.getElementById("close-chat");
+  const chatPanel = document.getElementById("chatPanel");
+
+  if (!chatForm || !chatInput || !openChatBtn || !closeChatBtn || !chatPanel) return;
+
+  // Открыть чат
+  openChatBtn.addEventListener("click", () => {
+    chatPanel.style.display = "block";
+  });
+
+  // Закрыть чат
+  closeChatBtn.addEventListener("click", () => {
+    chatPanel.style.display = "none";
+  });
+
+  // Отправка сообщения
+  chatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    sendMessage(chatInput.value);
+    chatInput.value = "";
+  });
+
+  // Создаём тикет при загрузке страницы
+  const currentUser = getCurrentUser();
+  if (currentUser) {
+    createTicket(currentUser.username);
+  } else {
+    createTicket("guest");
+  }
+}
+
+/***************************************************
  * cars: список авто
  ***************************************************/
 /***************************************************
@@ -99,10 +194,9 @@ const cars = [
  * Ниже логика (admin, localStorage, темы, покупка), 
  * остаётся такой же, как в прошлых примерах.
  ***************************************************/
-// ... дальше идёт весь ваш код loginUser, logoutUser, initAuthPage,
+// ... весь ваш код loginUser, logoutUser, initAuthPage,
 //    initAdminPage, loadCars, filterCars, openBuyModal, closeBuyModal, etc.
 //    без изменений
-
 
 /***************************************************
  * Убедимся, что admin/admin123 есть
@@ -507,95 +601,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Инициализация чата
+  initChat();
+
   // Инициализация AOS
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 2000,
       easing: 'ease-out-cubic',
       once: true
-    });
-  }
-});
-// Подключение к серверу Socket.io
-const socket = io();
-
-let currentTicketId = null; // ID текущего тикета
-let currentUserName = null; // Имя пользователя (или admin)
-
-// Создание тикета
-function createTicket(userName) {
-  currentUserName = userName || `User_${Date.now()}`;
-  currentTicketId = `TICKET_${Date.now()}`;
-
-  // Уведомляем сервер
-  socket.emit("createTicket", currentTicketId);
-
-  // Слушаем обновления тикета
-  socket.on("ticketData", (ticket) => {
-    renderMessages(ticket);
-  });
-}
-
-// Отправка сообщения
-function sendMessage(text) {
-  if (!currentTicketId || !text.trim()) return;
-
-  const message = {
-    ticketId: currentTicketId,
-    from: currentUserName,
-    text: text.trim(),
-  };
-
-  socket.emit("sendMessage", message);
-}
-
-// Отрисовка сообщений
-function renderMessages(ticket) {
-  const messagesContainer = document.getElementById("chat-messages");
-  if (!messagesContainer || !ticket) return;
-
-  messagesContainer.innerHTML = "";
-  if (ticket.messages.length === 0) {
-    messagesContainer.innerHTML = "<p>Сообщений пока нет. Напишите первое!</p>";
-    return;
-  }
-
-  ticket.messages.forEach((msg) => {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = msg.from === "admin" ? "msg-admin" : "msg-user";
-    msgDiv.innerHTML = `<strong>${msg.from}</strong> <span style="font-size:0.8rem;color:#999;">(${msg.date})</span><br>${msg.text}`;
-    messagesContainer.appendChild(msgDiv);
-  });
-
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-// cars: список авто
-
-/***************************************************
- * Формы при DOMContentLoaded
- ***************************************************/
-document.addEventListener("DOMContentLoaded", () => {
-  // Создаём тикет при загрузке страницы (для демонстрации)
-  createTicket("guest");
-
-  // Покупка авто
-  const buyForm = document.getElementById("buy-form");
-  if (buyForm) {
-    buyForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("buy-name").value.trim();
-      const email = document.getElementById("buy-email").value.trim();
-      const phone = document.getElementById("buy-phone").value.trim();
-      const car = document.getElementById("buy-car").value.trim();
-      const message = document.getElementById("buy-message").value.trim();
-      if (!name || !email || !phone || !car || !message) {
-        alert("Заполните все поля!");
-        return;
-      }
-      alert(`Спасибо, ${name}! Ваша заявка на покупку ${car} принята.`);
-      buyForm.reset();
-      closeBuyModal();
     });
   }
 });
