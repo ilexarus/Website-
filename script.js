@@ -1,96 +1,3 @@
-// Подключение к серверу Socket.io
-const socket = io("https://autosaling.netlify.app/"); // Замените на URL вашего сервера
-
-let currentTicketId = null;
-let currentUserName = null;
-
-/***************************************************
- * Создание тикета
- ***************************************************/
-function createTicket(userName) {
-  currentUserName = userName || `User_${Date.now()}`;
-  currentTicketId = `TICKET_${Date.now()}`;
-
-  // Уведомляем сервер о создании тикета
-  socket.emit("createTicket", currentTicketId, currentUserName);
-
-  // Слушаем обновления тикета от сервера
-  socket.on("ticketData", (ticket) => {
-    renderMessages(ticket);
-  });
-}
-
-/***************************************************
- * Отправка сообщения
- ***************************************************/
-function sendMessage(text) {
-  if (!currentTicketId || !text.trim()) return;
-
-  const message = {
-    ticketId: currentTicketId,
-    from: currentUserName,
-    text: text.trim(),
-  };
-
-  socket.emit("sendMessage", message);
-}
-
-/***************************************************
- * Отрисовка сообщений в чате
- ***************************************************/
-function renderMessages(ticket) {
-  const messagesContainer = document.getElementById("chat-messages");
-  if (!messagesContainer || !ticket) return;
-
-  messagesContainer.innerHTML = "";
-  ticket.messages.forEach((msg) => {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = msg.from.toLowerCase() === "admin" ? "msg-admin" : "msg-user";
-    msgDiv.innerHTML = `<strong>${msg.from}</strong> <span style="font-size:0.8rem;color:#999;">(${msg.date})</span><br>${msg.text}`;
-    messagesContainer.appendChild(msgDiv);
-  });
-
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
-/***************************************************
- * Инициализация чата
- ***************************************************/
-function initChat() {
-  const chatForm = document.getElementById("chat-form");
-  const chatInput = document.getElementById("chat-input");
-  const openChatBtn = document.getElementById("open-chat");
-  const closeChatBtn = document.getElementById("close-chat");
-  const chatPanel = document.getElementById("chatPanel");
-
-  if (!chatForm || !chatInput || !openChatBtn || !closeChatBtn || !chatPanel) return;
-
-  // Открыть чат
-  openChatBtn.addEventListener("click", () => {
-    chatPanel.style.display = "block";
-  });
-
-  // Закрыть чат
-  closeChatBtn.addEventListener("click", () => {
-    chatPanel.style.display = "none";
-  });
-
-  // Отправка сообщения
-  chatForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    sendMessage(chatInput.value);
-    chatInput.value = "";
-  });
-
-  // Создаём тикет при загрузке страницы
-  const currentUser = getCurrentUser();
-  if (currentUser) {
-    createTicket(currentUser.username);
-  } else {
-    createTicket("guest");
-  }
-}
-
 /***************************************************
  * cars: список авто
  ***************************************************/
@@ -106,16 +13,96 @@ const cars = [
     fallbackImage: "img/tesla-model-3-2023.png",
     description: "Компактный электромобиль с автопилотом и большим запасом хода."
   },
-  // ... остальные модели
+  {
+    model: "Toyota Camry",
+    year: "2023",
+    price: 25990,
+    image: "img/toyota-camry-2023.webp",
+    fallbackImage: "img/toyota-camry-2023.png",
+    description: "Надёжный седан бизнес-класса, комфорт и практичность для города и трассы."
+  },
+  {
+    model: "BMW iX",
+    year: "2024",
+    price: 84900,
+    image: "img/bmw-ix-2024.webp",
+    fallbackImage: "img/bmw-ix-2024.png",
+    description: "Электрический кроссовер с современными технологиями и спортивным дизайном."
+  },
+  {
+    model: "Mercedes-Benz E-Class",
+    year: "2022",
+    price: 55900,
+    image: "img/mercedes-e-class-2022.webp",
+    fallbackImage: "img/mercedes-e-class-2022.png",
+    description: "Престижный седан, создающий идеальные условия для дальних поездок."
+  },
+  {
+    model: "Honda Civic",
+    year: "2022",
+    price: 22500,
+    image: "img/honda-civic-2022.webp",
+    fallbackImage: "img/honda-civic-2022.png",
+    description: "Популярный городской авто: экономичность, стиль и надёжность."
+  },
+  {
+    model: "Audi Q5",
+    year: "2024",
+    price: 49900,
+    image: "img/audi-q5-2024.webp",
+    fallbackImage: "img/audi-q5-2024.png",
+    description: "Престижный кроссовер с полным приводом и отличной управляемостью."
+  },
+  {
+    model: "Range Rover Velar",
+    year: "2023",
+    price: 63900,
+    image: "img/range-rover-velar-2023.webp",
+    fallbackImage: "img/range-rover-velar-2023.png",
+    description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
+  },
+  {
+    model: "Hyundai Solaris",
+    year: "2023",
+    price: 16900,
+    image: "img/hyundai-solaris-2023.webp",
+    fallbackImage: "img/hyundai-solaris-2023.png",
+    description: "Доступный и надёжный седан с небольшим расходом топлива."
+  },
+  {
+    model: "Ford Mustang",
+    year: "2022",
+    price: 55900,
+    image: "img/ford-mustang-2022.webp",
+    fallbackImage: "img/ford-mustang-2022.png",
+    description: "Легендарный американский мускул-кар со стильным дизайном и мощным двигателем."
+  },
+  {
+    model: "Chevrolet Tahoe",
+    year: "2023",
+    price: 59900,
+    image: "img/chevrolet-tahoe-2023.webp",
+    fallbackImage: "img/chevrolet-tahoe-2023.png",
+    description: "Большой внедорожник с просторным салоном и отличной проходимостью."
+  },
+  {
+    model: "Volkswagen Golf GTI",
+    year: "2024",
+    price: 32900,
+    image: "img/vw-golf-gti-2024.webp",
+    fallbackImage: "img/vw-golf-gti-2024.png",
+    description: "Спортивный хэтчбек с узнаваемым дизайном и динамичным характером."
+  }
 ];
 
 /***************************************************
  * Ниже логика (admin, localStorage, темы, покупка), 
  * остаётся такой же, как в прошлых примерах.
  ***************************************************/
-// ... весь ваш код loginUser, logoutUser, initAuthPage,
+// ... дальше идёт весь ваш код loginUser, logoutUser, initAuthPage,
 //    initAdminPage, loadCars, filterCars, openBuyModal, closeBuyModal, etc.
 //    без изменений
+
 
 /***************************************************
  * Убедимся, что admin/admin123 есть
@@ -519,9 +506,6 @@ document.addEventListener("DOMContentLoaded", () => {
       supportForm.reset();
     });
   }
-
-  // Инициализация чата
-  initChat();
 
   // Инициализация AOS
   if (typeof AOS !== 'undefined') {
