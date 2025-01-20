@@ -1,31 +1,27 @@
-/* Универсальный box-sizing */
-*,
-*::before,
-*::after {
+/* Универсальное */
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* Переменные для тем (светлая) */
 :root {
-  --background-color: #ffffff; 
+  --background-color: #ffffff;
   --text-color: #333333;
   --accent-color: #FF6F00;
   --secondary-color: #f0f0f0;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
-  /* Фон главного экрана (hero) в светлой теме */
   --hero-bg: #fafafa;
+  --parallax-bg: url("img/parallax-bg.jpg"); /* Замените на свою картинку */
 }
 
 /* Тёмная тема */
 body.dark-theme {
-  --background-color: #1a1a1a; 
+  --background-color: #1a1a1a;
   --text-color: #e0e0e0;
   --accent-color: #FF6F00;
   --secondary-color: #2c2c2c;
   --shadow-color: rgba(255, 255, 255, 0.1);
 
-  /* Фон главного экрана (hero) в тёмной теме: полностью тёмный */
   --hero-bg: #1a1a1a;
 }
 
@@ -39,19 +35,21 @@ body {
 
 /* Заголовки */
 h1, h2, h3, h4 {
-  margin: 0 0 15px 0;
-  color: var(--accent-color);
   text-align: center;
+  color: var(--accent-color);
+  margin: 0 0 15px 0;
 }
 
 /* Текст, ссылки */
 p, label, span, a {
   color: var(--text-color);
 }
+
 a {
   text-decoration: none;
   transition: color 0.3s;
 }
+
 a:hover {
   color: var(--accent-color);
 }
@@ -63,44 +61,32 @@ a:hover {
   padding: 0 20px;
 }
 
-/* FAB меню (сверху слева) */
+/* FAB-кнопки */
+.menu-fab, .theme-fab {
+  position: fixed;
+  top: 20px;
+  width: 50px;
+  height: 50px;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+  z-index: 2000;
+}
+
 .menu-fab {
-  position: fixed;
-  top: 20px;
   left: 20px;
-  width: 50px;
-  height: 50px;
-  background: var(--accent-color);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s;
-  z-index: 2000;
 }
 
-/* FAB темы (сверху справа) */
 .theme-fab {
-  position: fixed;
-  top: 20px;
   right: 20px;
-  width: 50px;
-  height: 50px;
-  background: var(--accent-color);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: transform 0.3s;
-  z-index: 2000;
 }
 
-.menu-fab:hover,
-.theme-fab:hover {
+.menu-fab:hover, .theme-fab:hover {
   transform: scale(1.1);
 }
 
@@ -119,21 +105,45 @@ a:hover {
   display: flex;
   flex-direction: column;
 }
+
 .side-menu.active {
   left: 0;
 }
+
 .side-menu ul {
   list-style: none;
   margin: 60px 0 0;
   padding: 0;
 }
+
 .side-menu ul li {
   margin-bottom: 20px;
 }
+
 .side-menu ul li a {
   font-size: 1rem;
   color: var(--text-color);
+  text-decoration: none;
+  display: inline-block;
+  padding: 6px 0;
+  position: relative;
 }
+
+.side-menu ul li a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-color);
+  left: 0;
+  bottom: 0;
+  transition: 0.3s;
+}
+
+.side-menu ul li a:hover::after {
+  width: 100%;
+}
+
 .close-menu {
   align-self: flex-end;
   background: none;
@@ -141,14 +151,15 @@ a:hover {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--text-color);
-  transition: color 0.3s;
 }
+
 .close-menu:hover {
   color: var(--accent-color);
 }
 
-/* Hero */
+/* Hero + Parallax */
 .hero {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,19 +168,38 @@ a:hover {
   text-align: center;
   padding: 40px 20px;
   transition: background 0.3s;
+  overflow: hidden;
 }
+
+.hero.parallax-hero {
+  background: var(--hero-bg) no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: var(--parallax-bg);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
 .hero-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
   color: var(--accent-color);
+  animation: fadeInDown 1s ease-out;
 }
+
 .hero-description {
   font-size: 1.2rem;
   margin-bottom: 30px;
   color: var(--text-color);
+  animation: fadeInUp 1s ease-out;
 }
 
-/* Кнопка универсальная */
+/* Кнопка .btn */
 .btn {
   font-size: 1rem;
   padding: 10px 20px;
@@ -180,6 +210,7 @@ a:hover {
   cursor: pointer;
   transition: background 0.3s, transform 0.3s;
 }
+
 .btn:hover {
   background: #e65c00;
   transform: translateY(-3px);
@@ -189,6 +220,7 @@ a:hover {
 .catalog {
   padding: 60px 20px;
 }
+
 .filter {
   display: flex;
   flex-wrap: wrap;
@@ -196,16 +228,19 @@ a:hover {
   justify-content: center;
   margin-bottom: 30px;
 }
+
 .filter input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 240px;
 }
+
 .filter-buttons {
   display: flex;
   gap: 10px;
 }
+
 .filter-btn {
   padding: 10px 20px;
   border: none;
@@ -215,42 +250,59 @@ a:hover {
   border-radius: 25px;
   transition: background 0.3s;
 }
-.filter-btn.active,
-.filter-btn:hover {
+
+.filter-btn.active, .filter-btn:hover {
   background: var(--accent-color);
   color: #fff;
 }
+
 .catalog-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
   gap: 20px;
 }
+
 .card {
   background: var(--secondary-color);
   border-radius: 10px;
   box-shadow: 0 2px 8px var(--shadow-color);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s;
+  transition: transform 0.4s, box-shadow 0.4s;
 }
+
 .card:hover {
-  transform: scale(1.02);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 6px 12px var(--shadow-color);
 }
+
 .card img {
   width: 100%;
   height: 180px;
   object-fit: cover;
   display: block;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
+
 .card h3 {
   margin: 15px;
   font-size: 1.2rem;
   color: var(--accent-color);
 }
+
 .card p {
   margin: 0 15px 10px;
   color: #555;
 }
+
+.car-price {
+  font-weight: 600;
+  color: #ff6f00;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
 .buy-btn {
   margin: 10px 15px;
   padding: 10px 20px;
@@ -260,32 +312,24 @@ a:hover {
   border-radius: 5px;
   transition: background 0.3s, transform 0.3s;
 }
+
 .buy-btn:hover {
   background: #e65c00;
   transform: scale(1.05);
-}
-
-/* Цена */
-.car-price {
-  font-weight: 600;
-  color: #ff6f00;
-  margin-left: 15px;
-  margin-bottom: 10px;
 }
 
 /* Модальное окно */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.6);
   justify-content: center;
   align-items: center;
   z-index: 3000;
 }
+
 .modal-content {
   background: var(--secondary-color);
   padding: 20px;
@@ -298,19 +342,21 @@ a:hover {
   overflow-y: auto;
   transition: background 0.3s;
 }
+
 .modal-content h2 {
   margin-bottom: 20px;
   text-align: center;
   color: var(--accent-color);
 }
+
 .close {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 15px; right: 15px;
   font-size: 1.2rem;
   color: var(--accent-color);
   cursor: pointer;
 }
+
 .close:hover {
   color: #e65c00;
 }
@@ -320,6 +366,7 @@ a:hover {
   display: grid;
   gap: 10px;
 }
+
 input, textarea {
   padding: 10px;
   border: 1px solid #ccc;
@@ -327,6 +374,7 @@ input, textarea {
   background: var(--background-color);
   color: var(--text-color);
 }
+
 input:focus, textarea:focus {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
@@ -341,128 +389,91 @@ input:focus, textarea:focus {
   transition: background 0.3s;
 }
 
-/* Admin панель (ticket-item) */
-.ticket-item {
-  background: var(--secondary-color);
+/* Ticket-чат */
+.ticket-msg {
+  margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
+  background: #eee;
+  color: #333;
+  animation: slideIn 0.5s ease-out;
+}
+.ticket-msg-admin {
+  background: #ffd4d4; /* красновато для админа */
+  margin-left: 20px;
+}
+.ticket-msg-user {
+  background: #d4ffe8; /* зелёновато для пользователя */
+  margin-right: 20px;
+}
+
+/* Стили для тикетов */
+.admin-ticket-item, .user-ticket-item {
+  background: var(--secondary-color);
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
   box-shadow: 0 1px 4px var(--shadow-color);
+  transition: transform 0.3s;
+}
+
+.admin-ticket-item:hover, .user-ticket-item:hover {
+  transform: translateY(-2px);
 }
 
 /* Анимации */
 @keyframes fadeInUp {
   from {
-    opacity: 0;
-    transform: translateY(40px);
+    opacity: 0; transform: translateY(40px);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; transform: translateY(0);
   }
 }
+
+@keyframes slideIn {
+  from {
+    opacity: 0; transform: translateX(-50px);
+  }
+  to {
+    opacity: 1; transform: translateX(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0; transform: translateY(-20px);
+  }
+  to {
+    opacity: 1; transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0; transform: translateY(20px);
+  }
+  to {
+    opacity: 1; transform: translateY(0);
+  }
+}
+
 [data-aos] {
   transition-duration: 2s !important;
   transition-timing-function: ease-out-cubic !important;
 }
-/* Основные переменные */
-:root {
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --accent-color: #FF6F00;
-  --secondary-color: #f0f0f0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
 
-  /* Светлый фон Hero */
-  --hero-bg: #fafafa;
-  /* Фон изображения для параллакса (URL вашей картинки) */
-  --parallax-bg: url("img/parallax-bg.jpg");
-}
-
-/* Тёмная тема */
-body.dark-theme {
-  --background-color: #1a1a1a;
-  --text-color: #e0e0e0;
-  --accent-color: #FF6F00;
-  --secondary-color: #2c2c2c;
-  --shadow-color: rgba(255,255,255,0.1);
-
-  /* Тёмный фон Hero */
-  --hero-bg: #1a1a1a;
-}
-
-/* ... Здесь остальная часть, как раньше ... */
-
-/* Hero + Параллакс */
-.hero {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  background: var(--hero-bg);
+/* Дополнительные стили для улучшения визуальной составляющей */
+.service-item, .feature-block {
   text-align: center;
-  padding: 40px 20px;
-  transition: background 0.3s;
-  overflow: hidden;
-}
-
-/* Параллакс-блок */
-.parallax-hero {
-  background: var(--hero-bg) no-repeat center center;
-  background-size: cover;
-  background-attachment: fixed; /* параллакс */
-  background-image: var(--parallax-bg);
-}
-
-/* Наложение затемняющего слоя (для лучшей читаемости текста) */
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.3); /* лёгкое затемнение */
-  pointer-events: none;
-}
-
-/* Анимация для карточек каталога при hover */
-.card {
+  padding: 20px;
   background: var(--secondary-color);
   border-radius: 10px;
   box-shadow: 0 2px 8px var(--shadow-color);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.4s, box-shadow 0.4s;
-}
-.card:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 6px 12px var(--shadow-color);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Расширим анимации AOS */
-[data-aos] {
-  transition-duration: 2s !important;
-  transition-timing-function: ease-out-cubic !important;
+.service-item:hover, .feature-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px var(--shadow-color);
 }
-
-/* Эффекты при наведении на ссылки меню */
-.side-menu ul li a {
-  display: inline-block;
-  padding: 6px 0;
-  position: relative;
-}
-.side-menu ul li a::after {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  background: var(--accent-color);
-  left: 0;
-  bottom: 0;
-  transition: 0.3s;
-}
-.side-menu ul li a:hover::after {
-  width: 100%;
-}
-
-/* Прочие стили остаются аналогичными предыдущим вариантам... */

@@ -1,8 +1,5 @@
 /***************************************************
- * cars: список авто
- ***************************************************/
-/***************************************************
- * Расширенный массив cars: добавлено больше моделей
+ * cars: расширенный список автомобилей
  ***************************************************/
 const cars = [
   {
@@ -35,7 +32,7 @@ const cars = [
     price: 55900,
     image: "img/mercedes-e-class-2022.webp",
     fallbackImage: "img/mercedes-e-class-2022.png",
-    description: "Престижный седан, создающий идеальные условия для дальних поездок."
+    description: "Престижный седан, идеально подходящий для дальних поездок."
   },
   {
     model: "Honda Civic",
@@ -43,7 +40,7 @@ const cars = [
     price: 22500,
     image: "img/honda-civic-2022.webp",
     fallbackImage: "img/honda-civic-2022.png",
-    description: "Популярный городской авто: экономичность, стиль и надёжность."
+    description: "Популярный городской автомобиль: экономичность, стиль и надёжность."
   },
   {
     model: "Audi Q5",
@@ -96,16 +93,7 @@ const cars = [
 ];
 
 /***************************************************
- * Ниже логика (admin, localStorage, темы, покупка), 
- * остаётся такой же, как в прошлых примерах.
- ***************************************************/
-// ... дальше идёт весь ваш код loginUser, logoutUser, initAuthPage,
-//    initAdminPage, loadCars, filterCars, openBuyModal, closeBuyModal, etc.
-//    без изменений
-
-
-/***************************************************
- * Убедимся, что admin/admin123 есть
+ * Автоматически создаём admin/admin123, если нет
  ***************************************************/
 function ensureAdminExists() {
   let users = getUsers();
@@ -116,12 +104,12 @@ function ensureAdminExists() {
     const newAdmin = {
       username: 'admin',
       password: 'admin123',
-      email: 'admin@site',
+      email: 'admin@autosaling.com',
       isAdmin: true
     };
     users.push(newAdmin);
     setUsers(users);
-    console.log("Admin (admin/admin123) auto-created.");
+    console.log("Admin (admin/admin123) был автоматически создан.");
   }
 }
 
@@ -143,11 +131,268 @@ function setCurrentUser(user) {
   else localStorage.removeItem('currentUser');
 }
 
+/***************************************************
+ * Структура тикета:
+ * {
+ *   id: "TICKET_1680216029856",
+ *   user: "username",
+ *   dateCreated: "2025-01-19 12:30",
+ *   messages: [
+ *     { from: "user" / "admin" / "guest", text: "Сообщение", date: "..." },
+ *     ...
+ *   ]
+ * }
+ ***************************************************/
 function getTickets() {
   return JSON.parse(localStorage.getItem('tickets') || '[]');
 }
-function setTickets(arr) {
-  localStorage.setItem('tickets', JSON.stringify(arr));
+function setTickets(tickets) {
+  localStorage.setItem('tickets', JSON.stringify(tickets));
+}
+
+/***************************************************
+ * Создать тикет (первое сообщение)
+ ***************************************************/
+function createTicket(userName, firstMessage) {
+  const tickets = getTickets();
+  const ticketId = "TICKET_" + Date.now();
+  const now = new Date().toLocaleString();
+  const fromType = userName ? "user" : "guest";
+
+  const newTicket = {
+    id: ticketId,
+    user: userName || null,
+    dateCreated: now,
+    messages: [
+      { from: fromType, text: firstMessage, date: now }
+    ]
+  };
+  tickets.push(newTicket);
+  setTickets(tickets);
+  return newTicket;
+}
+
+/***************************************************
+ * Добавить сообщение в тикет
+ ***************************************************/
+function addTicketMessage(ticketId, from, text) {
+  const tickets = getTickets();
+  const ticket = tickets.find(t => t.id === ticketId);
+  if (!ticket) return null;
+
+  const now = new Date().toLocaleString();
+  ticket.messages.push({ from, text, date: now });
+  setTickets(tickets);
+  return ticket;
+}
+
+/***************************************************
+ * Отрисовать всю переписку тикета
+ ***************************************************/
+function renderTicketConversation(ticketId, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const tickets = getTickets();
+  const ticket = tickets.find(t => t.id === ticketId);
+  if (!ticket) {
+    container.innerHTML = "<p>Тикет не найден.</p>";
+    return;
+  }
+  container.innerHTML = "";
+
+  ticket.messages.forEach(msg => {
+    const div = document.createElement("div");
+    div.classList.add("ticket-msg");
+    if (msg.from === "admin") {
+      div.classList.add("ticket-msg-admin");
+    } else {
+      div.classList.add("ticket-msg-user");
+    }
+    div.innerHTML = `
+      <p><strong>${capitalizeFirstLetter(msg.from)}</strong> <span style="font-size:0.8rem;color:#999;">(${msg.date})</span></p>
+      <p>${msg.text}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+/***************************************************
+ * Пользовательская сторона (contacts.html)
+ ***************************************************/
+function initContactsPage() {
+  const supportForm = document.getElementById("support-form");
+  if (supportForm) {
+    supportForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const user = getCurrentUser();
+      const sname = document.getElementById("support-name").value.trim();
+      const sphone = document.getElementById("support-phone").value.trim();
+      const smessage = document.getElementById("support-message").value.trim();
+      if (!smessage) {
+        alert("Введите сообщение!");
+        return;
+      }
+
+      let userName = null;
+      if (user) {
+        userName = user.username;
+      }
+      // Создаём тикет
+      const ticket = createTicket(userName, `Имя: ${sname}, Тел: ${sphone}\n${smessage}`);
+      alert(`Ваш тикет создан! ID: ${ticket.id}`);
+      supportForm.reset();
+
+      // Перерисуем список тикетов
+      const userTicketsContainer = document.getElementById("my-tickets-container");
+      if (user && userTicketsContainer) {
+        renderUserTickets(user.username, userTicketsContainer.id);
+      }
+    });
+  }
+
+  // Если пользователь авторизован, покажем список его тикетов
+  const user = getCurrentUser();
+  const myTicketsContainer = document.getElementById("my-tickets-container");
+  if (myTicketsContainer && user) {
+    renderUserTickets(user.username, myTicketsContainer.id);
+  }
+}
+
+/***************************************************
+ * Отобразить тикеты конкретного пользователя
+ ***************************************************/
+function renderUserTickets(username, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "<h3>Мои тикеты</h3>";
+
+  const tickets = getTickets();
+  const userTickets = tickets.filter(t => t.user && t.user.toLowerCase() === username.toLowerCase());
+  if (!userTickets.length) {
+    container.innerHTML += "<p>У вас нет тикетов.</p>";
+    return;
+  }
+  userTickets.forEach(t => {
+    const div = document.createElement("div");
+    div.classList.add("user-ticket-item");
+    div.innerHTML = `
+      <p><strong>ID:</strong> ${t.id} <span style="color:#999;">(${t.dateCreated})</span></p>
+      <button class="btn small-btn" onclick="openUserTicket('${t.id}')">Открыть</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+/***************************************************
+ * Открыть тикет (показать переписку + форма ответа)
+ ***************************************************/
+function openUserTicket(ticketId) {
+  const chatContainer = document.getElementById("user-chat-container");
+  if (!chatContainer) return;
+  chatContainer.dataset.ticketId = ticketId;
+  // Отрисовать переписку
+  renderTicketConversation(ticketId, chatContainer.id);
+
+  // Добавить поле отправки нового сообщения
+  chatContainer.innerHTML += `
+    <div style="margin-top:10px;">
+      <textarea id="user-reply-text" rows="2" placeholder="Ваше сообщение..."></textarea>
+      <button class="btn" onclick="userSendMessage('${ticketId}')">Отправить</button>
+    </div>
+  `;
+}
+
+/***************************************************
+ * Отправить новое сообщение от пользователя
+ ***************************************************/
+function userSendMessage(ticketId) {
+  const txt = document.getElementById("user-reply-text").value.trim();
+  if (!txt) {
+    alert("Введите текст сообщения!");
+    return;
+  }
+  addTicketMessage(ticketId, "user", txt);
+  document.getElementById("user-reply-text").value = "";
+  renderTicketConversation(ticketId, "user-chat-container");
+}
+
+/***************************************************
+ * Админ-панель (admin.html)
+ ***************************************************/
+function initAdminPage() {
+  const adminStatus = document.getElementById("admin-status");
+  const ticketsBlock = document.getElementById("tickets-block");
+  const ticketsList = document.getElementById("tickets-list");
+  if (!adminStatus || !ticketsBlock || !ticketsList) return;
+
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.isAdmin) {
+    adminStatus.innerHTML = "У вас нет прав доступа.";
+    ticketsBlock.style.display = "none";
+    return;
+  }
+  adminStatus.innerHTML = `Здравствуйте, <strong>${currentUser.username}</strong> (администратор).`;
+
+  renderAllTicketsAdmin();
+}
+
+/***************************************************
+ * Отобразить все тикеты для админа
+ ***************************************************/
+function renderAllTicketsAdmin() {
+  const ticketsList = document.getElementById("tickets-list");
+  if (!ticketsList) return;
+  ticketsList.innerHTML = "";
+
+  const tickets = getTickets();
+  if (!tickets.length) {
+    ticketsList.innerHTML = "<p>Нет тикетов.</p>";
+    return;
+  }
+  tickets.forEach(t => {
+    const div = document.createElement("div");
+    div.classList.add("admin-ticket-item");
+    div.innerHTML = `
+      <p><strong>ID:</strong> ${t.id} (${t.dateCreated}) <br>
+      Пользователь: ${t.user || "Гость"}</p>
+      <button class="btn small-btn" onclick="adminOpenTicket('${t.id}')">Открыть</button>
+    `;
+    ticketsList.appendChild(div);
+  });
+}
+
+/***************************************************
+ * Открыть тикет в админке (чат + форма ответа)
+ ***************************************************/
+function adminOpenTicket(ticketId) {
+  const adminChat = document.getElementById("admin-chat-container");
+  if (!adminChat) return;
+  adminChat.dataset.ticketId = ticketId;
+
+  renderTicketConversation(ticketId, adminChat.id);
+
+  // Добавим поле для ответа админа
+  adminChat.innerHTML += `
+    <div style="margin-top:10px;">
+      <textarea id="admin-reply-text" rows="2" placeholder="Ответ admin..."></textarea>
+      <button class="btn" onclick="adminSendMessage('${ticketId}')">Отправить</button>
+    </div>
+  `;
+}
+
+/***************************************************
+ * Отправить сообщение от админа
+ ***************************************************/
+function adminSendMessage(ticketId) {
+  const txt = document.getElementById("admin-reply-text").value.trim();
+  if (!txt) {
+    alert("Введите текст ответа!");
+    return;
+  }
+  addTicketMessage(ticketId, "admin", txt);
+  document.getElementById("admin-reply-text").value = "";
+  renderTicketConversation(ticketId, "admin-chat-container");
 }
 
 /***************************************************
@@ -156,7 +401,7 @@ function setTickets(arr) {
 function registerUser(username, password, email) {
   let users = getUsers();
   if (users.find(u => u.username.toLowerCase() === username.toLowerCase())) {
-    alert("Такой логин уже есть!");
+    alert("Такой логин уже существует!");
     return false;
   }
   let isAdmin = false;
@@ -191,7 +436,7 @@ function logoutUser() {
 }
 
 /***************************************************
- * auth.html
+ * Инициализация auth.html
  ***************************************************/
 function initAuthPage() {
   const regForm = document.getElementById("register-form");
@@ -231,40 +476,7 @@ function initAuthPage() {
 }
 
 /***************************************************
- * admin.html
- ***************************************************/
-function initAdminPage() {
-  const adminStatus = document.getElementById("admin-status");
-  const ticketsBlock = document.getElementById("tickets-block");
-  const ticketsList = document.getElementById("tickets-list");
-  if (!adminStatus || !ticketsBlock || !ticketsList) return;
-
-  const currentUser = getCurrentUser();
-  if (!currentUser || !currentUser.isAdmin) {
-    adminStatus.innerHTML = "У вас нет прав доступа.";
-    ticketsBlock.style.display = "none";
-    return;
-  }
-  adminStatus.innerHTML = `Здравствуйте, <strong>${currentUser.username}</strong> (администратор).`;
-
-  const tickets = getTickets();
-  if (!tickets.length) {
-    ticketsList.innerHTML = "<p>Нет запросов в техподдержку.</p>";
-  } else {
-    ticketsList.innerHTML = "";
-    tickets.forEach(t => {
-      const div = document.createElement("div");
-      div.style.marginBottom = "15px";
-      div.innerHTML = `
-        <p><strong>${t.name}</strong> (${t.phone}): "${t.message}" <span style="color:#999;">(${t.date})</span></p>
-      `;
-      ticketsList.appendChild(div);
-    });
-  }
-}
-
-/***************************************************
- * Каталог
+ * Каталог (index.html)
  ***************************************************/
 function loadCars(filter = 'all') {
   const catalog = document.getElementById("catalog-cards");
@@ -295,7 +507,7 @@ function filterCars(year) {
   const buttons = document.querySelectorAll(".filter-btn");
   buttons.forEach(btn => {
     btn.classList.remove("active");
-    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')){
+    if (btn.textContent === year || (year === 'all' && btn.textContent.toLowerCase() === 'все')) {
       btn.classList.add("active");
     }
   });
@@ -332,7 +544,7 @@ function searchCars() {
 }
 
 /***************************************************
- * Модальное окно "Купить"
+ * Модальное окно (покупка авто)
  ***************************************************/
 function openBuyModal(carName) {
   const buyModal = document.getElementById("buyModal");
@@ -421,12 +633,19 @@ function updateThemeIcon(theme) {
 }
 
 /***************************************************
- * Формы при DOMContentLoaded
+ * Вспомогательные функции
+ ***************************************************/
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+/***************************************************
+ * Инициализация при DOMContentLoaded
  ***************************************************/
 document.addEventListener("DOMContentLoaded", () => {
-  ensureAdminExists(); // Создаём admin/admin123, если нет
+  ensureAdminExists();
 
-  // index.html
+  // Если index.html
   if (document.getElementById("catalog-cards")) {
     loadCars();
     const searchInput = document.getElementById("search-input");
@@ -435,79 +654,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // auth.html
+  // Если auth.html
   if (document.getElementById("register-form") || document.getElementById("login-form")) {
     initAuthPage();
   }
 
-  // admin.html
+  // Если admin.html
   if (document.getElementById("admin-status")) {
     initAdminPage();
   }
 
-  // Покупка авто
-  const buyForm = document.getElementById("buy-form");
-  if (buyForm) {
-    buyForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("buy-name").value.trim();
-      const email = document.getElementById("buy-email").value.trim();
-      const phone = document.getElementById("buy-phone").value.trim();
-      const car = document.getElementById("buy-car").value.trim();
-      const message = document.getElementById("buy-message").value.trim();
-      if (!name || !email || !phone || !car || !message) {
-        alert("Заполните все поля!");
-        return;
-      }
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email)) {
-        alert("Неверный формат Email!");
-        return;
-      }
-      if (phone.length < 5) {
-        alert("Введите нормальный телефон (не меньше 5 символов).");
-        return;
-      }
-      alert(`Спасибо, ${name}! Ваша заявка на покупку ${car} принята.`);
-      buyForm.reset();
-      closeBuyModal();
-    });
+  // contacts.html
+  if (document.getElementById("support-form") || document.getElementById("my-tickets-container")) {
+    initContactsPage();
   }
 
-  // Техподдержка (contacts.html)
-  const supportForm = document.getElementById("support-form");
-  if (supportForm) {
-    supportForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const sname = document.getElementById("support-name").value.trim();
-      const sphone = document.getElementById("support-phone").value.trim();
-      const smessage = document.getElementById("support-message").value.trim();
-
-      if (!sname || !smessage) {
-        alert("Введите имя и сообщение!");
-        return;
-      }
-      if (sphone.length < 5) {
-        alert("Введите нормальный телефон (не меньше 5 символов).");
-        return;
-      }
-
-      let tickets = getTickets();
-      const newTicket = {
-        name: sname,
-        phone: sphone,
-        message: smessage,
-        date: new Date().toLocaleString()
-      };
-      tickets.push(newTicket);
-      setTickets(tickets);
-
-      alert("Ваш запрос отправлен в техподдержку!");
-      supportForm.reset();
-    });
-  }
-
-  // Инициализация AOS
+  // Инициализируем AOS
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 2000,

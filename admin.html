@@ -12,11 +12,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
-  <!-- Меню / Тема -->
-  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right">
+  <!-- Кнопка меню (сверху слева) -->
+  <button id="menu-fab" class="menu-fab" aria-label="Открыть меню" data-aos="fade-right" data-aos-delay="300">
     <i class="fas fa-bars"></i>
   </button>
-  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left">
+  
+  <!-- Кнопка темы (сверху справа) -->
+  <button id="theme-fab" class="theme-fab" aria-label="Переключить тему" data-aos="fade-left" data-aos-delay="300">
     <i class="fas fa-moon"></i>
   </button>
 
@@ -26,11 +28,11 @@
       <i class="fas fa-times"></i>
     </button>
     <ul>
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="about.html">О нас</a></li>
-      <li><a href="services.html">Услуги</a></li>
-      <li><a href="contacts.html">Контакты</a></li>
-      <li><a href="auth.html">Вход/Регистрация</a></li>
+      <li data-aos="fade-right" data-aos-delay="100"><a href="index.html">Главная</a></li>
+      <li data-aos="fade-right" data-aos-delay="200"><a href="about.html">О нас</a></li>
+      <li data-aos="fade-right" data-aos-delay="300"><a href="services.html">Услуги</a></li>
+      <li data-aos="fade-right" data-aos-delay="400"><a href="contacts.html">Контакты</a></li>
+      <li data-aos="fade-right" data-aos-delay="500"><a href="auth.html">Вход/Регистрация</a></li>
     </ul>
   </nav>
 
@@ -38,16 +40,23 @@
     <div class="container" data-aos="fade-up">
       <h1>Админ-панель</h1>
       <p id="admin-status" style="text-align:center; margin-top:20px;"></p>
+
+      <!-- Список тикетов -->
       <div id="tickets-block" style="margin-top:40px;">
         <h2>Запросы в техподдержку</h2>
         <div id="tickets-list" style="margin-top:20px;">
-          <!-- Вывод заявок -->
+          <!-- Перечень тикетов -->
         </div>
       </div>
+
+      <!-- Чат для админа -->
+      <div id="admin-chat-container" style="margin-top:40px; background:#fafafa; padding:10px; border-radius:5px;"></div>
     </div>
   </section>
 
+  <!-- AOS JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Основной JS -->
   <script src="script.js"></script>
 </body>
 </html>
