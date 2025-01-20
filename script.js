@@ -516,3 +516,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// Подключение к серверу Socket.io
+const socket = io();
+
+let currentTicketId = null; // ID текущего тикета
+let currentUserName = null; // Имя пользователя (или admin)
+
+// Функция создания нового тикета
+function createTicket(userName) {
+  currentUserName = userName || `User_${Date.now()}`;
+  currentTicketId = `TICKET_${Date.now()}`;
+
+  // Уведомляем сервер
+  socket.emit("createTicket", currentTicketId);
+
+  // Подключаемся к событиям сервера
+  socket.on("ticketData", (ticket) => {
+    renderMessages(ticket);
+  });
+}
+
+// Функция отправки сообщения
+function sendMessage(text) {
+  if (!currentTicketId || !text.trim()) return;
+
+  const message = {
+    ticketId: currentTicketId,
+    from: currentUserName,
+    text: text.trim(),
+  };
+
+  socket.emit("sendMessage", message);
+}
+
+// Отрисовка сообщений в чате
+function renderMessages(ticket) {
+  const messagesContainer = document.getElementById("chat-messages");
+  if (!messagesContainer || !ticket) return;
+
+  messagesContainer.innerHTML = "";
+  ticket.messages.forEach((msg) => {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = msg.from === "admin" ? "msg-admin" : "msg-user";
+    msgDiv.innerHTML = `<strong>${msg.from}</strong> <span style='font-size:0.8rem;color:#999;'>(${msg.date})</span><br>${msg.text}`;
+    messagesContainer.appendChild(msgDiv);
+  });
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Пример подключения
+function initChat() {
+  const chatForm = document.getElementById("chat-form");
+  const chatInput = document.getElementById("chat-input");
+
+  if (!chatForm || !chatInput) return;
+
+  chatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    sendMessage(chatInput.value);
+    chatInput.value = "";
+  });
+
+  // Создаём тикет при загрузке страницы (для демонстрации)
+  createTicket("guest");
+}
+
+// Запуск инициализации
+window.addEventListener("DOMContentLoaded", initChat);
