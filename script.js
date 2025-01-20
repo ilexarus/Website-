@@ -1,10 +1,8 @@
-/***************************************************
- * Подключение к серверу Socket.io
- ***************************************************/
-const socket = io();
+// Подключение к серверу Socket.io
+const socket = io("https://autosaling.netlify.app/"); // Замените на URL вашего сервера
 
-let currentTicketId = null; // ID текущего тикета
-let currentUserName = null; // Имя пользователя (или admin)
+let currentTicketId = null;
+let currentUserName = null;
 
 /***************************************************
  * Создание тикета
@@ -108,86 +106,7 @@ const cars = [
     fallbackImage: "img/tesla-model-3-2023.png",
     description: "Компактный электромобиль с автопилотом и большим запасом хода."
   },
-  {
-    model: "Toyota Camry",
-    year: "2023",
-    price: 25990,
-    image: "img/toyota-camry-2023.webp",
-    fallbackImage: "img/toyota-camry-2023.png",
-    description: "Надёжный седан бизнес-класса, комфорт и практичность для города и трассы."
-  },
-  {
-    model: "BMW iX",
-    year: "2024",
-    price: 84900,
-    image: "img/bmw-ix-2024.webp",
-    fallbackImage: "img/bmw-ix-2024.png",
-    description: "Электрический кроссовер с современными технологиями и спортивным дизайном."
-  },
-  {
-    model: "Mercedes-Benz E-Class",
-    year: "2022",
-    price: 55900,
-    image: "img/mercedes-e-class-2022.webp",
-    fallbackImage: "img/mercedes-e-class-2022.png",
-    description: "Престижный седан, создающий идеальные условия для дальних поездок."
-  },
-  {
-    model: "Honda Civic",
-    year: "2022",
-    price: 22500,
-    image: "img/honda-civic-2022.webp",
-    fallbackImage: "img/honda-civic-2022.png",
-    description: "Популярный городской авто: экономичность, стиль и надёжность."
-  },
-  {
-    model: "Audi Q5",
-    year: "2024",
-    price: 49900,
-    image: "img/audi-q5-2024.webp",
-    fallbackImage: "img/audi-q5-2024.png",
-    description: "Престижный кроссовер с полным приводом и отличной управляемостью."
-  },
-  {
-    model: "Range Rover Velar",
-    year: "2023",
-    price: 63900,
-    image: "img/range-rover-velar-2023.webp",
-    fallbackImage: "img/range-rover-velar-2023.png",
-    description: "Стильный и роскошный SUV, сочетающий проходимость и изысканный дизайн."
-  },
-  {
-    model: "Hyundai Solaris",
-    year: "2023",
-    price: 16900,
-    image: "img/hyundai-solaris-2023.webp",
-    fallbackImage: "img/hyundai-solaris-2023.png",
-    description: "Доступный и надёжный седан с небольшим расходом топлива."
-  },
-  {
-    model: "Ford Mustang",
-    year: "2022",
-    price: 55900,
-    image: "img/ford-mustang-2022.webp",
-    fallbackImage: "img/ford-mustang-2022.png",
-    description: "Легендарный американский мускул-кар со стильным дизайном и мощным двигателем."
-  },
-  {
-    model: "Chevrolet Tahoe",
-    year: "2023",
-    price: 59900,
-    image: "img/chevrolet-tahoe-2023.webp",
-    fallbackImage: "img/chevrolet-tahoe-2023.png",
-    description: "Большой внедорожник с просторным салоном и отличной проходимостью."
-  },
-  {
-    model: "Volkswagen Golf GTI",
-    year: "2024",
-    price: 32900,
-    image: "img/vw-golf-gti-2024.webp",
-    fallbackImage: "img/vw-golf-gti-2024.png",
-    description: "Спортивный хэтчбек с узнаваемым дизайном и динамичным характером."
-  }
+  // ... остальные модели
 ];
 
 /***************************************************
